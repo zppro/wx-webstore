@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="container spu-list">
+  <view class="spu-item" bindtap="spuTap" wx:for="{{spus}}" wx:for-item="spu" wx:key="spu.id">
+    <image class="spu-img" mode="widthFix" src="{{spu.img}}"></image>
+    <text class="spu-name">{{spu.name}}</text>
+    <view>
+      <text class="spu-sale-price">{{spu.sale_price}}</text>
+      <text class="spu-market-price">￥{{spu.market_price}}</text>
+    </view>
+  </view>
+</view>

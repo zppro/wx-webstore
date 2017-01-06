@@ -1,0 +1,38 @@
+.spu-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.spu-item {
+  width: 100%;
+  background-color: white;
+  margin-bottom: 20rpx;
+}
+.spu-img{
+  display:block;
+  width: 100%;
+}
+.spu-name{
+  display:block;
+  font-size: 17pt;
+  padding-top: 20rpx;
+  padding-left: 20rpx;
+}
+.spu-sale-price-unit{
+  font-size: 20pt;
+  color: #ff0000;
+  padding-bottom: 4rpx;
+}
+.spu-sale-price{
+  font-size: 30pt;
+  color: #ff0000;
+}
+.spu-sale-price::before{
+  content: '￥';
+  font-size: 20pt;
+}
+.spu-market-price{
+  font-size:16pt;
+  color:#888;
+  text-decoration:line-through;
+}

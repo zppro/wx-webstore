@@ -1,0 +1,9 @@
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo-1">
+    <image class="userinfo-avatar-1" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname-1">{{userInfo.nickName}}</text>
+  </view>
+  <view class="usermotto-1">
+    <text class="user-motto-1">{{motto}}</text>
+  </view>
+</view>
