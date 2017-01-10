@@ -1,11 +1,13 @@
 <!--index.wxml-->
 <view class="container spu-list">
-  <view class="spu-item" bindtap="spuTap" wx:for="{{spus}}" wx:for-item="spu" wx:key="spu.id">
+  <view class="spu-item" data-spu-id="{{spu.id}}" bindtap="spuTap" wx:for="{{spus}}" wx:for-item="spu" wx:key="spu.id">
     <image class="spu-img" mode="widthFix" src="{{spu.img}}"></image>
     <text class="spu-name">{{spu.name}}</text>
-    <view>
-      <text class="spu-sale-price">{{spu.sale_price}}</text>
-      <text class="spu-market-price">￥{{spu.market_price}}</text>
+    <view class="spu-price">
+      <text class="spu-sale-price">{{spu.sale_price_lower}}</text>
+      <text class="spu-market-price">￥{{spu.market_price_lower}}</text>
     </view>
   </view>
 </view>
+<import src="../../components/wx-toast/wx-toast.wxml"/>
+<template is="wx-toast" data="{{toastOptions: toastOptions}}"/>

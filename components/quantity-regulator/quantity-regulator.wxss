@@ -1,0 +1,25 @@
+.quantity-regulator-c{
+    width: 130px;
+    height:30px;
+    line-height:30px;
+    display: flex;
+    border: solid 1px #888;
+    border-radius: 4px;
+}
+.quantity-minus{
+    flex:1.5;
+    text-align: center;
+    font-size: 20pt;
+    border-right:solid 1px #888;
+}
+.quantity-plus{
+    flex:1.5;
+    text-align: center;
+    font-size: 20pt;
+    border-left: solid 1px #888;
+}
+.quantity-value{
+    flex: 2;
+    text-align: center;
+    height: 100%;
+}

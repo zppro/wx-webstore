@@ -1,4 +1,100 @@
 <!--index.wxml-->
-<view class="container spu-details">
-  详情
+<import src="../../components/quantity-regulator/quantity-regulator.wxml"/>
+<view class="container">
+  <scroll-view class="spu-details" scroll-y="true" style="height: {{windowHeight}}px" >
+    <view class="spu-details-page-info {{pageInfoAnimationClass}}" hidden="{{!isPageInfoShow}}">
+      <view class="spu-details-item" >
+        <image class="spu-img" mode="widthFix" src="{{current.img}}"></image>
+        <text class="spu-name">{{current.name}}</text>
+        <text class="spu-intro">{{current.intro}}</text>
+        <view class="spu-price">
+          <text class="spu-sale-price">{{selected_sku.sale_price}}</text>
+          <text class="spu-market-price">￥{{selected_sku.market_price}}</text>
+        </view>
+      </view>
+      <view class="spu-stat-item" >
+        <text class="spu-sku-current-shipping-fee">快递：免运费</text>
+        <text class="spu-sku-current-sales-monthly">月销：{{selected_sku.sale_monthly||0}}件</text>
+        <text class="spu-shipment-place">{{current.shipment_place}}</text>
+      </view>
+      <view class="spu-sku-current">
+        <text class="spu-sku-current-label">已选</text>
+        <text class="spu-sku-current-name">{{selected_sku.name}}</text>
+        <text class="spu-sku-current-quantity">{{quantity}} 件</text>
+        <text class="spu-sku-change" bindtap="openChangeSKUDialog">...</text>
+      </view>
+      <view class="spu-shipping-place">
+        <text class="spu-shipping-place-label">送至</text>
+        <text class="iconfont icon-map spu-shipping-place-icon" />
+        <text class="spu-shipping-place-value">{{selectedShippingPlace.province + selectedShippingPlace.city + selectedShippingPlace.area + selectedShippingPlace.address}}</text>
+        <text class="spu-shpping-place-pick" bindtap="openPickShppingPlaceDialog">...</text>
+      </view>
+      <view class="spu-pan-block" data-is-pan-up="{{true}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd">
+        <text class="iconfont icon-arrowup">上拉查看商品图文详情</text>
+      </view>
+    </view>
+    <view class="spu-details-page-intro-url {{pageIntroUrlAnimationClass}}" hidden="{{!isPageIntroUrlShow}}">
+      <view class="spu-pan-block" data-is-pan-up="{{false}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd">
+        <text class="iconfont icon-arrowdown">下拉查看商品详情</text>
+      </view>
+      <image class="spu-img" mode="widthFix" src="{{current.intro_url}}"></image>
+    </view>
+  </scroll-view>
+  <view class="sp-details-actions">
+    <button class="buy-now-button" type="primary" size="45" bindtap="buyNow" >立即购买</button>
+  </view>
 </view>
+<view class="spu-popup-container " hidden="{{!isSKUSContainerPopup}}">
+   <view class="spu-popup-container-mask {{skusAnimationMaskClass}}" bindtap="closeChangeSKUDialog">
+   </view>
+   <view class="spu-popup-container-content spu-popup-container-content-pd {{skusAnimationContentClass}}">
+      <view class="spu-skus-row spu-skus-row-img-price">
+        <view class="spu-img-in-sku-c">
+          <image class="spu-img-in-sku" mode="widthFix" src="{{current.img}}"></image>
+        </view>
+        <view class="sku-price">
+          <text class="sku-sale-price">{{selected_sku.sale_price}}</text>
+        </view>
+      </view>
+      <view class="spu-skus-row">
+        <text class="spu-skus-list-label">颜色型号</text>
+      </view>
+      <view class="spu-skus-row spu-skus-list">
+        <block wx:for="{{current.skus}}" wx:for-item="sku" wx:key="sku._id">
+          <view class="sku-item {{sku._id == selected_sku._id ? 'sku-item-selected': ''}}" data-sku-id="{{sku._id}}" bindtap="skuTap" >
+            <text class="sku-name">{{sku.name}}</text>
+          </view>
+        </block>
+      </view>
+      <view class="spu-skus-row spu-skus-quantity">
+        <text class="spu-skus-quantity-label">数量</text>
+        <view class="spu-skus-quantity-control">
+          <template is="quantity-regulator" data="{{quantity:quantity}}" />
+        </view>
+      </view>
+   </view>
+</view>
+<view class="spu-popup-container " hidden="{{!isShppingPlacePickContainerPopup}}">
+   <view class="spu-popup-container-mask {{shppingPlaceAnimationMaskClass}}" bindtap="closePickShippingPlaceDialog">
+   </view>
+   <view class="spu-popup-container-content {{shppingPlaceAnimationContentClass}}">
+      <view class="spu-shpping-place-head">
+        <text class="spu-shpping-place-label">配送至</text>
+      </view>
+      <view class="spu-shpping-place-body">
+        <view class="spu-shpping-place-list">
+          <block wx:for="{{memberShippingPlaces}}" wx:for-item="shippingPlace" wx:key="shippingPlace._id">
+            <view class="shipping-place-item {{shippingPlace._id == selectedShippingPlace._id ? 'shipping-place-item-selected': ''}}" data-shipping-place-id="{{shippingPlace._id}}" bindtap="shippingPlaceTap" >
+              <text class="iconfont icon-map shipping-place-details">{{'  ' + shippingPlace.province + shippingPlace.city + shippingPlace.area + shippingPlace.address}}</text>
+              <text class="shipping-place-picker-marker {{shippingPlace._id == selectedShippingPlace._id ? 'iconfont icon-zhengque': ''}}" />
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="spu-shpping-place-foot">
+        <button class="shpping-place-add-button" type="primary" size="45" bindtap="addNewShippingPlace" >添加新地址</button>
+      </view>
+   </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml"/>
+<template is="wx-toast" data="{{toastOptions: toastOptions}}"/>

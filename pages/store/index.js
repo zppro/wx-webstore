@@ -1,4 +1,5 @@
 //index.js
+import keys from '../../config/keys.js'
 //获取应用实例
 var app = getApp()
 Page({
@@ -6,18 +7,22 @@ Page({
     spus: []
   },
   //事件处理函数
-  spuTap: function () {
+  spuTap: function (e) {
+    console.log(e.currentTarget.dataset.spuId);
     wx.navigateTo({
-      url: './spu-details'
+      url: './spu-details?spuId=' + e.currentTarget.dataset.spuId
     })
   },
   onLoad: function () {
     console.log('index onLoad')
-    this.setData({
-        spus:[
-          {id: '1bb', name: '梧斯源睡眠监测仪器', img: '/images/test/banner.jpg', sale_price: 888, market_price: 1889},
-          {id: 'c33', name: '防雾霾口罩', img: '/images/test/banner.jpg', sale_price: 32, market_price: 134}
-        ]
-      })
+    var that = this;
+    app.toast.init(this);
+    console.log(app.config[keys.CONFIG_SERVER])
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].root + 'spus', {page: {size: 10, skip:0}}, (spus)=>{
+      console.log(spus);
+      that.setData({
+        spus
+      });
+    });
   }
 })

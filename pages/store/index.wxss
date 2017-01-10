@@ -18,10 +18,8 @@
   padding-top: 20rpx;
   padding-left: 20rpx;
 }
-.spu-sale-price-unit{
-  font-size: 20pt;
-  color: #ff0000;
-  padding-bottom: 4rpx;
+.spu-price{
+  text-align: right;
 }
 .spu-sale-price{
   font-size: 30pt;

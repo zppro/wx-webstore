@@ -1,6 +1,8 @@
 //app.js
 import libs from 'utils/libs.js'
 import keys from 'config/keys.js'
+import toast from 'components/wx-toast/wx-toast'
+
 const DEBUG = true
 App({
   onLaunch: function () {
@@ -30,6 +32,7 @@ App({
       })
     }
   },
+  toast,
   libs,
   env:{
     DEBUG

@@ -1,4 +1,7 @@
 /**app.wxss**/
+@import 'components/wx-toast/wx-toast.wxss';
+@import 'components/icon.wxss';
+
 page{
   background-color: #efeff4;
 }

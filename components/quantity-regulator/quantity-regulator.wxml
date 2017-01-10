@@ -1,0 +1,7 @@
+<template name="quantity-regulator">
+    <view class="quantity-regulator-c">
+        <view class="quantity-minus" bindtap="minus" >-</view>
+        <input class="quantity-value" value="{{quantity}}" bindblur="setQuantityRegulator" focus="{{true}}" />
+        <view class="quantity-plus" bindtap="plus" >+</view>
+    </view>
+</template>
