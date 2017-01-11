@@ -15,3 +15,27 @@ page{
   margin: 0;
   box-sizing: border-box;
 } 
+.verticle-middle{
+  height:100%;
+  display:inline-block;
+  vertical-align: middle;
+}
+.h-flex{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.v-flex{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}

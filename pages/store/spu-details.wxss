@@ -110,32 +110,32 @@
   color:#888;
   line-height: 60rpx;
 }
-.spu-shipping-place{
+.spu-shipping-info{
   width: 100%;
   margin: 0 0 5px 0;
   background-color: white;
   display: flex;
 }
-.spu-shipping-place-label{
+.spu-shipping-info-label{
   width: 80rpx;
   padding-left: 10rpx;
   color:#888;
   font-size: 14px;
   margin: 12px 0 5px 0;
 }
-.spu-shipping-place-icon{
+.spu-shipping-info-icon{
   width: 20px;
   text-align: center;
   color:#ff0000;
   font-size: 12px;
   margin: 15px 0 5px 0;
 }
-.spu-shipping-place-value{
+.spu-shipping-info-value{
   flex: 1;
   font-size: 12px;
   margin: 15px 0 5px 0;
 }
-.spu-shpping-place-pick{
+.spu-shipping-info-pick{
   width: 80rpx;
   color:#888;
   line-height:40px;
@@ -265,21 +265,21 @@
 }
 
 /*** pick shipping place container css ***/
-.spu-shpping-place-head{
+.spu-shipping-info-head{
   height: 40px;
   line-height: 40px;
   text-align: center;
 }
-.spu-shpping-place-label{
+.spu-shipping-info-label{
   color:#aaa;
 }
-.spu-shpping-place-body{
+.spu-shipping-info-body{
   flex: 1;
 }
-.spu-shpping-place-list{
+.spu-shipping-info-list{
   border-bottom: solid 1px #f5f5f5;
 }
-.shipping-place-item{
+.shipping-info-item{
   padding: 8px 0;
   border-top: solid 1px #f5f5f5;
   width: 100%;
@@ -287,24 +287,24 @@
   font-size: 12px;
   display: flex;
 }
-.shipping-place-item-selected {
+.shipping-info-item-selected {
   color:#ff0000;
 }
-.shipping-place-details{
+.shipping-info-details{
   padding-left: 10px;
   font-size: 12px;
   flex: 1;
 }
-.shipping-place-picker-marker{
+.shipping-info-picker-marker{
   width: 60px;
   font-size: 12px;
   text-align:center;
   color:#ff0000;
 }
-.spu-shpping-place-foot{
+.spu-shipping-info-foot{
   height:45px;
 }
-.shpping-place-add-button{
+.shipping-info-add-button{
   text-align: center;
   border-radius: 0;
 }

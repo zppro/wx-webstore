@@ -2,6 +2,7 @@
   "pages": [
     "pages/store/index",
     "pages/store/spu-details",
+    "pages/store/order-confirm",
     "pages/mine/mine",
     "pages/logs/logs"
   ],

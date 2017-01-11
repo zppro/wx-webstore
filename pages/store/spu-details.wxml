@@ -23,11 +23,11 @@
         <text class="spu-sku-current-quantity">{{quantity}} 件</text>
         <text class="spu-sku-change" bindtap="openChangeSKUDialog">...</text>
       </view>
-      <view class="spu-shipping-place">
-        <text class="spu-shipping-place-label">送至</text>
-        <text class="iconfont icon-map spu-shipping-place-icon" />
-        <text class="spu-shipping-place-value">{{selectedShippingPlace.province + selectedShippingPlace.city + selectedShippingPlace.area + selectedShippingPlace.address}}</text>
-        <text class="spu-shpping-place-pick" bindtap="openPickShppingPlaceDialog">...</text>
+      <view class="spu-shipping-info">
+        <text class="spu-shipping-info-label">送至</text>
+        <text class="iconfont icon-map spu-shipping-info-icon" />
+        <text class="spu-shipping-info-value">{{selectedShippingInfo.province + selectedShippingInfo.city + selectedShippingInfo.area + selectedShippingInfo.address}}</text>
+        <text class="spu-shipping-info-pick" bindtap="openPickShippingInfoDialog">...</text>
       </view>
       <view class="spu-pan-block" data-is-pan-up="{{true}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd">
         <text class="iconfont icon-arrowup">上拉查看商品图文详情</text>
@@ -74,25 +74,25 @@
       </view>
    </view>
 </view>
-<view class="spu-popup-container " hidden="{{!isShppingPlacePickContainerPopup}}">
-   <view class="spu-popup-container-mask {{shppingPlaceAnimationMaskClass}}" bindtap="closePickShippingPlaceDialog">
+<view class="spu-popup-container " hidden="{{!isShippingInfoPickContainerPopup}}">
+   <view class="spu-popup-container-mask {{shippingInfoAnimationMaskClass}}" bindtap="closePickShippingInfoDialog">
    </view>
-   <view class="spu-popup-container-content {{shppingPlaceAnimationContentClass}}">
-      <view class="spu-shpping-place-head">
-        <text class="spu-shpping-place-label">配送至</text>
+   <view class="spu-popup-container-content {{shippingInfoAnimationContentClass}}">
+      <view class="spu-shipping-info-head">
+        <text class="spu-shipping-info-label">配送至</text>
       </view>
-      <view class="spu-shpping-place-body">
-        <view class="spu-shpping-place-list">
-          <block wx:for="{{memberShippingPlaces}}" wx:for-item="shippingPlace" wx:key="shippingPlace._id">
-            <view class="shipping-place-item {{shippingPlace._id == selectedShippingPlace._id ? 'shipping-place-item-selected': ''}}" data-shipping-place-id="{{shippingPlace._id}}" bindtap="shippingPlaceTap" >
-              <text class="iconfont icon-map shipping-place-details">{{'  ' + shippingPlace.province + shippingPlace.city + shippingPlace.area + shippingPlace.address}}</text>
-              <text class="shipping-place-picker-marker {{shippingPlace._id == selectedShippingPlace._id ? 'iconfont icon-zhengque': ''}}" />
+      <view class="spu-shipping-info-body">
+        <view class="spu-shipping-info-list">
+          <block wx:for="{{memberShippingInfos}}" wx:for-item="shippingInfo" wx:key="shippingInfo._id">
+            <view class="shipping-info-item {{shippingInfo._id == selectedShippingInfo._id ? 'shipping-info-item-selected': ''}}" data-shipping-info-id="{{shippingInfo._id}}" bindtap="shippingInfoTap" >
+              <text class="iconfont icon-map shipping-info-details">{{'  ' + shippingInfo.province + shippingInfo.city + shippingInfo.area + shippingInfo.address}}</text>
+              <text class="shipping-info-picker-marker {{shippingInfo._id == selectedShippingInfo._id ? 'iconfont icon-zhengque': ''}}" />
             </view>
           </block>
         </view>
       </view>
-      <view class="spu-shpping-place-foot">
-        <button class="shpping-place-add-button" type="primary" size="45" bindtap="addNewShippingPlace" >添加新地址</button>
+      <view class="spu-shipping-info-foot">
+        <button class="shipping-info-add-button" type="primary" size="45" bindtap="addNewShippingInfo" >添加新地址</button>
       </view>
    </view>
 </view>

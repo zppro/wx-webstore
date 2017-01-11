@@ -7,14 +7,14 @@ Page({
     selected_sku: {},
     quantity: 1,
     windowHeight: 627 - 45,
-    selectedShippingPlace: {
+    selectedShippingInfo: {
       _id: '1',
       province: '浙江',
       city: '杭州市',
       area: '余杭区',
       address: '余杭镇XX小区1-3-102'
     },
-    memberShippingPlaces: [
+    memberShippingInfos: [
       {_id: '1', province: '浙江', city: '杭州市', area: '余杭区', address: '余杭镇XX小区1-3-102'},
       {_id: '2', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区XX小区1-3-303'},
       {_id: '3', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区YY小区12-1-502'}
@@ -24,19 +24,51 @@ Page({
     pageInfoAnimationClass: '',
     pageIntroUrlAnimationClass: '',
     isSKUSContainerPopup: false,
-    isShppingPlacePickContainerPopup: false,
+    isShippingInfoPickContainerPopup: false,
     skusAnimationMaskClass: '',
     skusAnimationContentClass: '',
-    shppingPlaceAnimationMaskClass: '',
-    shppingPlaceAnimationContentClass: '',
+    shippingInfoAnimationMaskClass: '',
+    shippingInfoAnimationContentClass: '',
     startPoint: [0, 0],
     spuPanDeltaUpY: 0,
     spuPanDeltaDownY: 0,
-    spuPanThreshold: 100
+    spuPanThreshold: 45
   },
   //事件处理函数
   buyNow: function (){
-
+    let spu = this.data.current;
+    let sku = this.data.selected_sku;
+    let quantity = this.data.quantity;
+    let amount = sku.sale_price * quantity;
+    wx.setStorage({
+      key: keys.ORDER_CONFIRM_NOW,
+      data:{
+        shipping_info: this.data.selectedShippingInfo,
+        items: [{
+          spu_id: spu.id,
+          spu_name: spu.name,
+          sku_id: sku._id,
+          sku_name: sku.name,
+          img: spu.img,
+          price: sku.sale_price,//下单单价 单位元
+          market_price: sku.market_price,
+          quantity: quantity//数量
+        }],
+        amount: new Number(amount).toFixed(2),
+        shipping_fee: new Number(0).toFixed(2)
+      },
+      success: function(res){
+        // success
+        wx.navigateTo({
+          url: './order-confirm'
+        });
+      },
+      fail: function(err) {
+        // fail
+        console.log(err);
+        app.toast.show(err, {icon: 'warn', duration: 1500})
+      }
+    });
   },
   openChangeSKUDialog: function () {
     var that = this;
@@ -78,42 +110,42 @@ Page({
     });
     quantityRegulator.setMax(this.data.selected_sku.quantity);
   },
-  openPickShppingPlaceDialog: function () {
+  openPickShippingInfoDialog: function () {
       var that = this;
       this.setData({
-        isShppingPlacePickContainerPopup: true,
-        shppingPlaceAnimationContentClass: 'spu-popup-container-content-fade-in'
+        isShippingInfoPickContainerPopup: true,
+        shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-in'
       })
       setTimeout(()=>{
         that.setData({
-          shppingPlaceAnimationMaskClass: 'spu-popup-container-mask-fade-in'
+          shippingInfoAnimationMaskClass: 'spu-popup-container-mask-fade-in'
         })
       }, 300);
   },
-  closePickShippingPlaceDialog: function () {
-    if (this.data.isShppingPlacePickContainerPopup) {
+  closePickShippingInfoDialog: function () {
+    if (this.data.isShippingInfoPickContainerPopup) {
       var that = this;
       this.setData({
-        shppingPlaceAnimationMaskClass: 'spu-popup-container-mask-fade-out',
-        shppingPlaceAnimationContentClass: 'spu-popup-container-content-fade-out'
+        shippingInfoAnimationMaskClass: 'spu-popup-container-mask-fade-out',
+        shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-out'
       })
       setTimeout(()=>{
         that.setData({
-          isShppingPlacePickContainerPopup: false
+          isShippingInfoPickContainerPopup: false
         })
       }, 300);
     }
   },
-  shippingPlaceTap: function (e) {
-    if (this.data.selectedShippingPlace._id == e.currentTarget.dataset.shippingPlaceId) 
+  shippingInfoTap: function (e) {
+    if (this.data.selectedShippingInfo._id == e.currentTarget.dataset.shippingInfoId) 
       return;
 
-    let shippingPlace = this.data.memberShippingPlaces.find((o)=>{
-      return o._id == e.currentTarget.dataset.shippingPlaceId
+    let shippingInfo = this.data.memberShippingInfos.find((o)=>{
+      return o._id == e.currentTarget.dataset.shippingInfoId
     });
     
     this.setData({
-      selectedShippingPlace: shippingPlace
+      selectedShippingInfo: shippingInfo
     });
   },
   spuPanTouchStart: function (e) {
@@ -167,8 +199,8 @@ Page({
     });
     }
   },
-  addNewShippingPlace: function () {
-    console.log('addNewShippingPlace...')
+  addNewShippingInfo: function () {
+    console.log('addNewShippingInfo...')
   },
   onLoad: function (options) {
     var that = this;
@@ -183,7 +215,7 @@ Page({
     
     app.toast.init(this);
     quantityRegulator.init(this);
-    app.libs.http.get(app.config[keys.CONFIG_SERVER].root + 'spu/' + options.spuId, (spu)=>{
+    app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spu/' + options.spuId, (spu)=>{
       console.log(spu);
       that.setData({
         current: spu,

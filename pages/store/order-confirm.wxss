@@ -1,0 +1,187 @@
+.order-confirm {
+    flex: 1;
+    width: 100%;
+}
+.order-confirm-actions{
+    height: 45px;
+    line-height:45px;
+    width: 100%;
+    display: flex;
+}
+.order-pay-summary{
+    flex:2;
+    text-align: right;
+    color: #ff0000;
+    padding-right: 10px;
+    background-color: white;
+}
+.total-pay-label{
+    font-size:12px;   
+}
+.total-pay{
+    font-size: 18px;
+}
+.total-pay::before{
+    content: '￥';
+    font-size: 12px;
+}
+.order-now-button{
+    flex: 1;
+    text-align: center;
+    border-radius: 0;
+}
+.order-shipping{
+    width: 100%;
+    display: flex;
+    height: 60px;
+    padding: 0 4px;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: white;
+}
+.order-shipping-info{
+    flex: 1;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.order-shipping-set{
+    line-height: 60px;
+}
+.order-shipping-man{
+    flex: 1.5;
+    font-size: 14px;
+    text-align: left;
+    align-self: center;
+}
+.order-shipping-nickname,
+.order-shipping-phone{
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+.order-shipping-place{
+    flex: 1;
+    font-size: 12px;
+    text-align: left;
+    line-height: 24px;
+    align-content: left;
+}
+.order-shipping-place-icon{
+    font-size: 12px;
+    margin-right: 2px;
+}
+
+.order-items {
+    width: 100%;
+    height: 100px;
+    padding: 0 4px;
+    margin: 8px 0 0 0;
+    background-color: white;
+    border-top: solid 1px #f5f5f5;
+}
+.order-items-img-single{
+    flex: 1;
+    text-align: center;
+}
+.item-img{
+    width:90px;
+    height: 90px;
+    vertical-align: middle;
+}
+.order-items-other{
+    flex: 2;
+    height: 90px;
+    vertical-align: middle;
+}
+.item-spu-name{
+    flex: 1;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+.item-sku-name{
+    flex: 1;
+    width: 100%;
+    font-size: 12px;
+    color: #aaa;
+}
+.item-price-quantity{
+    flex: 2;
+    width: 100%;
+}
+.item-price{
+    color:#ff0000;
+    font-size: 18px;
+}
+.item-price::before{
+    content: '￥';
+    font-size: 12px;
+}
+.item-quantity{
+    font-size: 16px;
+    padding-right: 5px;
+}
+.item-quantity::before{
+    content: 'x';
+    font-size: 14px;
+}
+.order-invoice{
+    height: 40px;
+    padding: 0 4px;
+    background-color: white;
+    border-top: solid 1px #f5f5f5;
+}
+.item-label{
+    font-size: 13px;
+    text-indent: 5px;
+}
+.item-arrow-right{
+    font-size: 16px;
+    width: 20px;
+}
+.order-invoice-info{
+    flex: 1;
+    text-align: right;
+    font-size: 12px;
+}
+.order-memo{
+    height: 45px;
+    padding: 0 4px;
+    background-color: white;
+    border-top: solid 1px #f5f5f5;
+}
+.order-memo-value{
+    height: 35px;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.order-amount{
+    height: 30px;
+    padding: 0 4px;
+    margin: 8px 0 0 0;
+    background-color: white;
+}
+.order-shipping-fee{
+    height: 30px;
+    padding: 0 4px;
+    background-color: white;
+}
+.order-amount-value,.order-shipping-fee-value{
+    color:#ff0000;
+    font-size: 12px;
+    flex: 1;
+    text-align: right;
+}
+.order-amount-value::before{
+    content: '￥';
+    font-size: 11px;
+}
+.order-shipping-fee-value::before{
+    content: '+￥';
+    font-size: 11px;
+}
