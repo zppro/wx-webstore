@@ -18,16 +18,36 @@ Page({
         // check data validation
         var that = this;
         if (this.checkData()) {
-            console.log('order create :');
-            setTimeout(() => {
-                let order = that.data.order;
-                console.log(order);
-                order.open_id = app.getSession().openid;
-                order.code = keys.SERVER_GEN;
-                app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (orderRec) => {
-                    console.log(orderRec);
-                }, { loadingText: '订单创建中...', toastInfo: '订单创建成功' });
-            }, 200);
+            console.log('begin order create...');
+            let order = that.data.order;
+            console.log(order);
+            order.open_id = app.getSession().openid;
+            order.code = keys.SERVER_GEN;
+            order.appid = app.appid;
+            app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (prepayRet) => {
+                var requestPaymentObject = prepayRet.requestPaymentObject
+                var orderId = prepayRet.orderId
+                requestPaymentObject['success'] = function (res) {
+                    console.log('订单支付成功')
+                    app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
+                        app.toast.show('订单支付成功')
+                        wx.navigateTo({
+                            url: './order-details?orderId=' + orderId
+                        })
+                    }, (ret) => {
+                        app.toast.showError('支付状态更新失败')
+                        wx.navigateTo({
+                            url: './order-details?orderId=' + orderId
+                        })
+                    });
+                }
+                requestPaymentObject['fail'] = function (res) {
+                    console.log(res);
+                    app.toast.showError('订单支付失败')
+                }
+                console.log(requestPaymentObject);
+                wx.requestPayment(requestPaymentObject);
+            }, { loadingText: '订单创建中...', toastInfo: '订单创建成功' });
         }
     },
     setInputData: function (e) {
@@ -53,8 +73,8 @@ Page({
         return true;
     },
     onLoad: function (options) {
-        var that = this;
         console.log('order-confirm onLoad')
+        var that = this;
         wx.getSystemInfo({
             success: function (ret) {
                 that.setData({

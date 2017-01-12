@@ -5,7 +5,7 @@ import keys from 'config/keys.js'
 import toast from 'components/wx-toast/wx-toast'
 
 const APPID = 'wx47dcb6f48e7a35c2'
-const DEBUG = true
+const DEBUG = false
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
@@ -86,6 +86,7 @@ App({
   toast,
   util,
   libs,
+  appid: APPID,
   env: {
     DEBUG
   },

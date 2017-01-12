@@ -203,8 +203,8 @@ Page({
     console.log('addNewShippingInfo...')
   },
   onLoad: function (options) {
-    var that = this;
     console.log('spu-details onLoad' + options.spuId)
+    var that = this;
     wx.getSystemInfo({
       success: function(ret) { 
         that.setData({

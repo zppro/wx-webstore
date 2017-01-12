@@ -6,7 +6,7 @@ module.exports = {
         console.log(msg);
         this.show(msg, { icon: 'cancel', duration: 3000 });
     },
-    show: function (msg, {icon = 'success', color = "white", size = "45", duration = false} = {}) {
+    show: function (msg, {icon = 'success', color = "white", size = "45", duration = 1500 } = {}) {
         if (this.page) {
             this.page.setData({
                 toastOptions: { msg, icon, color, size, visiable: true }
