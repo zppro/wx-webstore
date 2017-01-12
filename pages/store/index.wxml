@@ -8,6 +8,7 @@
       <text class="spu-market-price">￥{{spu.market_price_lower}}</text>
     </view>
   </view>
+  <button wx:if="{{false}}" type="primary" size="45" bindtap="testOrderDetails">测试订单详情</button>
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml"/>
 <template is="wx-toast" data="{{toastOptions: toastOptions}}"/>

@@ -1,0 +1,85 @@
+<view class="container">
+  <scroll-view class="order-details" scroll-y="true" style="height: {{windowHeight}}px">
+    <view class="order-shipping">
+      <view class="order-shipping-info">
+        <view class="order-shipping-man">
+          <text class="order-shipping-nickname">{{current.shipping_info.shipping_nickname}}</text>
+          <text class="order-shipping-phone">{{formatShippingPhone}}</text>
+          <view class="order-shipping-default-flag">
+            <block wx:if="{{true}}">
+              <text class="order-shipping-default-flag-value">默认</text>
+            </block>
+          </view>
+        </view>
+        <view class="order-shipping-place">
+          <text class="iconfont icon-map order-shipping-place-icon" />
+          <text class="order-shipping-place-value">{{current.shipping_info.province + current.shipping_info.city + current.shipping_info.area + current.shipping_info.address}}</text>
+        </view>
+      </view>
+      <view class="order-envelop">
+        <image class="envelop-img" mode="widthFix" src="/images/envelop.jpg"></image>
+      </view>
+    </view>
+    <view class="h-flex order-head">
+      <text class="item-label">订单号：</text>
+      <text class="order-code">{{current.code}}</text>
+      <text class="order-status">{{current.order_status_name}}</text>
+    </view>
+    <view class="h-flex order-items">
+      <block wx:if="{{current.items.length == 1}}">
+        <view class="order-items-img-single">
+          <image class="item-img" src="{{current.items[0].img}}"></image>
+          <text class="verticle-middle"></text>
+        </view>
+        <view class="v-flex order-items-other">
+          <text class="item-spu-name">{{current.items[0].spu_name}}</text>
+          <text class="item-sku-name">{{current.items[0].sku_name}}</text>
+          <view class="h-flex item-price-quantity">
+            <text class="item-price">{{current.items[0].price}}</text>
+            <text class="item-quantity">{{current.items[0].quantity}}</text>
+          </view>
+        </view>
+        <text class="verticle-middle"></text>
+      </block>
+    </view>
+    <view class="h-flex order-invoice">
+      <text class="item-label">发票信息</text>
+      <text class="order-invoice-info">{{current.invoice_flag ? (current.invoice_info.type ? (current.invoice_info.type == 'A0003' ? '(电子)' :'(纸质)') + current.invoice_info.title || '' : '') : '不开发票' }}</text>
+    </view>
+    <view class="h-flex order-memo">
+      <text class="item-label">订单备注</text>
+      <text class="order-memo-value">{{current.memo}}</text>
+    </view>
+    <view class="h-flex order-amount">
+      <text class="item-label">商品总额</text>
+      <text class="order-amount-value">{{formatAmount}}</text>
+    </view>
+    <view class="h-flex order-shipping-fee">
+      <text class="item-label">运费</text>
+      <text class="order-shipping-fee-value">{{formatShippingFee}}</text>
+    </view>
+    <view class="h-flex order-total-fee">
+      <text class="item-label">实际支付</text>
+      <text class="order-total-fee-value">{{formatTotalFee}}</text>
+    </view>
+    <view class="h-flex order-time">
+      <text class="order-time-value">{{formatCheckInTime}}</text>
+    </view>
+  </scroll-view>
+  <view class="h-flex order-details-actions">
+    <block wx:if="{{current.order_status == 'A0001'}}">
+      <button class="order-remove" type="warn" size="default" bindtap="orderNow">删除订单</button>
+      <view class="order-remove-space"></view>
+    </block>
+    <block wx:if="{{current.order_status == 'A0003' || current.order_status == 'A0005' || current.order_status == 'A0007'}}">
+      <button class="order-refund" type="warn" size="default" bindtap="orderNow">返修/退换</button>
+      <view class="order-refund-space"></view>
+    </block>
+    <block wx:if="{{current.order_status == 'A0009' || current.order_status == 'A0017'}}">
+      <button class="order-rebuy" type="primary" size="default" bindtap="orderNow">再次购买</button>
+      <view class="order-refund-space"></view>
+    </block>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

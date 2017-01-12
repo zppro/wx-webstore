@@ -1,0 +1,292 @@
+.order-details {
+  flex: 1;
+  width: 100%;
+}
+
+.order-details-actions {
+  height: 45px;
+  line-height: 45px;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+.order-remove{
+    flex: 1;
+    border-radius: 0;
+}
+.order-refund{
+    flex: 1;
+    text-align: center;
+    border-radius: 0;
+}
+.order-rebuy{
+    flex: 1;
+    text-align: center;
+    border-radius: 0;
+}
+.order-remove-space,
+.order-refund-space,
+.order-rebuy-space{
+    flex: 3;
+}
+.order-shipping {
+  width: 100%;
+  height: 87px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.order-shipping-info {
+  height: 73px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.order-envelop {
+  height: 4px;
+}
+
+.order-shipping-man {
+  flex: 2;
+  text-align: left;
+  display: flex;
+}
+
+.order-shipping-place {
+  flex: 1;
+  text-align: left;
+}
+
+.order-shipping-nickname, .order-shipping-phone, .order-shipping-default-flag {
+  display: inline-block;
+  text-align: left;
+  font-size: 20px;
+  line-height: 50px;
+}
+
+.order-shipping-nickname {
+  flex: 1;
+  font-weight: bold;
+}
+
+.order-shipping-phone {
+  flex: 2.2;
+  font-weight: bold;
+}
+
+.order-shipping-default-flag {
+  flex: 3;
+}
+
+.order-shipping-default-flag-value {
+  background-color: #f6680a;
+  color: white;
+  padding: 4px;
+}
+
+.order-shipping-place-value {
+  font-size: 12px;
+}
+
+.order-shipping-place-icon {
+  font-size: 12px;
+  margin-right: 2px;
+}
+
+.envelop-img {
+  width: 100%;
+  height: 4px;
+}
+
+.order-head {
+  width: 100%;
+  height: 30px;
+  padding: 0 4px;
+  margin: 8px 0 0 0;
+  background-color: white;
+}
+
+.order-code {
+  flex: 2;
+  font-size: 12px;
+}
+
+.order-status {
+  flex: 1;
+  text-align: right;
+  font-size: 14px;
+  color: #f00;
+}
+
+.order-items {
+  width: 100%;
+  height: 100px;
+  padding: 0 4px;
+  margin: 1px 0 0 0;
+  background-color: white;
+  border-top: solid 1px #f5f5f5;
+}
+
+.order-items-img-single {
+  flex: 1;
+  text-align: center;
+}
+
+.item-img {
+  width: 90px;
+  height: 90px;
+  vertical-align: middle;
+}
+
+.order-items-other {
+  flex: 2;
+  height: 90px;
+  vertical-align: middle;
+}
+
+.item-spu-name {
+  flex: 1;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.item-sku-name {
+  flex: 1;
+  width: 100%;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.item-price-quantity {
+  flex: 2;
+  width: 100%;
+}
+
+.item-price {
+  color: #f00;
+  font-size: 18px;
+}
+
+.item-price::before {
+  content: '￥';
+  font-size: 12px;
+}
+
+.item-quantity {
+  font-size: 16px;
+  padding-right: 5px;
+}
+
+.item-quantity::before {
+  content: 'x';
+  font-size: 14px;
+}
+
+.order-invoice {
+  height: 40px;
+  padding: 0 4px;
+  background-color: white;
+  border-top: solid 1px #f5f5f5;
+}
+
+.item-label {
+  font-size: 13px;
+  text-indent: 5px;
+}
+
+.item-arrow-right {
+  font-size: 16px;
+  width: 20px;
+}
+
+.order-invoice-info {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.order-memo {
+  height: 45px;
+  padding: 0 4px;
+  background-color: white;
+  border-top: solid 1px #f5f5f5;
+}
+
+.order-memo-value {
+  width: 80%;
+  height: 35px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.order-amount {
+  height: 30px;
+  padding: 0 4px;
+  margin: 8px 0 0 0;
+  background-color: white;
+}
+
+.order-shipping-fee {
+  height: 30px;
+  padding: 0 4px;
+  background-color: white;
+}
+
+.order-total-fee {
+  height: 40px;
+  padding: 0 4px;
+  background-color: white;
+  border-top: solid 1px #f5f5f5;
+}
+
+.order-time {
+  height: 20px;
+  padding: 0 4px;
+  background-color: white;
+}
+
+.order-amount-value, .order-shipping-fee-value {
+  color: #f00;
+  font-size: 12px;
+  flex: 1;
+  text-align: right;
+}
+
+.order-total-fee-value {
+  color: #f00;
+  font-size: 20px;
+  flex: 1;
+  text-align: right;
+}
+
+.order-time-value {
+  font-size: 11px;
+  flex: 1;
+  text-align: right;
+  color: #aaa;
+}
+
+.order-amount-value::before {
+  content: '￥';
+  font-size: 11px;
+}
+
+.order-shipping-fee-value::before {
+  content: '+￥';
+  font-size: 11px;
+}
+
+.order-total-fee-value::before {
+  content: '￥';
+  font-size: 11px;
+}
+.order-time-value::before {
+  content: '下单时间：';
+  font-size: 11px;
+}
