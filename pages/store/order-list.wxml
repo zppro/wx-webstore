@@ -1,0 +1,32 @@
+<view class="container order-list">
+  <view class="order" wx:for="{{orders}}" wx:for-item="order" wx:key="order.id">
+    <view class="h-flex order-head">
+      <text class="order-code">{{order.code}}</text>
+      <text class="order-status">{{order.order_status_name}}</text>
+    </view>
+    <view class="order-body" data-order-id="{{order.id}}" bindtap="orderTap">
+      <view class="h-flex order-items" wx:for="{{order.items}}" wx:for-item="orderItem" wx:key="orderItem._id">
+        <view class="item-img-c">
+          <image class="item-img" src="{{orderItem.img}}"></image>
+          <text class="verticle-middle"></text>
+        </view>
+        <view class="v-flex order-items-other">
+          <text class="item-spu-name">{{orderItem.spu_name}}</text>
+          <text class="item-sku-name">{{orderItem.sku_name}}</text>
+          <view class="h-flex item-price-quantity">
+            <text class="item-price">{{orderItem.price}}</text>
+            <text class="item-quantity">{{orderItem.quantity}}</text>
+          </view>
+        </view>
+        <text class="verticle-middle"></text>
+      </view>
+    </view>
+    <view class="h-flex order-foot">
+      <text class="order-amount-space"></text>
+      <text class="order-amount-label">合计：</text>
+      <text class="order-amount-value">{{order.amount}}</text>
+    </view>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

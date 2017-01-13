@@ -3,6 +3,7 @@
     "pages/store/index",
     "pages/store/spu-details",
     "pages/store/order-confirm",
+    "pages/store/order-list",
     "pages/store/order-details",
     "pages/mine/mine",
     "pages/logs/logs"

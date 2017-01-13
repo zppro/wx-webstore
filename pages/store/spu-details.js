@@ -34,6 +34,13 @@ Page({
     spuPanDeltaDownY: 0,
     spuPanThreshold: 45
   },
+  onShareAppMessage: function () {
+    return {
+      title: this.data.current.name,
+      desc: this.data.current.intro,
+      path: '/pages/store/spu-details?spuId=' + this.data.current.id
+    }
+  },
   //事件处理函数
   buyNow: function (){
     let spu = this.data.current;

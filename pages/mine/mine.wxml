@@ -1,9 +1,45 @@
 <view class="container">
-  <view  bindtap="bindViewTap" class="userinfo-1">
-    <image class="userinfo-avatar-1" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname-1">{{userInfo.nickName}}</text>
+  <view bindtap="bindViewTap" class="userinfo">
+    <view class="userinfo-space-top">
+    </view>
+    <view class="userinfo-avatar-c">
+      <view class="userinfo-avatar-c2">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <view class="verticle-middle"></view>
+      </view>
+    </view>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
-  <view class="usermotto-1">
-    <text class="user-motto-1">{{motto}}</text>
+  <view class="h-flex my-order-head">
+    <text class="my-order-head-label">我的订单</text>
+    <text class="iconfont icon-quanbudingdan my-order-icon" />
+    <text class="view-all-orders" data-order-status="" bindtap="orderTap">查看全部订单</text>
+  </view>
+  <view class="h-flex my-order-status-list">
+    <view class="my-order-status-item" data-order-status="A0001" bindtap="orderTap">
+      <text class="iconfont icon-daifukuan my-order-status-icon" />
+      <text class="my-order-status-text">待付款</text>
+    </view>
+    <view class="my-order-status-item" data-order-status="A0003" bindtap="orderTap">
+      <text class="iconfont icon-daifahuo my-order-status-icon" />
+      <text class="my-order-status-text">待发货</text>
+    </view>
+    <view class="my-order-status-item" data-order-status="A0005" bindtap="orderTap">
+      <text class="iconfont icon-daishouhuo my-order-status-icon" />
+      <text class="my-order-status-text">待收货</text>
+    </view>
+    <view class="my-order-status-item" data-order-status="A0011,A0013" bindtap="orderTap">
+      <text class="iconfont icon-tuikuan1 my-order-status-icon" />
+      <text class="my-order-status-text">售后</text>
+    </view>
+  </view>
+  <view class="h-flex my-manage-item">
+    <view class="my-manage-item-icon-c">
+      <view class="my-manage-item-icon-c2">
+        <text class="iconfont icon-map my-manage-item-icon" />
+        <view class="verticle-middle"></view>
+      </view>
+    </view>
+    <text class="my-manage-item-text">收货地址</text>
   </view>
 </view>

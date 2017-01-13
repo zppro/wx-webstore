@@ -1,0 +1,132 @@
+.order-list {
+  width: 100%;
+}
+
+.order {
+  width: 100%;
+  background-color: white;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-head {
+  width: 100%;
+  height: 30px;
+  padding: 0 4px;
+  margin: 8px 0 0 0;
+  background-color: white;
+  border-bottom: solid 1px #aaa;
+}
+
+.order-foot {
+  width: 100%;
+  height: 30px;
+  padding: 0 4px;
+  background-color: white;
+}
+
+.order-code {
+  flex: 2;
+  font-size: 12px;
+}
+
+.order-code::before {
+  content: '订单号：';
+  font-size: 12px;
+}
+
+.order-status {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: #f00;
+}
+
+.order-items {
+  width: 100%;
+  height: 100px;
+  padding: 0 4px;
+  margin: 1px 0 0 0;
+  background-color: #f4f4f4;
+  border-top: solid 1px #f5f5f5;
+}
+
+.item-img-c {
+  flex: 1;
+  text-align: center;
+}
+
+.item-img {
+  width: 90px;
+  height: 90px;
+  vertical-align: middle;
+}
+
+.order-items-other {
+  flex: 2;
+  height: 90px;
+  vertical-align: middle;
+}
+
+.item-spu-name {
+  flex: 1;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.item-sku-name {
+  flex: 1;
+  width: 100%;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.item-price-quantity {
+  flex: 2;
+  width: 100%;
+}
+
+.item-price {
+  color: #f00;
+  font-size: 18px;
+}
+
+.item-price::before {
+  content: '￥';
+  font-size: 12px;
+}
+
+.item-quantity {
+  font-size: 16px;
+  padding-right: 5px;
+  color: #aaa;
+}
+
+.item-quantity::before {
+  content: 'x';
+  font-size: 14px;
+}
+
+.order-amount-space {
+  flex: 4;
+}
+
+.order-amount-label {
+  flex: 1;
+  color: #f00;
+  text-align: right;
+  font-size: 14px;
+}
+
+.order-amount-value {
+  flex: 1;
+  color: #f00;
+  text-align: left;
+}
+
+.order-amount-value::before {
+  content: '￥';
+  font-size: 12px;
+}

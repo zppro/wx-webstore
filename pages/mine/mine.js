@@ -1,13 +1,13 @@
 let app = getApp()
 Page({
   data: {
-    motto: 'Hello World ',
     userInfo: {}
   },
   //事件处理函数
-  bindViewTap: function() {
+  orderTap: function (e) {
+    console.log(e.currentTarget.dataset);
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../store/order-list?order_status=' + e.currentTarget.dataset.orderStatus
     })
   },
   onLoad: function () {
