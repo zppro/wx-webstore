@@ -1,0 +1,25 @@
+<template name="region-picker">
+  <view class="region-picker" hidden="{{!regionPickerUI.isPopup}}">
+    <view class="region-picker-mask {{regionPickerUI.animationMaskClass}}" bindtap="closeRegionPicker">
+    </view>
+    <view class="region-picker-content {{regionPickerUI.animationContentClass}}">
+      <view class="region-picker-content-head">
+        <view class="region-picker-selected">
+            <text class="region-picker-selected-province {{currentPickView == 'province' ? 'selected-value' : ''}}" bindtap="provinceTap">{{_selectedProvinceObject.name || '省'}}</text>
+            <text class="region-picker-selected-city {{currentPickView == 'city' ? 'selected-value' : ''}}" bindtap="cityTap">{{_selectedCityObject.name || '市'}}</text>
+            <text class="region-picker-selected-area {{currentPickView == 'area' ? 'selected-value' : ''}}" bindtap="areaTap">{{_selectedAreaObject.name || '区/县'}}</text>
+        </view>
+       <button class="ok-button" type="default" size="mini" bindtap="pickOkTap">确定</button>
+      </view>
+      <scroll-view class="region-picker-content-body region-picker-content-provines {{animationProvinceClass}}" scroll-y="true" hidden="{{currentPickView != 'province'}}" bindtouchstart="regionPickerTouchStart" bindtouchmove="regionPickerTouchMove" bindtouchend="regionPickerTouchEnd">
+        <view class="region-picker-item {{_selectedProvinceObject.id == province.id ? 'region-picker-item-active': ''}}" wx:for="{{provinces}}" wx:for-item="province" wx:key="province.id" data-province-id="{{province.id}}" bindtap="pickProvinceObject">{{province.name}}</view>
+      </scroll-view>
+      <scroll-view class="region-picker-content-body region-picker-content-cities {{animationCityClass}}" scroll-y="true" hidden="{{currentPickView != 'city'}}" bindtouchstart="regionPickerTouchStart" bindtouchmove="regionPickerTouchMove" bindtouchend="regionPickerTouchEnd">
+        <view class="region-picker-item {{_selectedCityObject.id == city.id ? 'region-picker-item-active': ''}}" wx:for="{{cities}}" wx:for-item="city" wx:key="city.id" data-city-id="{{city.id}}" bindtap="pickCityObject">{{city.name}}</view>
+      </scroll-view>
+      <scroll-view class="region-picker-content-body region-picker-content-areas {{animationAreaClass}}" scroll-y="true" hidden="{{currentPickView != 'area'}}" bindtouchstart="regionPickerTouchStart" bindtouchmove="regionPickerTouchMove" bindtouchend="regionPickerTouchEnd">
+        <view class="region-picker-item {{_selectedAreaObject.id == area.id ? 'region-picker-item-active': ''}}" wx:for="{{areas}}" wx:for-item="area" wx:key="area.id" data-area-id="{{area.id}}" bindtap="pickAreaObject">{{area.name}}</view>
+      </scroll-view>
+    </view>
+  </view>
+</template>

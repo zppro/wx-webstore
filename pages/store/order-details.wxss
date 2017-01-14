@@ -78,7 +78,7 @@
 }
 
 .order-shipping-default-flag {
-  flex: 3;
+  flex: 2.4;
 }
 
 .order-shipping-default-flag-value {

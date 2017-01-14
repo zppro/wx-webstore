@@ -1,0 +1,35 @@
+<view class="container">
+  <scroll-view class="shipping-details" scroll-y="true" style="height: {{windowHeight}}px">
+    <view class="shipping-details-nickname">
+      <input class="shipping-details-nickname-value" placeholder="收件人" data-field-name="current.shipping_nickname" bindblur="setInputData" value="{{current.shipping_nickname}}" />
+    </view>
+    <view class="shipping-details-phone">
+      <input class="shipping-details-phone-value" placeholder="收件人电话" data-field-name="current.shipping_phone" bindblur="setInputData" value="{{current.shipping_phone}}" />
+    </view>
+    <view class="h-flex shipping-details-pca">
+      <block wx:if="{{ !current.province || !current.city || !current.area }}">
+        <text class="shipping-details-pca-label">所在地区</text>
+      </block>
+      <text class="shipping-details-province">{{current.province}}</text>
+      <text class="shipping-details-city">{{current.city}}</text>
+      <text class="shipping-details-area">{{current.area}}</text>
+      <view class="item-arrow-right" bindtap="openRegionPickerDialog">
+        ...
+      </view>
+    </view>
+    <view class="shipping-details-address">
+      <textarea class="shipping-details-address-value" placeholder="详细地址" data-field-name="current.address" bindinput="setInputData" value="{{current.address}}" />
+    </view>
+  </scroll-view>
+  <view class="shipping-details-actions">
+    <view class="setDefaultIcon">
+      <icon class="defaultIcon" type="{{current.defaultFlag ? 'success' : 'circle'}}" size="24" color="{{current.defaultFlag ? 'green' : '#B3B3B3'}}" />
+    </view>
+    <view class="setDefaultText {{current.defaultFlag ? 'defaultIconText' : '' }}" bindtap="setDefault">设为默认地址</view>
+    <button class="save-button" type="warn" size="45" bindtap="save">保存</button>
+  </view>
+</view>
+<import src="../../components/region-picker/region-picker.wxml" />
+<template is="region-picker" data="{{regionPickerUI, currentPickView, provinces, cities, areas, _selectedProvinceObject, _selectedCityObject, _selectedAreaObject, animationProvinceClass, animationCityClass, animationAreaClass}}" />
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

@@ -1,4 +1,3 @@
-import quantityRegulator from '../../components/quantity-regulator/quantity-regulator'
 import keys from '../../config/keys.js'
 var app = getApp()
 Page({
@@ -21,33 +20,46 @@ Page({
             console.log('begin order create...');
             let order = that.data.order;
             console.log(order);
-            order.open_id = app.getSession().openid;
-            order.code = keys.SERVER_GEN;
-            order.appid = app.appid;
-            app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (prepayRet) => {
-                var requestPaymentObject = prepayRet.requestPaymentObject
-                var orderId = prepayRet.orderId
-                requestPaymentObject['success'] = function (res) {
-                    console.log('订单支付成功')
-                    app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
-                        app.toast.show('订单支付成功')
-                        wx.redirectTo({
-                            url: './order-details?orderId=' + orderId
-                        })
-                    }, (ret) => {
-                        app.toast.showError('支付状态更新失败')
-                        wx.redirectTo({
-                            url: './order-details?orderId=' + orderId
-                        })
-                    });
-                }
-                requestPaymentObject['fail'] = function (res) {
-                    console.log(res);
-                    app.toast.showError('订单支付失败')
-                }
-                console.log(requestPaymentObject);
-                wx.requestPayment(requestPaymentObject);
-            }, { loadingText: '订单创建中...', toastInfo: '订单创建成功' });
+            app.getUserInfo((userInfo) => {
+                order.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
+                order.open_id = app.getSession().openid
+                order.code = keys.SERVER_GEN
+                order.appid = app.appid
+                order.order_nickname = userInfo.nickName
+                app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (prepayRet) => {
+                    var requestPaymentObject = prepayRet.requestPaymentObject
+                    var orderId = prepayRet.orderId
+                    requestPaymentObject['success'] = function (res) {
+                        console.log('订单支付成功')
+                        app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
+                            app.toast.show('订单支付成功')
+                            setTimeout(() => {
+                                wx.redirectTo({
+                                    url: './order-details?orderId=' + orderId
+                                })
+                            }, 700)
+                        }, (ret) => {
+                            app.toast.showError('支付状态更新失败')
+                            setTimeout(() => {
+                                wx.redirectTo({
+                                    url: './order-details?orderId=' + orderId
+                                })
+                            }, 700)
+                        });
+                    }
+                    requestPaymentObject['fail'] = function (res) {
+                        console.log(res);
+                        app.toast.showError('订单支付失败')
+                        setTimeout(() => {
+                            wx.redirectTo({
+                                url: './order-details?orderId=' + orderId
+                            })
+                        }, 700)
+                    }
+                    console.log(requestPaymentObject);
+                    wx.requestPayment(requestPaymentObject);
+                }, { loadingText: '订单创建中...', toastInfo: '订单创建成功' });
+            })
         }
     },
     setInputData: function (e) {

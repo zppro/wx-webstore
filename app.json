@@ -6,7 +6,7 @@
     "pages/store/order-list",
     "pages/store/order-details",
     "pages/mine/mine",
-    "pages/logs/logs"
+    "pages/mine/shipping-details"
   ],
   "window": {
     "backgroundTextStyle": "light",

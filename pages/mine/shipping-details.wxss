@@ -1,0 +1,88 @@
+@import '../../components/region-picker/region-picker.wxss';
+.shipping-details {
+    flex: 1;
+    width: 100%;
+}
+.shipping-details-actions{
+    height: 45px;
+    line-height:45px;
+    width: 100%;
+    display: flex;
+}
+
+.setDefaultIcon{
+    flex:1;
+    text-align: right;
+    color: #ff0000;
+    padding-right: 10px;
+    background-color: white;
+    font-size: 16px;
+    position: relative;
+}
+.setDefaultIconUpSpace{
+   height:0px;
+}
+.defaultIcon{
+    height:24px!important;
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    position: absolute;
+    bottom:10px;
+    right: 8px;
+}
+.defaultIconText{
+    color: green;
+}
+.setDefaultText{
+    flex:2;
+    color: #B3B3B3;
+    display: inline-block;
+    background-color: white;
+}
+.save-button{
+    flex: 1;
+    border-radius: 0;
+}
+.shipping-details-nickname,
+.shipping-details-phone{
+    height: 50px;
+    line-height: 50px;
+    background-color: white;
+    padding: 0 20px;
+    border-bottom: solid 1px #aaa;
+}
+.shipping-details-nickname-value,
+.shipping-details-phone-value{
+    height: 100%;
+}
+
+.shipping-details-pca{
+    height: 50px;
+    padding: 0 5px 0 20px;
+    background-color: white;
+    border-bottom: solid 1px #aaa;
+}
+.shipping-details-pca-label{
+    font-size: 19px;
+    color: #9F808F;
+}
+.shipping-details-province{
+    flex: 1;
+    text-align: center;
+}
+.shipping-details-city,
+.shipping-details-area{
+    flex: 2;
+    text-align: center;
+}
+.item-arrow-right{
+    font-size: 16px;
+    width: 20px;
+}
+
+.shipping-details-address{
+    height: 100px;
+    background-color: white;
+    padding: 10px 20px;
+}

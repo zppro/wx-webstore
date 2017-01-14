@@ -17,11 +17,16 @@ Page({
   },
   onPullDownRefresh: function () {
     this.fetchData(true, () => { wx.stopPullDownRefresh() })
-    this.setData({isAppendDisabled: false})
+    this.setData({ isAppendDisabled: false })
   },
   onReachBottom: function () {
     if (this.data.isAppendDisabled) return;
     this.fetchData(false)
+  },
+  test: function () {
+    wx.navigateTo({
+      url: '../mine/shipping-details'
+    })
   },
   //事件处理函数
   spuTap: function (e) {
@@ -33,7 +38,7 @@ Page({
   fetchData: function (refresh, cb) {
     let that = this;
     let skip = refresh ? 0 : this.data.spus.length;
-    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spus', { page: { size: settings.LIST_PAGE_SIZE, skip } }, (spus) => {
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spus', { tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), page: { size: settings.LIST_PAGE_SIZE, skip } }, (spus) => {
       that.setData({
         isAppendDisabled: spus.length == 0,
         spus: refresh ? spus : that.data.spus.concat(spus)

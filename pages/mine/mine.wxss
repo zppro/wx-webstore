@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-image: url('/images/user-info-bg.jpg');
+  background-image: url('https://img2.okertrip.com/user_info_bg.jpg');
   background-size:100% 100%;
   height: 160px;
   box-sizing: border-box;
