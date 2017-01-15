@@ -10,10 +10,15 @@ Page({
       url: '../store/order-list?order_status=' + e.currentTarget.dataset.orderStatus
     })
   },
+  shippingTap: function (e) {
+    wx.navigateTo({
+      url: './shipping-list'
+    })
+  },
   onLoad: function () {
     console.log('onLoad')
-    let a = app.libs.moment().add(1, 'days').format('YYYY-MM-DD')
-    console.log(a)
+    // let a = app.libs.moment().add(1, 'days').format('YYYY-MM-DD')
+    // console.log(a)
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){

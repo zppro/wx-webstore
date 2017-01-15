@@ -20,6 +20,7 @@
       <scroll-view class="region-picker-content-body region-picker-content-areas {{animationAreaClass}}" scroll-y="true" hidden="{{currentPickView != 'area'}}" bindtouchstart="regionPickerTouchStart" bindtouchmove="regionPickerTouchMove" bindtouchend="regionPickerTouchEnd">
         <view class="region-picker-item {{_selectedAreaObject.id == area.id ? 'region-picker-item-active': ''}}" wx:for="{{areas}}" wx:for-item="area" wx:key="area.id" data-area-id="{{area.id}}" bindtap="pickAreaObject">{{area.name}}</view>
       </scroll-view>
+      <textarea hidden="true" />
     </view>
   </view>
 </template>

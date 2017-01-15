@@ -25,7 +25,7 @@ Page({
   fetchData: function (refresh, cb) {
     let that = this;
     let skip = refresh ? 0 : this.data.orders.length;
-    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orders/', { order_status: this.data.pageOptions.order_status, openid: app.getSession().openid, page: { size: settings.LIST_PAGE_SIZE, skip } }, (orders) => {
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orders/', { order_status: this.data.pageOptions.order_status, tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), open_id: app.getSession().openid, page: { size: settings.LIST_PAGE_SIZE, skip } }, (orders) => {
       that.setData({
         isAppendDisabled: orders.length == 0,
         orders: refresh ? orders : that.data.orders.concat(orders)

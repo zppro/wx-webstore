@@ -2,6 +2,9 @@
     module.exports = factory()
 }((function () { 'use strict';
     var http = {
+            save: function (url, data, successFn, bizFailFn, options) {
+                data.id ? this.put(url+ '/' + data.id, data, successFn, bizFailFn, options) : this.post(url, data, successFn, bizFailFn, options)
+            },
             get: function(url, successFn, bizFailFn, options) {
                 this.fetch(url, {}, successFn, bizFailFn, options);
             },

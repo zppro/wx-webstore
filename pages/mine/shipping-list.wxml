@@ -1,0 +1,30 @@
+<view class="container ">
+  <scroll-view class="shipping-list" scroll-y="true" style="height: {{windowHeight}}px">
+    <view class="shipping" wx:for="{{shippings}}" wx:for-item="shipping" wx:key="shipping.id">
+      <view class="h-flex shipping-item-body">
+        <text class="item-nick-name">{{shipping.shipping_nickname}}</text>
+        <text class="item-phone">{{shipping.shipping_phone}}</text>
+      </view>
+      <text class="item-address-full">{{shipping.province + shipping.city + shipping.area + shipping.address}}</text>
+      <view class="h-flex shipping-item-actions">
+        <view class="set-default-c" data-shipping-id="{{shipping.id}}" bindtap="setDefaultTap">
+          <text class="iconfont {{shipping.default_flag?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
+          <text class="set-default-button">设为默认</text>
+        </view>
+        <view class="edit-c" data-shipping-id="{{shipping.id}}" bindtap="editTap">
+          <text class="iconfont icon-yemianbianji- edit-button-icon"></text>
+          <text class="edit-button">编辑</text>
+        </view>
+        <view class="remove-c" data-shipping-id="{{shipping.id}}" bindtap="removeTap">
+          <text class="iconfont icon-shanchu-01 remove-button-icon"></text>
+          <text class="remove-button">删除</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="shipping-actions">
+    <button class="add-new-button" type="warn" size="45" bindtap="addNewTap">添加新地址</button>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

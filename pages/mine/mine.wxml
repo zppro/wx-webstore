@@ -40,6 +40,6 @@
         <view class="verticle-middle"></view>
       </view>
     </view>
-    <text class="my-manage-item-text">收货地址</text>
+    <text class="my-manage-item-text" bindtap="shippingTap">收货地址</text>
   </view>
 </view>

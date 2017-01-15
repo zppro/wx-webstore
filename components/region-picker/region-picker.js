@@ -1,5 +1,5 @@
 module.exports = {
-    init: function (page,{pickOk, fetchProvinces, fetchCities, fetchAreas, moveThreshold = 45}) {
+    init: function (page, {pickOk, fetchProvinces, fetchCities, fetchAreas, moveThreshold = 45}) {
         this.page = page
         this.page.closeRegionPicker = this.closeRegionPicker.bind(this)
         this.page.pickProvinceObject = this.pickProvinceObject.bind(this)
@@ -17,7 +17,6 @@ module.exports = {
         this.fetchCities = fetchCities
         this.fetchAreas = fetchAreas
         this.moveThreshold = moveThreshold
-        
     },
     openRegionPicker: function () {
         console.log('openRegionPicker')
@@ -43,7 +42,28 @@ module.exports = {
         let provinces = this.page.data.provinces
         if (!provinces || provinces.length == 0) {
             this.fetchProvinces && this.fetchProvinces(this.setProvinceRange.bind(this))
+        } else {
+            let cities = this.page.data.cities
+            if (cities && cities.length > 0) {
+                let areas = this.page.data.areas
+                if (areas && areas.length > 0) {
+                    if ( this.page.data._selectedAreaObject) {
+                        this.page.setData({
+                            currentPickView: 'area'
+                        })
+                    } else if( this.page.data._selectedCityObject) {
+                        this.page.setData({
+                            currentPickView: 'city'
+                        })
+                    } else {
+                        this.page.setData({
+                            currentPickView: 'province'
+                        })
+                    }
+                }
+            }
         }
+
     },
     closeRegionPicker: function () {
         if (this.page.data.regionPickerUI.isPopup) {
@@ -164,7 +184,7 @@ module.exports = {
         }
     },
     pickOkTap: function () {
-        this.pickOk && this.pickOk({province: this.page.data._selectedProvinceObject, city: this.page.data._selectedCityObject, area: this.page.data._selectedAreaObject})
+        this.pickOk && this.pickOk({ province: this.page.data._selectedProvinceObject, city: this.page.data._selectedCityObject, area: this.page.data._selectedAreaObject })
         this.closeRegionPicker()
     },
     regionPickerTouchStart: function (e) {
@@ -217,14 +237,29 @@ module.exports = {
         this.page.setData({
             provinces
         })
+        if (provinces.length == 1) {
+            let province = provinces[0]
+            this.page.setData({
+                _selectedProvinceObject: province,
+                animationProvinceClass: 'region-picker-content-body-fade-out-left'
+            })
+            this.fetchCities && this.fetchCities(province, this.setCityRange.bind(this))
+        }
     },
     setCityRange: function (cities) {
         this.page.setData({
             cities,
             currentPickView: 'city',
             animationCityClass: 'region-picker-content-body-fade-in-right'
-
         })
+        if (cities.length == 1) {
+            let city = cities[0]
+            this.page.setData({
+                _selectedCityObject: city,
+                animationCityClass: 'region-picker-content-body-fade-out-left'
+            })
+            this.fetchAreas && this.fetchAreas(this.page.data._selectedProvinceObject, city, this.setAreaRange.bind(this))
+        }
     },
     setAreaRange: function (areas) {
         console.log(areas)
@@ -266,7 +301,7 @@ module.exports = {
                 break
             }
         }
-        
+
     },
     pickAreaObject: function (e) {
         var that = this;

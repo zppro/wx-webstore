@@ -287,6 +287,13 @@
   font-size: 12px;
   display: flex;
 }
+.shipping-info-default-flag::before{
+  content: '默认';
+  background-color: #f6680a;
+  color: white;
+  font-size: 12px;
+  padding: 4px;
+}
 .shipping-info-item-selected {
   color:#ff0000;
 }
@@ -295,6 +302,7 @@
   font-size: 12px;
   flex: 1;
 }
+
 .shipping-info-picker-marker{
   width: 60px;
   font-size: 12px;

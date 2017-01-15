@@ -8,16 +8,16 @@ Page({
     quantity: 1,
     windowHeight: 627 - 45,
     selectedShippingInfo: {
-      _id: '1',
-      province: '浙江',
-      city: '杭州市',
-      area: '余杭区',
-      address: '余杭镇XX小区1-3-102'
+      // _id: '1',
+      // province: '浙江',
+      // city: '杭州市',
+      // area: '余杭区',
+      // address: '余杭镇XX小区1-3-102'
     },
     memberShippingInfos: [
-      {_id: '1', province: '浙江', city: '杭州市', area: '余杭区', address: '余杭镇XX小区1-3-102'},
-      {_id: '2', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区XX小区1-3-303'},
-      {_id: '3', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区YY小区12-1-502'}
+      { _id: '1', province: '浙江', city: '杭州市', area: '余杭区', address: '余杭镇XX小区1-3-102' },
+      { _id: '2', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区XX小区1-3-303' },
+      { _id: '3', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区YY小区12-1-502' }
     ],
     isPageInfoShow: true,
     isPageIntroUrl: false,
@@ -25,6 +25,7 @@ Page({
     pageIntroUrlAnimationClass: '',
     isSKUSContainerPopup: false,
     isShippingInfoPickContainerPopup: false,
+    isWaitAddNewShippingInfo: false,
     skusAnimationMaskClass: '',
     skusAnimationContentClass: '',
     shippingInfoAnimationMaskClass: '',
@@ -41,41 +42,59 @@ Page({
       path: '/pages/store/spu-details?spuId=' + this.data.current.id
     }
   },
+  onShow: function () {
+    console.log('on show isWaitAddNewShippingInfo: ' + this.data.isWaitAddNewShippingInfo);
+    if (this.data.isWaitAddNewShippingInfo) {
+      this.fetchMemberShippingInfos()
+      this.setData({
+        isWaitAddNewShippingInfo: false
+      })
+    }
+  },
   //事件处理函数
-  buyNow: function (){
-    let spu = this.data.current;
-    let sku = this.data.selected_sku;
-    let quantity = this.data.quantity;
-    let amount = sku.sale_price * quantity;
-    wx.setStorage({
-      key: keys.ORDER_CONFIRM_NOW,
-      data:{
-        shipping_info: this.data.selectedShippingInfo,
-        items: [{
-          spu_id: spu.id,
-          spu_name: spu.name,
-          sku_id: sku._id,
-          sku_name: sku.name,
-          img: spu.img,
-          price: sku.sale_price,//下单单价 单位元
-          market_price: sku.market_price,
-          quantity: quantity//数量
-        }],
-        amount: new Number(amount).toFixed(2),
-        shipping_fee: new Number(0).toFixed(2)
-      },
-      success: function(res){
-        // success
-        wx.navigateTo({
-          url: './order-confirm'
-        });
-      },
-      fail: function(err) {
-        // fail
-        console.log(err);
-        app.toast.show(err, {icon: 'warn', duration: 1500})
-      }
-    });
+  buyNow: function () {
+    if (this.checkData()) {
+      let spu = this.data.current;
+      let sku = this.data.selected_sku;
+      let quantity = this.data.quantity;
+      let amount = sku.sale_price * quantity;
+      wx.setStorage({
+        key: keys.ORDER_CONFIRM_NOW,
+        data: {
+          shipping_info: this.data.selectedShippingInfo,
+          items: [{
+            spu_id: spu.id,
+            spu_name: spu.name,
+            sku_id: sku._id,
+            sku_name: sku.name,
+            img: spu.img,
+            price: sku.sale_price,//下单单价 单位元
+            market_price: sku.market_price,
+            quantity: quantity//数量
+          }],
+          amount: new Number(amount).toFixed(2),
+          shipping_fee: new Number(0).toFixed(2)
+        },
+        success: function (res) {
+          // success
+          wx.navigateTo({
+            url: './order-confirm'
+          });
+        },
+        fail: function (err) {
+          // fail
+          console.log(err);
+          app.toast.show(err, { icon: 'warn', duration: 1500 })
+        }
+      });
+    }
+  },
+  checkData: function () {
+    if (app.util.isEmpty(this.data.selectedShippingInfo.id)) {
+      app.toast.showError('请选择收货地址');
+      return false
+    }
+    return true
   },
   openChangeSKUDialog: function () {
     var that = this;
@@ -83,7 +102,7 @@ Page({
       isSKUSContainerPopup: true,
       skusAnimationContentClass: 'spu-popup-container-content-fade-in'
     })
-    setTimeout(()=>{
+    setTimeout(() => {
       that.setData({
         skusAnimationMaskClass: 'spu-popup-container-mask-fade-in'
       })
@@ -96,7 +115,7 @@ Page({
         skusAnimationMaskClass: 'spu-popup-container-mask-fade-out',
         skusAnimationContentClass: 'spu-popup-container-content-fade-out'
       })
-      setTimeout(()=>{
+      setTimeout(() => {
         that.setData({
           isSKUSContainerPopup: false
         })
@@ -104,13 +123,23 @@ Page({
     }
   },
   skuTap: function (e) {
-    if (this.data.selected_sku._id == e.currentTarget.dataset.skuId) 
+    console.log('skuTap')
+    if (this.data.selected_sku._id == e.currentTarget.dataset.skuId)
       return;
-
-    let sku = this.data.current.skus.find((o)=>{
-      return o._id == e.currentTarget.dataset.skuId
-    });
-    
+    let skus = this.data.current.skus
+    let sku;
+    if (skus.find) {
+      sku = skus.find((o) => {
+        return o._id == e.currentTarget.dataset.skuId
+      });
+    } else {
+      for (let i = 0; i < skus.length; i++) {
+        if (skus[i]._id == e.currentTarget.dataset.skuId) {
+          sku = skus[i]
+          break
+        }
+      }
+    }
     this.setData({
       quantity: 1,
       selected_sku: sku
@@ -118,16 +147,16 @@ Page({
     quantityRegulator.setMax(this.data.selected_sku.quantity);
   },
   openPickShippingInfoDialog: function () {
-      var that = this;
-      this.setData({
-        isShippingInfoPickContainerPopup: true,
-        shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-in'
+    var that = this;
+    this.setData({
+      isShippingInfoPickContainerPopup: true,
+      shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-in'
+    })
+    setTimeout(() => {
+      that.setData({
+        shippingInfoAnimationMaskClass: 'spu-popup-container-mask-fade-in'
       })
-      setTimeout(()=>{
-        that.setData({
-          shippingInfoAnimationMaskClass: 'spu-popup-container-mask-fade-in'
-        })
-      }, 300);
+    }, 300);
   },
   closePickShippingInfoDialog: function () {
     if (this.data.isShippingInfoPickContainerPopup) {
@@ -136,7 +165,7 @@ Page({
         shippingInfoAnimationMaskClass: 'spu-popup-container-mask-fade-out',
         shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-out'
       })
-      setTimeout(()=>{
+      setTimeout(() => {
         that.setData({
           isShippingInfoPickContainerPopup: false
         })
@@ -144,13 +173,23 @@ Page({
     }
   },
   shippingInfoTap: function (e) {
-    if (this.data.selectedShippingInfo._id == e.currentTarget.dataset.shippingInfoId) 
+    if (this.data.selectedShippingInfo._id == e.currentTarget.dataset.shippingInfoId)
       return;
 
-    let shippingInfo = this.data.memberShippingInfos.find((o)=>{
-      return o._id == e.currentTarget.dataset.shippingInfoId
-    });
-    
+    let memberShippingInfos = this.data.memberShippingInfos
+    let shippingInfo
+    if (memberShippingInfos.find) {
+      shippingInfo = memberShippingInfos.find((o) => {
+        return o._id == e.currentTarget.dataset.shippingInfoId
+      });
+    } else {
+      for (let i = 0; i < memberShippingInfos.length; i++) {
+        if (memberShippingInfos[i]._id == e.currentTarget.dataset.shippingInfoId) {
+          shippingInfo = memberShippingInfos[i]
+          break
+        }
+      }
+    }
     this.setData({
       selectedShippingInfo: shippingInfo
     });
@@ -166,18 +205,18 @@ Page({
     var deltaX = Math.abs(curPoint[0] - startPoint[0]);
     var deltaY = Math.abs(curPoint[1] - startPoint[1]);
     if (deltaX < deltaY) {
-        // 在Y轴上变动大大
-        if (curPoint[1] < startPoint[1]) {
-          this.setData({
-            spuPanDeltaUpY: deltaY
-          });
-          console.log(e.timeStamp + ' - touch up move');
-        } else {
-          this.setData({
-            spuPanDeltaDownY: deltaY
-          });
-          console.log(e.timeStamp + ' - touch down move');
-        }
+      // 在Y轴上变动大大
+      if (curPoint[1] < startPoint[1]) {
+        this.setData({
+          spuPanDeltaUpY: deltaY
+        });
+        console.log(e.timeStamp + ' - touch up move');
+      } else {
+        this.setData({
+          spuPanDeltaDownY: deltaY
+        });
+        console.log(e.timeStamp + ' - touch down move');
+      }
     }
   },
   spuPanTouchEnd: function (e) {
@@ -203,32 +242,52 @@ Page({
         isPageInfoShow: true,
         pageInfoAnimationClass: 'spu-details-page-info-fade-in',
         pageIntroUrlAnimationClass: 'spu-details-page-intro-url-fade-out'
-    });
+      });
     }
   },
   addNewShippingInfo: function () {
     console.log('addNewShippingInfo...')
-  },
-  onLoad: function (options) {
-    console.log('spu-details onLoad' + options.spuId)
-    var that = this;
-    wx.getSystemInfo({
-      success: function(ret) { 
-        that.setData({
-          windowHeight: ret.windowHeight - 45
-        });
-      }
+    this.setData({
+      isWaitAddNewShippingInfo: true
+    })
+    wx.navigateTo({
+      url: '../mine/shipping-details?needNavigationBack=true'
     })
     
-    app.toast.init(this);
-    quantityRegulator.init(this);
-    app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spu/' + options.spuId, (spu)=>{
-      console.log(spu);
+  },
+  fetchMemberShippingInfos: function () {
+    let that = this
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shippings', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), page: { size: 99, skip: 0 } }, (memberShippingInfos) => {
+      console.log(memberShippingInfos)
+      that.setData({
+        memberShippingInfos
+      });
+    })
+  },
+  fetchData: function (id) {
+    let that = this
+    app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spu/' + id, (spu) => {
       that.setData({
         current: spu,
         selected_sku: spu.default_selected_sku || {}
       });
       quantityRegulator.setMax(that.data.selected_sku.quantity);
-    });
+    })
+  },
+  onLoad: function (options) {
+    console.log('spu-details onLoad' + options.spuId)
+    let that = this
+    wx.getSystemInfo({
+      success: function (ret) {
+        that.setData({
+          windowHeight: ret.windowHeight - 45
+        })
+      }
+    })
+
+    app.toast.init(this)
+    quantityRegulator.init(this)
+    this.fetchData(options.spuId)
+    this.fetchMemberShippingInfos()
   }
 })

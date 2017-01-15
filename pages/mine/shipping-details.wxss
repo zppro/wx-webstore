@@ -11,7 +11,7 @@
 }
 
 .setDefaultIcon{
-    flex:1;
+    flex:0.5;
     text-align: right;
     color: #ff0000;
     padding-right: 10px;
@@ -35,13 +35,14 @@
     color: green;
 }
 .setDefaultText{
-    flex:2;
+    flex:1.5;
+    text-align: left;
     color: #B3B3B3;
     display: inline-block;
     background-color: white;
 }
 .save-button{
-    flex: 1;
+    flex: 2;
     border-radius: 0;
 }
 .shipping-details-nickname,
@@ -82,7 +83,11 @@
 }
 
 .shipping-details-address{
-    height: 100px;
+    height: 50px;
+    line-height: 50px;
     background-color: white;
-    padding: 10px 20px;
+    padding: 0 20px;
+}
+.shipping-details-address-value{
+    height: 100%;
 }
