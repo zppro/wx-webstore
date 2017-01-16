@@ -5,10 +5,10 @@ const serverConfig = {
  tenantId: '5874d73a13155c6ec7546561'
 }
 const debugServerConfig = {
- root: 'http://192.168.255.107:3002/me-services/',
+ root: 'https://m.wx-api.com/me-services/',
  biz: 'mws/',
  wx:  'weixin/app/',
- tenantId: ''
+ tenantId: '586f52b98738dc1b2ff09060'
 }
 const debugServerConfig2 = {
  root: 'https://m.wx-api.com/me-services/',
@@ -18,7 +18,7 @@ const debugServerConfig2 = {
 }
 
 module.exports = function(debug) {
-    let config = debug ? debugServerConfig2 : serverConfig; 
+    let config = debug ? debugServerConfig : serverConfig; 
     return {
         config,
         getBizUrl: function () {
