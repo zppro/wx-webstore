@@ -148,6 +148,7 @@ Page({
   },
   openPickShippingInfoDialog: function () {
     var that = this;
+    this.fetchMemberShippingInfos()
     this.setData({
       isShippingInfoPickContainerPopup: true,
       shippingInfoAnimationContentClass: 'spu-popup-container-content-fade-in'
@@ -264,6 +265,14 @@ Page({
       });
     })
   },
+  fetchDefaultShippingInfo: function () {
+    let that = this
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultShipping', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId()}, (defaultShipping) => {
+      that.setData({
+        selectedShippingInfo: defaultShipping
+      });
+    })
+  },
   fetchData: function (id) {
     let that = this
     app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spu/' + id, (spu) => {
@@ -288,6 +297,6 @@ Page({
     app.toast.init(this)
     quantityRegulator.init(this)
     this.fetchData(options.spuId)
-    this.fetchMemberShippingInfos()
+    this.fetchDefaultShippingInfo()
   }
 })

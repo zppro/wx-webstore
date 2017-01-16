@@ -5,15 +5,11 @@ import keys from 'config/keys.js'
 import toast from 'components/wx-toast/wx-toast'
 
 const APPID = 'wx47dcb6f48e7a35c2'
-const DEBUG = true
+const DEBUG = 'DEBUG_HOME'
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
     var that = this;
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 读取配置
     this.config[keys.CONFIG_SERVER] = require('config/server.js')(DEBUG)
 

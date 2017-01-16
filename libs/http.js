@@ -20,12 +20,19 @@
                 options.method = 'PUT';
                 this.fetch(url, data, successFn, bizFailFn, options);
             },
+            delete: function(url, successFn, bizFailFn, options) {
+                console.log(url);
+                options = options || {};
+                options.method = 'DELETE';
+                this.fetch(url, {}, successFn, bizFailFn, options);
+            },
             fetch: function(url, data, successFn, bizFailFn, {method = 'GET', loadingText = '数据载入中...', toastInfo = '' } = {}) {
                 var app = getApp()
                 console.log(url);
+                console.log(data);
                 wx.showToast({title: loadingText, icon:'loading'});
                 wx.request({
-                    url, data,
+                    url, data: data || {},
                     method,
                     success: function(res) {
                         if (res.data.success) {

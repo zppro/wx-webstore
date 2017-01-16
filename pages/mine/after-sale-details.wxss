@@ -1,0 +1,84 @@
+.after-sale-details-type, .after-sale-details-text {
+  flex: 1;
+  width: 90%;
+  padding-top: 17px;
+}
+
+.after-sale-details-text-label {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.after-sale-details-text-label::after {
+  content: '*';
+  color: red;
+}
+
+.after-sale-details-type-label-right {
+  color: red;
+}
+
+.after-sale-details-type-ul {
+  width: 100%;
+  flex: 1;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+}
+
+.after-sale-details-type-li {
+  flex: 1;
+  width: 100%;
+  background-color: white;
+  height: 44px;
+  box-sizing: border-box;
+  display: flex;
+  border-bottom: solid 1px #f5f5f5;
+}
+
+.type-info-item-selected {
+  color: #f00;
+  background-color: white;
+  flex: 1;
+}
+
+.after-sale-details-type-li-label {
+  font-size: 12px;
+  line-height: 44px;
+  padding-left: 15px;
+  flex: 1;
+}
+
+.after-sale-details-type-marker {
+  line-height: 44px;
+  padding-right: 15px;
+  color: #f00;
+  width: 20px;
+}
+
+.after-sale-details-text-textarea-c {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.after-sale-details-textarea {
+  background-color: white;
+  width: 100%;
+  font-size: 12px;
+}
+
+.after-sale-details-actions {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  background-color: #f00;
+}
+
+
+.apply-for-button {
+  border-radius: 0px;
+  background-color: #f00;
+}

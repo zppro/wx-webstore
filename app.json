@@ -7,7 +7,8 @@
     "pages/store/order-details",
     "pages/mine/mine",
     "pages/mine/shipping-list",
-    "pages/mine/shipping-details"
+    "pages/mine/shipping-details",
+    "pages/mine/after-sale-details"
   ],
   "window": {
     "backgroundTextStyle": "light",

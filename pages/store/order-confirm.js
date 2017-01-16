@@ -31,7 +31,7 @@ Page({
                     var orderId = prepayRet.orderId
                     requestPaymentObject['success'] = function (res) {
                         console.log('订单支付成功')
-                        app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
+                        app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
                             app.toast.show('订单支付成功')
                             setTimeout(() => {
                                 wx.redirectTo({

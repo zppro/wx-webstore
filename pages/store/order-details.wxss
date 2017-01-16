@@ -12,7 +12,7 @@
     flex: 1;
     border-radius: 0;
 }
-.order-refund{
+.order-apply-for-after-sale{
     flex: 1;
     text-align: center;
     border-radius: 0;
@@ -23,7 +23,7 @@
     border-radius: 0;
 }
 .order-remove-space,
-.order-refund-space,
+.order-apply-for-after-sale-space,
 .order-rebuy-space{
     flex: 3;
 }

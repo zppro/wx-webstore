@@ -2,7 +2,8 @@
   <view class="order" wx:for="{{orders}}" wx:for-item="order" wx:key="order.id">
     <view class="h-flex order-head">
       <text class="order-code">{{order.code}}</text>
-      <text class="order-status">{{order.order_status_name}}</text>
+      <text class="order-amount-label">合计：</text>
+      <text class="order-amount-value">{{order.amount}}</text>
     </view>
     <view class="order-body" data-order-id="{{order.id}}" bindtap="orderTap">
       <view class="h-flex order-items" wx:for="{{order.items}}" wx:for-item="orderItem" wx:key="orderItem._id">
@@ -22,9 +23,16 @@
       </view>
     </view>
     <view class="h-flex order-foot">
-      <text class="order-amount-space"></text>
-      <text class="order-amount-label">合计：</text>
-      <text class="order-amount-value">{{order.amount}}</text>
+      <text class="order-status-space"></text>
+      <block wx:if="{{order.order_status == 'A0001'}}">
+        <button class="list-button" data-order-id="{{order.id}}" type="default" size="mini" bindtap="payTap">立即支付</button>
+        <text class="order-status-space2"></text>
+      </block>
+      <block wx:elif="{{order.order_status == 'A0005'}}">
+        <button class="list-button" data-order-id="{{order.id}}" type="default" size="mini" bindtap="confirmReceiptGoodsTap">确认收货</button>
+        <text class="order-status-space2"></text>
+      </block>
+      <text class="order-status">{{order.order_status_name}}</text>
     </view>
   </view>
 </view>

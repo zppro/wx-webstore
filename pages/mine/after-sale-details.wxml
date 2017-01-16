@@ -1,0 +1,27 @@
+
+<!--index.wxml-->
+<view class="container">
+  <view class="after-sale-details-type">
+    <text class="after-sale-details-text-label">售后类型</text>
+    <view class="after-sale-details-type-ul">
+      <block wx:for="{{afterSaleTypeInfos}}" wx:for-item="typeInfo" wx:key="typeInfo._id">
+        <view class="after-sale-details-type-li {{typeInfo._id == selectedTypeInfo._id ? 'type-info-item-selected': ''}}" data-type-info-id="{{typeInfo._id}}" bindtap="typeInfoTap">
+          <text class="after-sale-details-type-li-label">{{' ' + typeInfo.type}}
+          </text>
+          <text class="after-sale-details-type-marker {{typeInfo._id == selectedTypeInfo._id ? 'iconfont icon-zhengque': ''}}" />
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="after-sale-details-text">
+    <text class="after-sale-details-text-label">申请售后说明</text>
+    <view class="after-sale-details-text-textarea-c">
+      <textarea class="after-sale-details-textarea" placeholder="请输入申请售后说明" data-field-name="current.memo" bindinput="setInputData" value="{{current.memo}}" />
+    </view>
+  </view>
+  <view class="after-sale-details-actions">
+    <button size="45" type="warn" class="apply-for-button" bindtap="applyForOrderAfterSaleTap">提交申请</button>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

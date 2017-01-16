@@ -17,8 +17,15 @@ const debugServerConfig2 = {
  tenantId: '5872df7f4a71cf1529c051d6'
 }
 
-module.exports = function(debug) {
-    let config = debug ? debugServerConfig : serverConfig; 
+module.exports = function(env) {
+    let config;
+    if (env === 'DEBUG_OFFICE') {
+        config = debugServerConfig
+    } else if (env === 'DEBUG_HOME') {
+        config = debugServerConfig2
+    } else {
+        config = serverConfig
+    }
     return {
         config,
         getBizUrl: function () {

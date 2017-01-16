@@ -23,7 +23,7 @@
   </scroll-view>
   <view class="shipping-details-actions">
     <view class="setDefaultIcon">
-      <icon class="defaultIcon" type="{{defaultFlag ? 'success' : 'circle'}}" size="24" color="{{defaultFlag ? 'green' : '#B3B3B3'}}" />
+      <icon class="defaultIcon" type="{{defaultFlag ? 'success' : 'circle'}}" size="24" color="{{defaultFlag ? 'green' : '#B3B3B3'}}" bindtap="setDefault" />
     </view>
     <view class="setDefaultText {{defaultFlag ? 'defaultIconText' : '' }}" bindtap="setDefault">设为默认地址</view>
     <button class="save-button" type="warn" size="45" bindtap="save">保存</button>

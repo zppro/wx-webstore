@@ -68,16 +68,16 @@
   </scroll-view>
   <view class="h-flex order-details-actions">
     <block wx:if="{{current.order_status == 'A0001'}}">
-      <button class="order-remove" type="warn" size="default" bindtap="orderNow">删除订单</button>
+      <button class="order-remove" type="warn" size="default" bindtap="removeTap">删除订单</button>
       <view class="order-remove-space"></view>
     </block>
-    <block wx:if="{{current.order_status == 'A0003' || current.order_status == 'A0005' || current.order_status == 'A0007'}}">
-      <button class="order-refund" type="warn" size="default" bindtap="orderNow">返修/退换</button>
-      <view class="order-refund-space"></view>
+    <block wx:if="{{current.order_status == 'A0007' || current.order_status == 'A0009'}}">
+      <button class="order-apply-for-after-sale" type="warn" size="default" bindtap="applyForAfterSaleTap">返修/退换</button>
+      <view class="order-apply-for-after-sale-space"></view>
     </block>
     <block wx:if="{{current.order_status == 'A0009' || current.order_status == 'A0017'}}">
-      <button class="order-rebuy" type="primary" size="default" bindtap="orderNow">再次购买</button>
-      <view class="order-refund-space"></view>
+      <button class="order-rebuy" type="primary" size="default" bindtap="rebuyTap">再次购买</button>
+      <view class="order-rebuy-space"></view>
     </block>
   </view>
 </view>

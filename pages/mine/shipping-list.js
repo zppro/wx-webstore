@@ -21,7 +21,7 @@ Page({
         if (this.data.isWaitAddNewShippingInfo) {
             let that = this
             this.fetchData(true, () => {
-                wx.stopPullDownRefresh()
+                // wx.stopPullDownRefresh()
                 that.setData({
                     isWaitAddNewShippingInfo: false
                 })
@@ -68,19 +68,21 @@ Page({
             itemColor: '#f00',
             success: function (res) {
                 if (res.tapIndex == 0) {
-                    app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shipping/' + shippingId, { status: 0}, () => {
+                    app.libs.http.delete(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shipping/' + shippingId, () => {
                         let shippings = that.data.shippings
-                        let i = 0
-                        for (; i < shippings.length; i++) {
+                        let i = -1
+                        for (i = 0; i < shippings.length; i++) {
                             if (shippings[i].id == shippingId) {
                                 break
                             }
                         }
-                        shippings.splice(i,1)
-                        that.setData({
-                            shippings
-                        })
-                    }, { loadingText: '设置中...', toastInfo: '设为默认成功' })
+                        if (i != -1) {
+                            shippings.splice(i, 1)
+                            that.setData({
+                                shippings
+                            })
+                        }
+                    }, { loadingText: '删除中...', toastInfo: '删除成功' })
                 }
             }
         })
