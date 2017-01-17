@@ -174,7 +174,7 @@ Page({
     }
   },
   shippingInfoTap: function (e) {
-    if (this.data.selectedShippingInfo._id == e.currentTarget.dataset.shippingInfoId)
+    if (this.data.selectedShippingInfo && this.data.selectedShippingInfo._id == e.currentTarget.dataset.shippingInfoId)
       return;
 
     let memberShippingInfos = this.data.memberShippingInfos
