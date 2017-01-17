@@ -8,9 +8,10 @@
     "pages/mine/mine",
     "pages/mine/shipping-list",
     "pages/mine/shipping-details",
-    "pages/mine/after-sale-details",
     "pages/mine/invoice-list",
+    "pages/mine/invoice-details",
     "pages/mine/after-sale-list"
+    "pages/mine/after-sale-details"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -32,7 +32,7 @@ Page({
     setDefaultTap: function (e) {
         let that = this
         let shippingId = e.currentTarget.dataset.shippingId
-        app.libs.http.put(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shippingSetDefault/' + shippingId, {}, () => {
+        app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shippingSetDefault/' + shippingId, {}, () => {
             let shippings = that.data.shippings
             for (let i = 0; i < shippings.length; i++) {
                 if (shippings[i].default_flag) {
