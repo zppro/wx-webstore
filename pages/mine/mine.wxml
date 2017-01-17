@@ -42,4 +42,13 @@
     </view>
     <text class="my-manage-item-text" bindtap="shippingTap">收货地址</text>
   </view>
+  <view class="h-flex my-manage-item">
+    <view class="my-manage-item-icon-c">
+      <view class="my-manage-item-icon-c2">
+        <text class="iconfont icon-kaifapiao my-manage-item-icon" />
+        <view class="verticle-middle"></view>
+      </view>
+    </view>
+    <text class="my-manage-item-text" bindtap="invoiceTap">开票信息</text>
+  </view>
 </view>

@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="invoice-details">
+    <view class="invoice-details-type">
+      <text class="invoice-details-label">发票类型</text>
+      <button class="invoice-type-button {{current.type == 'A0001' ? 'invoice-type-button-selected': '' }}" data-type="A0001" type="default" size="mini" bindtap="setTypeTap">纸质发票</button>
+    </view>
+    <view class="invoice-details-title">
+      <text class="invoice-details-label">发票抬头</text>
+      <view class="h-flex">
+        <block wx:for="{{titleTypes}}" wx:for-item="titleType" wx:key="titleType._id">
+          <view class="title-type-item {{titleType._id == current.title_type ? 'title-type-selected': ''}}" data-title-type="{{titleType._id}}" bindtap="titleTypeTap">
+            <icon class="selectedIcon" type="{{titleType._id == current.title_type ? 'success' : 'circle'}}" size="18" color="{{titleType._id == current.title_type ? '#ff0000' : '#B3B3B3'}}" />
+            <text class="title-type-name">{{titleType.name}}</text>
+          </view>
+        </block>
+        <text class="invoice-details-titleTypes-space"></text>
+      </view>
+      <view class="invoice-details-title">
+        <input class="invoice-details-title-value" data-field-name="current.title" bindblur="setInputData" value="{{current.title}}" />
+      </view>
+    </view>
+  </view>
+</view>
+<view class="invoice-details-actions">
+  <view class="invoice-details-action-row" bindtap="setDefault">
+    <view class="setDefaultIcon">
+      <icon class="defaultIcon" type="{{defaultFlag ? 'success' : 'circle'}}" size="24" color="{{defaultFlag ? 'green' : '#B3B3B3'}}"  />
+    </view>
+    <view class="setDefaultText {{defaultFlag ? 'defaultIconText' : '' }}" >设为默认地址</view>
+    <button class="save-button" type="warn" size="45" bindtap="save">保存</button>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

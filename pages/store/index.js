@@ -25,7 +25,7 @@ Page({
   },
   test: function () {
     wx.navigateTo({
-      url: '../mine/after-sale-details'
+      url: '../mine/invoice-details'
     })
   },
   //事件处理函数

@@ -15,6 +15,11 @@ Page({
       url: './shipping-list'
     })
   },
+  invoiceTap:  function (e) {
+    wx.navigateTo({
+      url: './invoice-list'
+    })
+  },
   onLoad: function () {
     console.log('onLoad')
     // let a = app.libs.moment().add(1, 'days').format('YYYY-MM-DD')

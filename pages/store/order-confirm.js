@@ -10,6 +10,12 @@ Page({
             invoice_info: {}
         },
         totalPay: 0.00,
+        selectedInvoiceInfo: {},
+        memberInvoiceInfos: [],
+        isInvoiceInfoPickContainerPopup: false,
+        isWaitAddNewInvoiceInfo: false,
+        invoiceInfoAnimationMaskClass: '',
+        invoiceInfoAnimationContentClass: '',
         windowHeight: 627 - 45
     },
     //事件处理函数
@@ -84,6 +90,76 @@ Page({
         }
         return true;
     },
+    openPickInvoiceInfoDialog: function () {
+        var that = this;
+        this.fetchMemberInvoiceInfos()
+        this.setData({
+            isInvoiceInfoPickContainerPopup: true,
+            invoiceInfoAnimationContentClass: 'order-confirm-popup-container-content-fade-in'
+        })
+        setTimeout(() => {
+            that.setData({
+                invoiceInfoAnimationMaskClass: 'order-confirm-popup-container-mask-fade-in'
+            })
+        }, 300);
+    },
+    closePickInvoiceInfoDialog: function () {
+        if (this.data.isInvoiceInfoPickContainerPopup) {
+            var that = this;
+            this.setData({
+                invoiceInfoAnimationMaskClass: 'order-confirm-popup-container-mask-fade-out',
+                invoiceInfoAnimationContentClass: 'order-confirm-popup-container-content-fade-out'
+            })
+            setTimeout(() => {
+                that.setData({
+                    isInvoiceInfoPickContainerPopup: false
+                })
+            }, 300);
+        }
+    },
+    pickOkTap: function (e) {
+        this.closePickInvoiceInfoDialog()
+    },
+    invoiceInfoTap: function (e) {
+        let invoiceId = e.currentTarget.dataset.invoiceInfoId
+        if (this.data.selectedInvoiceInfo && this.data.selectedInvoiceInfo._id == invoiceId)
+            return;
+
+        let memberInvoiceInfos = this.data.memberInvoiceInfos
+        let invoiceInfo
+        if (memberInvoiceInfos.find) {
+            invoiceInfo = memberInvoiceInfos.find((o) => {
+                return o._id == invoiceId
+            });
+        } else {
+            for (let i = 0; i < memberInvoiceInfos.length; i++) {
+                if (memberInvoiceInfos[i]._id == invoiceId) {
+                    invoiceInfo = memberInvoiceInfos[i]
+                    break
+                }
+            }
+        }
+        this.setData({
+            selectedInvoiceInfo: invoiceInfo
+        });
+    },
+    fetchMemberInvoiceInfos: function () {
+        let that = this
+        app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoices', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), page: { size: 99, skip: 0 } }, (memberInvoiceInfos) => {
+            console.log(memberInvoiceInfos)
+            that.setData({
+                memberInvoiceInfos
+            });
+        })
+    },
+    fetchDefaultInvoiceInfo: function () {
+        let that = this
+        app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultInvoice', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId() }, (defaultInvoice) => {
+            that.setData({
+                selectedInvoiceInfo: defaultInvoice
+            });
+        })
+    },
     onLoad: function (options) {
         console.log('order-confirm onLoad')
         var that = this;
@@ -110,5 +186,6 @@ Page({
                 console.log(err);
             }
         })
+        this.fetchDefaultShippingInfo()
     }
 })

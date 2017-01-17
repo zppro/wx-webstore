@@ -8,6 +8,7 @@
     "pages/mine/mine",
     "pages/mine/shipping-list",
     "pages/mine/shipping-details",
+    "pages/mine/invoice-details",
     "pages/mine/after-sale-details"
   ],
   "window": {
