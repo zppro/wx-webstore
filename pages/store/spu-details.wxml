@@ -15,7 +15,7 @@
       </view>
       <view class="spu-stat-item">
         <text class="spu-sku-current-shipping-fee">快递：免运费</text>
-        <text class="spu-sku-current-sales-monthly">月销：{{selected_sku.sale_monthly||0}}件</text>
+        <text class="spu-sku-current-sales-monthly">已销：{{current.sales_all||0}}件</text>
         <text class="spu-shipment-place">{{current.shipment_place}}</text>
       </view>
       <view class="spu-sku-current">
@@ -42,7 +42,7 @@
     </view>
   </scroll-view>
   <view class="sp-details-actions">
-    <button class="buy-now-button" type="primary" size="45" bindtap="buyNow">立即购买</button>
+    <button class="buy-now-button" type="warn" size="45" bindtap="buyNow">立即购买</button>
   </view>
 </view>
 <view class="spu-popup-container " hidden="{{!isSKUSContainerPopup}}">

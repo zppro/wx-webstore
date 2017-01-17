@@ -18,6 +18,15 @@ Page({
         invoiceInfoAnimationContentClass: '',
         windowHeight: 627 - 45
     },
+    onShow: function () {
+        console.log('on show isWaitAddNewInvoiceInfo: ' + this.data.isWaitAddNewInvoiceInfo);
+        if (this.data.isWaitAddNewInvoiceInfo) {
+            this.fetchMemberInvoiceInfos()
+            this.setData({
+                isWaitAddNewInvoiceInfo: false
+            })
+        }
+    },
     //事件处理函数
     orderNow: function () {
         // check data validation
@@ -90,6 +99,15 @@ Page({
         }
         return true;
     },
+    addNewInvoiceInfo: function () {
+        console.log('addNewInvoiceInfo...')
+        this.setData({
+            isWaitAddNewInvoiceInfo: true
+        })
+        wx.navigateTo({
+            url: '../mine/invoice-details?needNavigationBack=true'
+        })
+    },
     openPickInvoiceInfoDialog: function () {
         var that = this;
         this.fetchMemberInvoiceInfos()
@@ -139,7 +157,21 @@ Page({
                 }
             }
         }
+        let order = this.data.order
+        order.invoice_flag = invoiceInfo._id != 'none'
+        if (order.invoice_flag) {
+            order.invoice_info = {
+                type: invoiceInfo.type,
+                title_type: invoiceInfo.title_type,
+                title: invoiceInfo.title
+            }
+        } else {
+            order.invoice_info = {}
+        }
+
+        console.log(invoiceInfo)
         this.setData({
+            order,
             selectedInvoiceInfo: invoiceInfo
         });
     },
@@ -147,6 +179,7 @@ Page({
         let that = this
         app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoices', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), page: { size: 99, skip: 0 } }, (memberInvoiceInfos) => {
             console.log(memberInvoiceInfos)
+            memberInvoiceInfos.unshift({ _id: 'none', title: '不开发票' })
             that.setData({
                 memberInvoiceInfos
             });
@@ -155,7 +188,21 @@ Page({
     fetchDefaultInvoiceInfo: function () {
         let that = this
         app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultInvoice', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId() }, (defaultInvoice) => {
+            let order = that.data.order
+            order.invoice_flag = !!defaultInvoice
+            if (order.invoice_flag) {
+                order.invoice_info = {
+                    type: defaultInvoice.type,
+                    title_type: defaultInvoice.title_type,
+                    title: defaultInvoice.title
+                }
+            } else {
+                order.invoice_info = {}
+            }
+            console.log('fetchDefaultInvoiceInfo')
+            console.log(order)
             that.setData({
+                order,
                 selectedInvoiceInfo: defaultInvoice
             });
         })
@@ -180,12 +227,12 @@ Page({
                     order: res.data,
                     totalPay: totalPay
                 });
+                that.fetchDefaultInvoiceInfo()
             },
             fail: function (err) {
                 // fail
                 console.log(err);
             }
         })
-        this.fetchDefaultShippingInfo()
     }
 })

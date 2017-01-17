@@ -83,6 +83,7 @@ Page({
         })
         options.invoiceId && app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoice/' + options.invoiceId, (invoice) => {
             that.setData({
+                defaultFlag: invoice.default_flag,
                 current: invoice
             })
         })

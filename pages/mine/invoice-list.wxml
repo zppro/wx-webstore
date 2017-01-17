@@ -1,32 +1,13 @@
 <view class="container">
   <scroll-view class="invoice-list" scroll-y="true" style="height: {{windowHeight}}px">
-    <!--<view class="invoice">
-      <view class="h-flex invoice-item-body">
-         <text class="item-title">123</text>
-        <text class="item-type-name">321</text>
-      </view>
-      <view class="h-flex invoice-item-actions">
-        <view class="set-default-c">
-          <text class="iconfont {{invoice.default_flag?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
-          <text class="set-default-button">设为默认</text>
-        </view>
-        <view class="edit-c">
-          <text class="iconfont icon-yemianbianji- edit-button-icon"></text>
-          <text class="edit-button">编辑</text>
-        </view>
-        <view class="remove-c">
-          <text class="iconfont icon-shanchu-01 remove-button-icon"></text>
-          <text class="remove-button">删除</text>
-        </view>
-      </view>
-    </view>-->
-
     <view class="invoice" wx:for="{{invoices}}" wx:for-item="invoice" wx:key="invoice.id">
       <view class="h-flex invoice-item-body">
         <text class="item-title">{{invoice.title}}</text>
-        <text class="item-type-name">{{invoice.type_name}}</text>
+        <view>
+          <text class="item-type-name">{{invoice.type_name}}</text>
+        </view>
       </view>
-    <view class="h-flex invoice-item-actions">
+      <view class="h-flex invoice-item-actions">
         <view class="set-default-c" data-invoice-id="{{invoice.id}}" bindtap="setDefaultTap">
           <text class="iconfont {{invoice.default_flag?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
           <text class="set-default-button">设为默认</text>
@@ -40,11 +21,12 @@
           <text class="remove-button">删除</text>
         </view>
       </view>
-      </view>
+    </view>
   </scroll-view>
-  <view class="invoice-actions ">
-    <button class="add-new-button " type="warn " size="45 " bindtap="addNewTap ">添加</button>
+  <view class="invoice-actions">
+    <button class="add-new-button" type="warn" size="45" bindtap="addNewTap">添加</button>
   </view>
 </view>
-<import src="../../components/wx-toast/wx-toast.wxml " />
-<template is="wx-toast" data="{{toastOptions: toastOptions}} " />
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />
+
