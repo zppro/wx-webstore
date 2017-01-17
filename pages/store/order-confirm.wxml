@@ -58,5 +58,30 @@
     <button class="order-now-button" type="warn" size="45" bindtap="orderNow">立即下单</button>
   </view>
 </view>
+<view class="order-confirm-popup-container " hidden="{{!isInvoiceInfoPickContainerPopup}}">
+  <view class="order-confirm-popup-container-mask {{invoiceInfoAnimationMaskClass}}" bindtap="closePickInvoiceInfoDialog">
+  </view>
+  <view class="order-confirm-popup-container-content {{invoiceInfoAnimationContentClass}}">
+    <view class="order-confirm-popup-head">
+      <text class="invoice-info-label">请选择发票信息</text>
+      <button class="invoice-info-ok-button" type="default" size="mini" bindtap="pickOkTap">确定</button>
+    </view>
+    <view class="order-confirm-popup-body">
+      <view class="invoice-info-list">
+        <block wx:for="{{memberInvoiceInfos}}" wx:for-item="invoiceInfo" wx:key="invoiceInfo._id">
+          <view class="invoice-info-item {{invoiceInfo._id == selectedInvoiceInfo._id ? 'invoice-info-item-selected': ''}}" data-invoice-info-id="{{invoiceInfo._id}}" bindtap="invoiceInfoTap">
+            <text class="iconfont icon-map invoice-info-details">{{' ' + invoiceInfo.title}}
+            </text>
+            <text class="invoice-info-default-flag" hidden="{{!invoiceInfo.default_flag}}" ></text>
+            <text class="invoice-info-picker-marker {{invoice._id == selectedInvoiceInfo._id ? 'iconfont icon-zhengque': ''}}" />
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="order-confirm-popup-foot">
+      <button class="invoice-info-add-button" type="primary" size="45" bindtap="addNewInvoiceInfo">添加</button>
+    </view>
+  </view>
+</view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />
