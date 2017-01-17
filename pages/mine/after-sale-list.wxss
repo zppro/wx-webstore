@@ -1,21 +1,21 @@
-.invoice-list {
+.after-sale-list {
   flex: 1;
   width: 100%;
 }
 
-.invoice-actions {
+.after-sale-actions {
   height: 45px;
   line-height: 45px;
   width: 100%;
 }
 
-.invoice {
+.after-sale {
   width: 100%;
   background-color: white;
   margin-bottom: 10px;
 }
 
-.invoice-item-body {
+.after-sale-item-body {
   padding: 0 10px;
   height: 40px;
   line-height: 40px;
@@ -24,22 +24,28 @@
 .item-type {
   flex: 1;
   text-align: left;
+  font-size: 14px;
 }
-
+.item-order-id{
+   text-align: right;
+   font-size: 14px;
+    color: #888;
+}
 .item-memo {
   flex: 2;
   text-align: left;
-}
-
-.item-address-full {
-  padding: 0 10px;
-  height: 40px;
-  line-height: 40px;
   font-size: 14px;
-  color: #888;
 }
-
-.invoice-item-actions {
+.item-orderId{
+  flex: 1;
+  text-align: left;
+}
+.item-status{
+  text-align: right;
+  font-size: 14px;
+  color:red;
+}
+.after-sale-item-actions {
   padding: 0 10px;
   height: 40px;
   line-height: 40px;
@@ -47,36 +53,13 @@
   font-size: 16px;
   color: #888;
 }
-
-.set-default-c {
-  flex: 3;
-}
-
-.set-default-button {
-  padding-left: 5px;
-}
-
-.set-default-icon {
-  font-size: 20px;
-}
-
-.set-default-icon-selected {
-  color: #f00;
-}
-
-.edit-c, .remove-c {
+.item-audit-result-name{
   flex: 1;
+  text-align: left;
+  font-size: 12px;
 }
-
-.remove-c {
-  margin-left: 5px;
-}
-
-.edit-button-icon, .remove-button-icon {
-  font-size: 20px;
-}
-
-.edit-button, .remove-button {
-  padding-left: 5px;
-  
+.item-audit-comment{
+  flex: 2;
+  text-align: left;
+  font-size: 12px;
 }
