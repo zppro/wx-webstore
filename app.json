@@ -10,7 +10,7 @@
     "pages/mine/shipping-details",
     "pages/mine/invoice-list",
     "pages/mine/invoice-details",
-    "pages/mine/after-sale-list"
+    "pages/mine/after-sale-list",
     "pages/mine/after-sale-details"
   ],
   "window": {

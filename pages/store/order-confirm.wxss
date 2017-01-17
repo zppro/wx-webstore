@@ -150,6 +150,9 @@
     font-size: 16px;
     width: 20px;
 }
+.invoice-info-pick{
+    padding-left: 10px;
+}
 .order-invoice-info{
     flex: 1;
     text-align: right;
@@ -239,8 +242,13 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
+  position: relative;
 }
-
+.invoice-info-ok-button{
+    position: absolute;
+    top: 6px;
+    right: 8px;
+}
 .order-confirm-popup-body{
   flex: 1;
 }

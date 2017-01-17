@@ -85,7 +85,14 @@
   color: white;
 }
 .my-manage-item-icon-c2{
-  background-color: #e79102;
+  background-color: #ec9401;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+}
+.my-manage-item-icon-c3{
+  background-color: #32b16c;
   width: 32px;
   height: 32px;
   border-radius: 50%;

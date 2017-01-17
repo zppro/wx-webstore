@@ -11,8 +11,8 @@
           <text class="order-shipping-place-value">{{order.shipping_info.province + order.shipping_info.city + order.shipping_info.area + order.shipping_info.address}}</text>
         </view>
       </view>
-      <view class="order-shipping-set item-arrow-right iconfont icon-arrowright">
-      </view>
+      <!--<view class="order-shipping-set item-arrow-right iconfont icon-arrowright">
+      </view>-->
     </view>
     <view class="h-flex order-items">
       <block wx:if="{{order.items.length == 1}}">
@@ -34,8 +34,9 @@
     <view class="h-flex order-invoice">
         <text class="item-label">发票信息</text>
         <text class="order-invoice-info">{{order.invoice_flag ? (order.invoice_info.type ? (order.invoice_info.type == 'A0003' ? '(电子)' :'(纸质)') + order.invoice_info.title || '' : '') : '不开发票' }}</text>
-        <view class="item-arrow-right iconfont icon-arrowright">
-        </view>
+        <!--<view class="item-arrow-right iconfont icon-arrowright">
+        </view>-->
+        <text class="invoice-info-pick" bindtap="openPickInvoiceInfoDialog">...</text>
     </view>
     <view class="h-flex order-memo">
         <text class="item-label">订单备注</text>
@@ -70,10 +71,10 @@
       <view class="invoice-info-list">
         <block wx:for="{{memberInvoiceInfos}}" wx:for-item="invoiceInfo" wx:key="invoiceInfo._id">
           <view class="invoice-info-item {{invoiceInfo._id == selectedInvoiceInfo._id ? 'invoice-info-item-selected': ''}}" data-invoice-info-id="{{invoiceInfo._id}}" bindtap="invoiceInfoTap">
-            <text class="iconfont icon-map invoice-info-details">{{' ' + invoiceInfo.title}}
+            <text class="invoice-info-details">{{' ' + invoiceInfo.title}}
             </text>
             <text class="invoice-info-default-flag" hidden="{{!invoiceInfo.default_flag}}" ></text>
-            <text class="invoice-info-picker-marker {{invoice._id == selectedInvoiceInfo._id ? 'iconfont icon-zhengque': ''}}" />
+            <text class="invoice-info-picker-marker {{invoiceInfo._id == selectedInvoiceInfo._id ? 'iconfont icon-zhengque': ''}}" />
           </view>
         </block>
       </view>

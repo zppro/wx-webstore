@@ -254,7 +254,6 @@ Page({
     wx.navigateTo({
       url: '../mine/shipping-details?needNavigationBack=true'
     })
-    
   },
   fetchMemberShippingInfos: function () {
     let that = this
