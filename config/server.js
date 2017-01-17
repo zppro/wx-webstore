@@ -1,3 +1,4 @@
+import keys from './keys.js'
 const serverConfig = {
  root: 'https://sh.okertrip.com/me-services/',
  biz: 'mws/',
@@ -17,11 +18,11 @@ const debugServerConfig2 = {
  tenantId: '5872df7f4a71cf1529c051d6'
 }
 
-module.exports = function(env) {
+module.exports = function (build) {
     let config;
-    if (env === 'DEBUG_OFFICE') {
+    if (build === keys.ENV_BUILD_DEBUG_OFFICE) {
         config = debugServerConfig
-    } else if (env === 'DEBUG_HOME') {
+    } else if (build === keys.ENV_BUILD_DEBUG_HOME) {
         config = debugServerConfig2
     } else {
         config = serverConfig
