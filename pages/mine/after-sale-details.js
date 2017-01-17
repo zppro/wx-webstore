@@ -41,6 +41,7 @@ Page({
 
         }
     },
+    //提交判断
     checkData: function () {
         if (app.util.isEmpty(this.data.current.type)) {
             app.toast.showError('选择售后类型');
