@@ -10,12 +10,17 @@ Page({
       url: '../store/order-list?order_status=' + e.currentTarget.dataset.orderStatus
     })
   },
+  afterSaleTap: function () {
+    wx.navigateTo({
+      url: './after-sale-list'
+    })
+  },
   shippingTap: function (e) {
     wx.navigateTo({
       url: './shipping-list'
     })
   },
-  invoiceTap:  function (e) {
+  invoiceTap: function (e) {
     wx.navigateTo({
       url: './invoice-list'
     })
@@ -26,10 +31,10 @@ Page({
     // console.log(a)
     var that = this
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
+    app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
-        userInfo:userInfo
+        userInfo: userInfo
       })
     })
   }

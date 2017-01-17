@@ -40,7 +40,7 @@
     </view>
     <view class="h-flex order-memo">
         <text class="item-label">订单备注</text>
-        <textarea class="order-memo-value" placeholder="填写需要额外告知我们的信息" data-field-name="order.memo" bindinput="setInputData" value="{{order.memo}}" />
+        <input class="order-memo-value" placeholder="填写需要额外告知我们的信息" data-field-name="order.memo" bindinput="setInputData" value="{{order.memo}}" />
     </view>
     <view class="h-flex order-amount">
         <text class="item-label">商品总额</text>

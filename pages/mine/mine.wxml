@@ -28,7 +28,7 @@
       <text class="iconfont icon-daishouhuo my-order-status-icon" />
       <text class="my-order-status-text">待收货</text>
     </view>
-    <view class="my-order-status-item" data-order-status="A0011,A0013" bindtap="orderTap">
+    <view class="my-order-status-item" bindtap="afterSaleTap">
       <text class="iconfont icon-tuikuan1 my-order-status-icon" />
       <text class="my-order-status-text">售后</text>
     </view>
