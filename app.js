@@ -4,16 +4,21 @@ import util from 'utils/util.js'
 import keys from 'config/keys.js'
 import toast from 'components/wx-toast/wx-toast'
 
-const APPID = 'wx47dcb6f48e7a35c2'
 
-const build = keys.ENV_BUILD_PRODUCE
+
+const build = {
+  where: keys.ENV_BUILD_PRODUCE,
+  target: keys.ENV_BUILD_TARGET_WSY
+}
+const serverConfig = require('config/server-config.js')(build)
+const APPID = serverConfig.APPID
 
 App({
   onLaunch: function () {
     //调用API从本地缓存中获取数据
     var that = this;
     // 读取配置
-    this.config[keys.CONFIG_SERVER] = require('config/server.js')(build)
+    this.config[keys.CONFIG_SERVER] = serverConfig
 
     // 读取缓存中的session_key并从服务端读取session
     let gen_session_key = wx.getStorageSync(keys.SESSION_KEY_NAME);
