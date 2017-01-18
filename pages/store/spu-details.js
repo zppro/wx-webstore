@@ -43,11 +43,27 @@ Page({
     }
   },
   onShow: function () {
-    console.log('on show isWaitAddNewShippingInfo: ' + this.data.isWaitAddNewShippingInfo);
     if (this.data.isWaitAddNewShippingInfo) {
-      this.fetchMemberShippingInfos()
-      this.setData({
-        isWaitAddNewShippingInfo: false
+      let that = this
+      // this.fetchMemberShippingInfos()
+      var memberShippingInfos = this.data.memberShippingInfos
+      wx.getStorage({
+        key: keys.NEW_ADDED,
+        success: function (res) {
+          // success
+          if (res.data) {
+            memberShippingInfos.unshift(res.data)
+            that.setData({
+              selectedShippingInfo: res.data,
+              memberShippingInfos,
+              isWaitAddNewShippingInfo: false
+            })
+          }
+        },
+        fail: function (err) {
+          // fail
+          console.log(err);
+        }
       })
     }
   },
@@ -90,8 +106,8 @@ Page({
     }
   },
   checkData: function () {
-    if (app.util.isEmpty(this.data.selectedShippingInfo.id)) {
-      app.toast.showError('请选择收货地址');
+    if (!this.data.selectedShippingInfo || app.util.isEmpty(this.data.selectedShippingInfo.id)) {
+      this.openPickShippingInfoDialog()
       return false
     }
     return true
@@ -266,7 +282,7 @@ Page({
   },
   fetchDefaultShippingInfo: function () {
     let that = this
-    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultShipping', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId()}, (defaultShipping) => {
+    app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultShipping', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId() }, (defaultShipping) => {
       that.setData({
         selectedShippingInfo: defaultShipping
       });

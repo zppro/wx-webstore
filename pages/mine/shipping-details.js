@@ -27,11 +27,23 @@ Page({
                 current.open_id = app.getSession().openid
                 current.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
             }
-            app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shipping', current, (shippingRet) => {
+            app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'shipping', current, (ret) => {
                 if (that.data.needNavigationBack) {
-                    wx.navigateBack()
+                    wx.setStorage({
+                        key: keys.NEW_ADDED,
+                        data: ret,
+                        success: function (res) {
+                            // success
+                            wx.navigateBack()
+                        },
+                        fail: function (err) {
+                            // fail
+                            console.log(err);
+                            app.toast.show(err, { icon: 'warn', duration: 1500 })
+                        }
+                    })
                 } else {
-                    wx.redirectTo({url:'./shipping-list'})
+                    wx.redirectTo({ url: './shipping-list' })
                 }
             }, { loadingText: '收货地址保存中...', toastInfo: '收货地址保存成功' })
         }

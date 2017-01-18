@@ -56,6 +56,8 @@
       <view class="sku-price">
         <text class="sku-sale-price">{{selected_sku.sale_price}}</text>
       </view>
+      <view class="iconfont icon-cuowu" bindtap="closeChangeSKUDialog">
+      </view>
     </view>
     <view class="spu-skus-row">
       <text class="spu-skus-list-label">颜色型号</text>
@@ -81,6 +83,8 @@
   <view class="spu-popup-container-content {{shippingInfoAnimationContentClass}}">
     <view class="spu-shipping-info-head">
       <text class="spu-shipping-info-label">配送至</text>
+      <text class="iconfont icon-cuowu close-button-icon" bindtap="closePickShippingInfoDialog">
+      </text>
     </view>
     <view class="spu-shipping-info-body">
       <view class="spu-shipping-info-list">
@@ -88,7 +92,7 @@
           <view class="shipping-info-item {{shippingInfo._id == selectedShippingInfo._id ? 'shipping-info-item-selected': ''}}" data-shipping-info-id="{{shippingInfo._id}}" bindtap="shippingInfoTap">
             <text class="iconfont icon-map shipping-info-details">{{' ' + shippingInfo.province + shippingInfo.city + shippingInfo.area + shippingInfo.address}}
             </text>
-            <text class="shipping-info-default-flag" hidden="{{!shippingInfo.default_flag}}" ></text>
+            <text class="shipping-info-default-flag" hidden="{{!shippingInfo.default_flag}}"></text>
             <text class="shipping-info-picker-marker {{shippingInfo._id == selectedShippingInfo._id ? 'iconfont icon-zhengque': ''}}" />
           </view>
         </block>

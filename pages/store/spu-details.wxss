@@ -162,7 +162,7 @@
   flex: 1;
 }
 .spu-popup-container-content{
-  flex: 2;
+  flex: 1;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -269,12 +269,18 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
+  position: relative;
 }
 .spu-shipping-info-label{
   color:#aaa;
 }
 .spu-shipping-info-body{
   flex: 1;
+}
+.close-button-icon {
+  position: absolute;
+  right: 8px;
+  top: 3px;
 }
 .spu-shipping-info-list{
   border-bottom: solid 1px #f5f5f5;

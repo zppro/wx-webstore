@@ -10,6 +10,7 @@ Page({
             invoice_info: {}
         },
         totalPay: 0.00,
+        noneInvoice: { _id: 'none', title: '不开发票' },
         selectedInvoiceInfo: {},
         memberInvoiceInfos: [],
         isInvoiceInfoPickContainerPopup: false,
@@ -21,9 +22,57 @@ Page({
     onShow: function () {
         console.log('on show isWaitAddNewInvoiceInfo: ' + this.data.isWaitAddNewInvoiceInfo);
         if (this.data.isWaitAddNewInvoiceInfo) {
-            this.fetchMemberInvoiceInfos()
-            this.setData({
-                isWaitAddNewInvoiceInfo: false
+            let that = this
+            // this.fetchMemberInvoiceInfos()
+            let memberInvoiceInfos = this.data.memberInvoiceInfos
+            let order = this.data.order
+            wx.getStorage({
+                key: keys.NEW_ADDED,
+                success: function (res) {
+                    // success
+                    let invoiceInfo = res.data
+                    if (invoiceInfo) {
+                        if (invoiceInfo.default_flag) {
+                            //去除原来的default_flag
+                            let oldDefaultInvoiceInfo
+                            if (memberInvoiceInfos.find) {
+                                oldDefaultInvoiceInfo = memberInvoiceInfos.find((o) => {
+                                    return o.default_flag
+                                });
+                            } else {
+                                for (let i = 0; i < memberInvoiceInfos.length; i++) {
+                                    if (memberInvoiceInfos[i].default_flag) {
+                                        oldDefaultInvoiceInfo = memberInvoiceInfos[i]
+                                        break
+                                    }
+                                }
+                            }
+                            oldDefaultInvoiceInfo.default_flag = false
+                        }
+
+                        memberInvoiceInfos.unshift(invoiceInfo)
+                        order.invoice_flag = invoiceInfo._id != 'none'
+                        if (order.invoice_flag) {
+                            order.invoice_info = {
+                                type: invoiceInfo.type,
+                                title_type: invoiceInfo.title_type,
+                                title: invoiceInfo.title
+                            }
+                        } else {
+                            order.invoice_info = {}
+                        }
+                        that.setData({
+                            order,
+                            selectedInvoiceInfo: invoiceInfo,
+                            memberInvoiceInfos,
+                            isWaitAddNewInvoiceInfo: false
+                        })
+                    }
+                },
+                fail: function (err) {
+                    // fail
+                    console.log(err);
+                }
             })
         }
     },
@@ -135,9 +184,6 @@ Page({
             }, 300);
         }
     },
-    pickOkTap: function (e) {
-        this.closePickInvoiceInfoDialog()
-    },
     invoiceInfoTap: function (e) {
         let invoiceId = e.currentTarget.dataset.invoiceInfoId
         if (this.data.selectedInvoiceInfo && this.data.selectedInvoiceInfo._id == invoiceId)
@@ -179,7 +225,7 @@ Page({
         let that = this
         app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoices', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), page: { size: 99, skip: 0 } }, (memberInvoiceInfos) => {
             console.log(memberInvoiceInfos)
-            memberInvoiceInfos.unshift({ _id: 'none', title: '不开发票' })
+            memberInvoiceInfos.unshift(that.data.noneInvoice)
             that.setData({
                 memberInvoiceInfos
             });
@@ -203,7 +249,7 @@ Page({
             console.log(order)
             that.setData({
                 order,
-                selectedInvoiceInfo: defaultInvoice
+                selectedInvoiceInfo: defaultInvoice || that.data.noneInvoice
             });
         })
     },
@@ -226,7 +272,7 @@ Page({
                 that.setData({
                     order: res.data,
                     totalPay: totalPay
-                });
+                })
                 that.fetchDefaultInvoiceInfo()
             },
             fail: function (err) {

@@ -214,7 +214,7 @@
   flex: 1;
 }
 .order-confirm-popup-container-content{
-  flex: 2;
+  flex: 1;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -244,9 +244,9 @@
   text-align: center;
   position: relative;
 }
-.invoice-info-ok-button{
+.close-button-icon{
     position: absolute;
-    top: 6px;
+    top: 3px;
     right: 8px;
 }
 .order-confirm-popup-body{

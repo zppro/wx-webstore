@@ -5,7 +5,7 @@ var app = getApp()
 Page({
     data: {
         isAppendDisabled: false,
-        isWaitAddNewShippingInfo: false,
+        isWaitAddNewInvoiceInfo: false,
         invoices: [],
         windowHeight: 627 - 45
     },

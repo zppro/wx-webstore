@@ -65,7 +65,7 @@
   <view class="order-confirm-popup-container-content {{invoiceInfoAnimationContentClass}}">
     <view class="order-confirm-popup-head">
       <text class="invoice-info-label">请选择发票信息</text>
-      <button class="invoice-info-ok-button" type="default" size="mini" bindtap="pickOkTap">确定</button>
+      <text class="iconfont icon-cuowu close-button-icon" bindtap="closePickInvoiceInfoDialog"></text>
     </view>
     <view class="order-confirm-popup-body">
       <view class="invoice-info-list">
