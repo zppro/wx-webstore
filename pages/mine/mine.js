@@ -7,7 +7,7 @@ Page({
   orderTap: function (e) {
     console.log(e.currentTarget.dataset);
     wx.navigateTo({
-      url: '../store/order-list?order_status=' + e.currentTarget.dataset.orderStatus
+      url: './order-list?order_status=' + e.currentTarget.dataset.orderStatus
     })
   },
   afterSaleTap: function () {

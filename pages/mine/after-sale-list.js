@@ -35,7 +35,7 @@ Page({
     },
     afterSaleTap: function (e) {
         wx.navigateTo({
-            url: '../store/order-details?orderId=' + e.currentTarget.dataset.orderId
+            url: './order-details?orderId=' + e.currentTarget.dataset.orderId
         })
     },
     onLoad: function (options) {

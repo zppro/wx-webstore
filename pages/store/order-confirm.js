@@ -31,6 +31,7 @@ Page({
                 success: function (res) {
                     // success
                     let invoiceInfo = res.data
+                    console.log(res.data)
                     if (invoiceInfo) {
                         if (invoiceInfo.default_flag) {
                             //去除原来的default_flag
@@ -47,7 +48,7 @@ Page({
                                     }
                                 }
                             }
-                            oldDefaultInvoiceInfo.default_flag = false
+                            oldDefaultInvoiceInfo && (oldDefaultInvoiceInfo.default_flag = false)
                         }
 
                         memberInvoiceInfos.unshift(invoiceInfo)
@@ -72,6 +73,11 @@ Page({
                 fail: function (err) {
                     // fail
                     console.log(err);
+                },
+                complete: function () {
+                    wx.removeStorage({
+                        key: keys.NEW_ADDED
+                    })
                 }
             })
         }
@@ -91,22 +97,26 @@ Page({
                 order.appid = app.appid
                 order.order_nickname = userInfo.nickName
                 app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (prepayRet) => {
-                    var requestPaymentObject = prepayRet.requestPaymentObject
-                    var orderId = prepayRet.orderId
+                    let requestPaymentObject = prepayRet.requestPaymentObject
+                    console.log('requestPaymentObject:')
+                    console.log(requestPaymentObject)
+                    // let sceneId = prepayRet.scene_id
+                    let orderId = prepayRet.orderId
+                    let url = '../mine/order-details?orderId=' + orderId
                     requestPaymentObject['success'] = function (res) {
                         console.log('订单支付成功')
                         app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
                             app.toast.show('订单支付成功')
                             setTimeout(() => {
                                 wx.redirectTo({
-                                    url: './order-details?orderId=' + orderId
+                                    url
                                 })
                             }, 700)
                         }, (ret) => {
                             app.toast.showError('支付状态更新失败')
                             setTimeout(() => {
                                 wx.redirectTo({
-                                    url: './order-details?orderId=' + orderId
+                                    url
                                 })
                             }, 700)
                         });
@@ -116,7 +126,7 @@ Page({
                         app.toast.showError('订单支付失败')
                         setTimeout(() => {
                             wx.redirectTo({
-                                url: './order-details?orderId=' + orderId
+                                url
                             })
                         }, 700)
                     }

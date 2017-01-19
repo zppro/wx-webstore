@@ -51,6 +51,7 @@ Page({
         key: keys.NEW_ADDED,
         success: function (res) {
           // success
+          console.log(res.data)
           if (res.data) {
             memberShippingInfos.unshift(res.data)
             that.setData({
@@ -63,6 +64,11 @@ Page({
         fail: function (err) {
           // fail
           console.log(err);
+        },
+        complete: function () {
+          wx.removeStorage({
+            key: keys.NEW_ADDED
+          })
         }
       })
     }
@@ -282,6 +288,7 @@ Page({
   },
   fetchDefaultShippingInfo: function () {
     let that = this
+    console.log(app.getSession())
     app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'getDefaultShipping', { open_id: app.getSession().openid, tenantId: app.config[keys.CONFIG_SERVER].getTenantId() }, (defaultShipping) => {
       that.setData({
         selectedShippingInfo: defaultShipping

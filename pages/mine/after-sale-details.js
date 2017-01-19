@@ -31,7 +31,7 @@ Page({
                             app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'afterSale', current, () => {
                                 // wx.navigateBack()
                                 wx.redirectTo({
-                                    url: '../store/order-details?orderId=' + current.orderId
+                                    url: './order-details?orderId=' + current.orderId
                                 })
                             }, { loadingText: '提交申请中...', toastInfo: '提交申请成功' })
                         })
