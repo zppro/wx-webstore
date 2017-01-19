@@ -73,12 +73,12 @@
 }
 
 .order-shipping-phone {
-  flex: 2.2;
+  flex: 2;
   font-weight: bold;
 }
 
 .order-shipping-default-flag {
-  flex: 2.4;
+  flex: 0.8;
 }
 
 .order-shipping-default-flag-value {

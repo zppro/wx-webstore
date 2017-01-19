@@ -19,14 +19,15 @@
   padding-left: 20rpx;
 }
 .spu-price{
-  text-align: right;
+  text-align: left;
 }
 .spu-sale-price{
-  font-size: 30pt;
+  font-size: 24pt;
   color: #ff0000;
+  padding-left: 20rpx;
 }
 .spu-sale-price::before{
-  content: '￥';
+  content: ' ￥';
   font-size: 20pt;
 }
 .spu-market-price{

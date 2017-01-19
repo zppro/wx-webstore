@@ -232,13 +232,13 @@ Page({
       if (curPoint[1] < startPoint[1]) {
         this.setData({
           spuPanDeltaUpY: deltaY
-        });
-        console.log(e.timeStamp + ' - touch up move');
+        })
+        // console.log(e.timeStamp + ' - touch up move');
       } else {
         this.setData({
           spuPanDeltaDownY: deltaY
-        });
-        console.log(e.timeStamp + ' - touch down move');
+        })
+        // console.log(e.timeStamp + ' - touch down move');
       }
     }
   },
@@ -248,25 +248,31 @@ Page({
     console.log('isPanUp: ' + e.currentTarget.dataset.isPanUp);
     if (isPanUp && this.data.spuPanDeltaUpY > this.data.spuPanThreshold) {
       //上拉图片详情
-      console.log('end up ' + this.data.spuPanDeltaUpY);
-      console.log('上拉图片详情');
-      that.setData({
-        isPageIntroUrlShow: true,
-        isPageInfoShow: false,
-        pageInfoAnimationClass: 'spu-details-page-info-fade-out',
-        pageIntroUrlAnimationClass: 'spu-details-page-intro-url-fade-in'
-      });
+      // console.log('end up ' + this.data.spuPanDeltaUpY)
+      // console.log('上拉图片详情')
+      that.upTap()
     } else if (!isPanUp && this.data.spuPanDeltaDownY > this.data.spuPanThreshold) {
       //下拉产品介绍
-      console.log('end down ' + this.data.spuPanDeltaDownY);
-      console.log('下拉产品介绍');
-      that.setData({
-        isPageIntroUrlShow: false,
-        isPageInfoShow: true,
-        pageInfoAnimationClass: 'spu-details-page-info-fade-in',
-        pageIntroUrlAnimationClass: 'spu-details-page-intro-url-fade-out'
-      });
+      // console.log('end down ' + this.data.spuPanDeltaDownY)
+      // console.log('下拉产品介绍')
+      that.downTap()
     }
+  },
+  upTap: function () {
+    this.setData({
+      isPageIntroUrlShow: true,
+      isPageInfoShow: false,
+      pageInfoAnimationClass: 'spu-details-page-info-fade-out',
+      pageIntroUrlAnimationClass: 'spu-details-page-intro-url-fade-in'
+    })
+  },
+  downTap: function () {
+    this.setData({
+      isPageIntroUrlShow: false,
+      isPageInfoShow: true,
+      pageInfoAnimationClass: 'spu-details-page-info-fade-in',
+      pageIntroUrlAnimationClass: 'spu-details-page-intro-url-fade-out'
+    })
   },
   addNewShippingInfo: function () {
     console.log('addNewShippingInfo...')
@@ -298,6 +304,9 @@ Page({
   fetchData: function (id) {
     let that = this
     app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'spu/' + id, (spu) => {
+      wx.setNavigationBarTitle({
+        title: spu.name
+      })
       that.setData({
         current: spu,
         selected_sku: spu.default_selected_sku || {}

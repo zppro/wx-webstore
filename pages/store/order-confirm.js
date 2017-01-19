@@ -83,7 +83,7 @@ Page({
         }
     },
     //事件处理函数
-    orderNow: function () {
+    orderNow: function (e) {
         // check data validation
         var that = this;
         if (this.checkData()) {
@@ -96,16 +96,60 @@ Page({
                 order.code = keys.SERVER_GEN
                 order.appid = app.appid
                 order.order_nickname = userInfo.nickName
+                console.log(e.detail.formId)
+                order.formId = e.detail.formId //saved for orderShipped
+
                 app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order', order, (prepayRet) => {
                     let requestPaymentObject = prepayRet.requestPaymentObject
                     console.log('requestPaymentObject:')
                     console.log(requestPaymentObject)
-                    // let sceneId = prepayRet.scene_id
                     let orderId = prepayRet.orderId
                     let url = '../mine/order-details?orderId=' + orderId
+                    let templateId = app.config[keys.CONFIG_SERVER].wxAppConfig.getTemplateId('OrderPayed')
                     requestPaymentObject['success'] = function (res) {
                         console.log('订单支付成功')
                         app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (ret) => {
+                            console.log('orderPaySuccess:')
+                            console.log(ret)
+                            let sceneId = prepayRet.scene_id
+                            wx.request({
+                                url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + app.globalData.accessToken,
+                                data: {
+                                    touser: ret.open_id,
+                                    template_id,
+                                    form_id: sceneId,
+                                    data: {
+                                        "keyword1": {
+                                            "value": ret.code,
+                                            "color": "#4a4a4a"
+                                        },
+                                        "keyword2": {
+                                            "value": ret.items[0].spu_name,
+                                            "color": "#9b9b9b"
+                                        },
+                                        "keyword3": {
+                                            "value": '￥' + ret.amount + '元',
+                                            "color": "#9b9b9b"
+                                        },
+                                        "keyword4": {
+                                            "value": "如有疑问请致电88483380",
+                                            "color": "#9b9b9b"
+                                        }
+                                    },
+                                    color: '#ccc',
+                                    emphasis_keyword: 'keyword1.DATA'
+                                },
+                                method: 'POST',
+                                success: function (res) {
+                                    console.log("push msg");
+                                    console.log(res);
+                                },
+                                fail: function (err) {
+                                    // fail  
+                                    console.log("push err")
+                                    console.log(err);
+                                }
+                            })
                             app.toast.show('订单支付成功')
                             setTimeout(() => {
                                 wx.redirectTo({

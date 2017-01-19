@@ -2,7 +2,7 @@
 <!--index.wxml-->
 <import src="../../components/quantity-regulator/quantity-regulator.wxml" />
 <view class="container">
-  <scroll-view class="spu-details" scroll-y="true" style="height: {{windowHeight}}px">
+  <scroll-view class="spu-details" scroll-y="true" style="height: {{windowHeight}}px" >
     <view class="spu-details-page-info {{pageInfoAnimationClass}}" hidden="{{!isPageInfoShow}}">
       <view class="spu-details-item">
         <image class="spu-img" mode="widthFix" src="{{current.img}}"></image>
@@ -30,12 +30,12 @@
         <text class="spu-shipping-info-value">{{(selectedShippingInfo.province + selectedShippingInfo.city + selectedShippingInfo.area + selectedShippingInfo.address) || ''}}</text>
         <text class="spu-shipping-info-pick" bindtap="openPickShippingInfoDialog">...</text>
       </view>
-      <view class="spu-pan-block" data-is-pan-up="{{true}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd">
+      <view class="spu-pan-block" data-is-pan-up="{{true}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd" bindtap="upTap">
         <text class="iconfont icon-arrowup">上拉查看商品图文详情</text>
       </view>
     </view>
     <view class="spu-details-page-intro-url {{pageIntroUrlAnimationClass}}" hidden="{{!isPageIntroUrlShow}}">
-      <view class="spu-pan-block" data-is-pan-up="{{false}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd">
+      <view class="spu-pan-block" data-is-pan-up="{{false}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd" bindtap="downTap">
         <text class="iconfont icon-arrowdown">下拉查看商品详情</text>
       </view>
       <image class="spu-img" mode="widthFix" src="{{current.intro_url}}"></image>

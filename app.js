@@ -8,10 +8,9 @@ import toast from 'components/wx-toast/wx-toast'
 
 const build = {
   where: keys.ENV_BUILD_WHERE_DEBUG_OFFICE, //ENV_BUILD_WHERE_DEBUG_OFFICE, ENV_BUILD_WHERE_PRODUCE
-  target: keys.ENV_BUILD_TARGET_BC
+  target: keys.ENV_BUILD_TARGET_BC // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
 }
 const serverConfig = require('config/server-config.js')(build)
-const APPID = serverConfig.APPID
 
 App({
   onLaunch: function () {
@@ -19,33 +18,53 @@ App({
     var that = this;
     // 读取配置
     this.config[keys.CONFIG_SERVER] = serverConfig
-
-    // 读取缓存中的session_key并从服务端读取session
-    let gen_session_key = wx.getStorageSync(keys.SESSION_KEY_NAME);
-    console.log(gen_session_key);
-    if (gen_session_key) {
-      this.libs.http.get(this.config[keys.CONFIG_SERVER].getWXUrl() + 'getSession/' + gen_session_key, (session) => {
-        console.log(session);
-        if (!session) {
-          //过期重新请求
-          that.requestSession()
-        } else {
-          that.globalData.session = session;
-          that.getUserInfo();
-        }
-      });
-    } else {
-      that.requestSession();
-    }
+    this.libs.http.get(serverConfig.getWXUrl() + 'wxAppConfig/' + serverConfig.getWxAppConfigId(), (wxAppConfig) => {
+      console.log('wxAppConfig')
+      console.log(wxAppConfig)
+      serverConfig.setWxAppConfig(wxAppConfig)
+      that.appid = serverConfig.appid
+      that.appname = serverConfig.appname
+      console.log(wxAppConfig.app_id)
+      console.log(wxAppConfig.app_name)
+      console.log(serverConfig.appid)
+      console.log(serverConfig.appname)
+      // 读取缓存中的session_key并从服务端读取session111
+      let gen_session_key = wx.getStorageSync(keys.SESSION_KEY_NAME);
+      console.log(gen_session_key);
+      if (gen_session_key) {
+        that.libs.http.get(serverConfig.getWXUrl() + 'getSession/' + gen_session_key, (session) => {
+          console.log(session);
+          if (!session) {
+            //过期重新请求
+            that.requestSession()
+          } else {
+            that.globalData.session = session;
+            that.getUserInfo();
+          }
+        })
+      } else {
+        that.requestSession()
+      }
+      that.requestAccessToken()
+    })
+  },
+  requestAccessToken: function () {
+    let that = this;
+    this.libs.http.post(that.config[keys.CONFIG_SERVER].getWXUrl() + 'requestAccessToken', { appid: this.appid }, (ret) => {
+      if (ret) {
+        console.log('requestAccessToken:' + ret)
+        that.globalData.accessToken = ret;
+      }
+    })
   },
   requestSession: function () {
-    console.log('requestSession');
-    var that = this;
+    console.log('requestSession')
+    let that = this;
     wx.login({
       success: function (res1) {
         console.log('requestSession with code:' + res1.code);
-        that.libs.http.post(that.config[keys.CONFIG_SERVER].getWXUrl() + 'requestSession', { appid: APPID, code: res1.code }, (ret) => {
-          
+        that.libs.http.post(that.config[keys.CONFIG_SERVER].getWXUrl() + 'requestSession', { appid: that.appid, code: res1.code }, (ret) => {
+
           if (ret && ret.session_key && ret.session_value) {
             wx.setStorageSync(keys.SESSION_KEY_NAME, ret.session_key);
             that.globalData.session = ret.session_value;
@@ -89,7 +108,6 @@ App({
   toast,
   util,
   libs,
-  appid: APPID,
   env: {
     build
   },

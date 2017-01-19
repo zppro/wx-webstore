@@ -9,9 +9,10 @@ Page({
     spus: []
   },
   onShareAppMessage: function () {
+    let desc = app.config[keys.CONFIG_SERVER].wxAppConfig.description || '销售睡眠监测仪器，定位手环，机器人等'
     return {
-      title: '梧斯源商城',
-      desc: '销售睡眠监测仪器，定位手环，机器人等',
+      title: app.appname,
+      desc,
       path: '/pages/store/index'
     }
   },
@@ -49,6 +50,20 @@ Page({
   onLoad: function () {
     console.log('index onLoad')
     app.toast.init(this)
-    this.fetchData(true)
+    let that = this
+    if (!app.appid) {
+      setTimeout(() => {
+        console.log('delay to wait load wxConfig')
+        app.appname && wx.setNavigationBarTitle({
+          title: app.appname
+        })
+        that.fetchData(true)
+      }, 1000)
+    } else {
+      app.appname && wx.setNavigationBarTitle({
+        title: app.appname
+      })
+      that.fetchData(true)
+    }
   }
 })
