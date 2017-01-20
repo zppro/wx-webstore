@@ -112,50 +112,55 @@ Page({
                             console.log('orderPaySuccess:')
                             console.log(ret)
                             let sceneId = prepayRet.scene_id
-                            wx.request({
-                                url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + app.globalData.accessToken,
-                                data: {
-                                    touser: ret.open_id,
-                                    template_id,
-                                    form_id: sceneId,
+                            app.requestAccessToken(function (accessToken) {
+                                console.log('accessToken： ' + accessToken + ' templateId:  '+ templateId + ' sceneId:' + sceneId)
+                                
+                                wx.request({
+                                    url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + accessToken,
                                     data: {
-                                        "keyword1": {
-                                            "value": ret.code,
-                                            "color": "#4a4a4a"
+                                        touser: ret.open_id,
+                                        template_id: templateId,
+                                        form_id: sceneId,
+                                        data: {
+                                            "keyword1": {
+                                                "value": ret.code,
+                                                "color": "#4a4a4a"
+                                            },
+                                            "keyword2": {
+                                                "value": ret.items[0].spu_name,
+                                                "color": "#9b9b9b"
+                                            },
+                                            "keyword3": {
+                                                "value": '￥' + ret.amount + '元',
+                                                "color": "#9b9b9b"
+                                            },
+                                            "keyword4": {
+                                                "value": "如有疑问请致电88483380",
+                                                "color": "#9b9b9b"
+                                            }
                                         },
-                                        "keyword2": {
-                                            "value": ret.items[0].spu_name,
-                                            "color": "#9b9b9b"
-                                        },
-                                        "keyword3": {
-                                            "value": '￥' + ret.amount + '元',
-                                            "color": "#9b9b9b"
-                                        },
-                                        "keyword4": {
-                                            "value": "如有疑问请致电88483380",
-                                            "color": "#9b9b9b"
-                                        }
+                                        color: '#ccc',
+                                        emphasis_keyword: 'keyword1.DATA'
                                     },
-                                    color: '#ccc',
-                                    emphasis_keyword: 'keyword1.DATA'
-                                },
-                                method: 'POST',
-                                success: function (res) {
-                                    console.log("push msg");
-                                    console.log(res);
-                                },
-                                fail: function (err) {
-                                    // fail  
-                                    console.log("push err")
-                                    console.log(err);
-                                }
-                            })
-                            app.toast.show('订单支付成功')
-                            setTimeout(() => {
-                                wx.redirectTo({
-                                    url
+                                    method: 'POST',
+                                    success: function (res) {
+                                        console.log("push msg");
+                                        console.log(res);
+                                    },
+                                    fail: function (err) {
+                                        // fail  
+                                        console.log("push err")
+                                        console.log(err);
+                                    }
                                 })
-                            }, 700)
+                            })
+
+                            // app.toast.show('订单支付成功')
+                            // setTimeout(() => {
+                            //     wx.redirectTo({
+                            //         url
+                            //     })
+                            // }, 700)
                         }, (ret) => {
                             app.toast.showError('支付状态更新失败')
                             setTimeout(() => {

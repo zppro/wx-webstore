@@ -58,7 +58,7 @@ Page({
           title: app.appname
         })
         that.fetchData(true)
-      }, 1000)
+      }, 500)
     } else {
       app.appname && wx.setNavigationBarTitle({
         title: app.appname
