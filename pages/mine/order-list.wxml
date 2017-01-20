@@ -1,11 +1,11 @@
 <view class="container order-list">
-  <view class="order" wx:for="{{orders}}" wx:for-item="order" wx:key="order.id">
+  <view class="order" wx:for="{{orders}}" wx:for-item="order" wx:key="order.id" data-order-id="{{order.id}}" bindtap="orderTap">
     <view class="h-flex order-head">
       <text class="order-code">{{order.code}}</text>
       <text class="order-amount-label">合计：</text>
       <text class="order-amount-value">{{order.amount}}</text>
     </view>
-    <view class="order-body" data-order-id="{{order.id}}" bindtap="orderTap">
+    <view class="order-body">
       <view class="h-flex order-items" wx:for="{{order.items}}" wx:for-item="orderItem" wx:key="orderItem._id">
         <view class="item-img-c">
           <image class="item-img" src="{{orderItem.img}}"></image>
@@ -25,7 +25,13 @@
     <view class="h-flex order-foot">
       <text class="order-status-space"></text>
       <block wx:if="{{order.order_status == 'A0001'}}">
-        <button class="list-button" data-order-id="{{order.id}}" type="default" size="mini" bindtap="payTap">立即支付</button>
+        <form name='payForm' class="inline-form" report-submit data-order-id="{{order.id}}" catchsubmit='payTap'>
+          <button class="list-button list-button-pay" type="default" size="mini" form-type="submit" catchtap="payTap2">立即支付</button>
+        </form>
+        <text class="order-status-space2"></text>
+      </block>
+      <block wx:elif="{{order.order_status == 'A0003'}}">
+        <button class="list-button" data-order-id="{{order.id}}" type="default" size="mini" bindtap="applyForRefundTap">申请退款</button>
         <text class="order-status-space2"></text>
       </block>
       <block wx:elif="{{order.order_status == 'A0005'}}">

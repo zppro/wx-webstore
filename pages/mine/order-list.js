@@ -36,20 +36,71 @@ Page({
     })
   },
   //事件处理函数
+  payTap2: function (e) {
+
+  },
   payTap: function (e) {
     let that = this
     let orderId = e.currentTarget.dataset.orderId
+    console.log(e)
+
     wx.showActionSheet({
       itemList: ['确认支付该订单？'],
       itemColor: '#f00',
       success: function (res) {
         if (res.tapIndex == 0) {
-          app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderRepay/' + orderId, { appid: app.appid }, (prepayRet) => {
+          app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderRepay/' + orderId, { appid: app.appid, formId: e.detail.formId }, (prepayRet) => {
             var requestPaymentObject = prepayRet.requestPaymentObject
-            var orderId = prepayRet.orderId
+            let orderId = prepayRet.orderId
+            let url = '../mine/order-details?orderId=' + orderId
+            let templateId = app.config[keys.CONFIG_SERVER].wxAppConfig.getTemplateId('OrderPayed')
             requestPaymentObject['success'] = function (res) {
               console.log('订单支付成功')
               app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderPaySuccess/' + orderId, { pay_type: 'A0003' }, (updated) => {
+
+                let sceneId = prepayRet.scene_id
+                app.requestAccessToken(function (accessToken) {
+                  console.log('accessToken： ' + accessToken + ' templateId:  ' + templateId + ' sceneId:' + sceneId)
+                  wx.request({
+                    url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + accessToken,
+                    data: {
+                      touser: updated.open_id,
+                      template_id: templateId,
+                      form_id: sceneId,
+                      data: {
+                        "keyword1": {
+                          "value": updated.code,
+                          "color": "#4a4a4a"
+                        },
+                        "keyword2": {
+                          "value": updated.items[0].spu_name,
+                          "color": "#9b9b9b"
+                        },
+                        "keyword3": {
+                          "value": '￥' + updated.amount + '元',
+                          "color": "#9b9b9b"
+                        },
+                        "keyword4": {
+                          "value": "如有疑问请致电88483380",
+                          "color": "#9b9b9b"
+                        }
+                      },
+                      color: '#ccc',
+                      emphasis_keyword: 'keyword1.DATA'
+                    },
+                    method: 'POST',
+                    success: function (res) {
+                      console.log("push msg");
+                      console.log(res);
+                    },
+                    fail: function (err) {
+                      // fail  
+                      console.log("push err")
+                      console.log(err);
+                    }
+                  })
+                })
+
                 app.toast.show('订单支付成功')
                 let orders = that.data.orders
                 let i = -1;
@@ -83,6 +134,11 @@ Page({
           }, { loadingText: '订单支付中...', toastInfo: '微信支付成功' });
         }
       }
+    })
+  },
+  applyForRefundTap: function (e) {
+    wx.navigateTo({
+      url: './after-sale-details?orderId=' + e.currentTarget.dataset.orderId + '&type=A0007'
     })
   },
   confirmReceiptGoodsTap: function (e) {

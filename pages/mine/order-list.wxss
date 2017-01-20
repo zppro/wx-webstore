@@ -121,9 +121,15 @@
 .order-status-space {
   flex: 4;
 }
+.inline-form{
+  display: block;
+}
 .list-button{
   background-color: white;
   border: solid 1px #aaa;
+}
+.list-button-pay{
+  margin-top: 4px;
 }
 .order-status-space2 {
   flex: 0.3;

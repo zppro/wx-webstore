@@ -8,38 +8,41 @@ Page({
         afterSaleTypeInfos: [
             { _id: 'A0001', type: '申请维修' },
             { _id: 'A0003', type: '我要换货' },
-            { _id: 'A0005', type: '我要退货' }
+            { _id: 'A0005', type: '我要退货' },
+            { _id: 'A0007', type: '我要退款' }
         ]
     },
     //事件处理函数
     applyForOrderAfterSaleTap: function () {
         var that = this;
-        if (this.checkData()) {
-            let current = that.data.current;
-            wx.showActionSheet({
-                itemList: ['确定要提交售后申请么？'],
-                itemColor: '#f00',
-                success: function (res) {
-                    if (res.tapIndex == 0) {
-                        app.getUserInfo((userInfo) => {
-                            if (!current.id) {
-                                current.code = keys.SERVER_GEN
-                                current.open_id = app.getSession().openid
-                                current.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
-                                current.apply_for_nickname = userInfo.nickName
-                            }
-                            app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'afterSale', current, () => {
-                                // wx.navigateBack()
-                                wx.redirectTo({
-                                    url: './order-details?orderId=' + current.orderId
-                                })
-                            }, { loadingText: '提交申请中...', toastInfo: '提交申请成功' })
-                        })
-                    }
-                }
-            })
+        setTimeout(() => {
+            if (that.checkData()) {
+                let current = that.data.current;
+                wx.showActionSheet({
+                    itemList: ['确定要提交售后申请么？'],
+                    itemColor: '#f00',
+                    success: function (res) {
+                        if (res.tapIndex == 0) {
+                            app.getUserInfo((userInfo) => {
+                                if (!current.id) {
+                                    current.code = keys.SERVER_GEN
+                                    current.open_id = app.getSession().openid
+                                    current.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
+                                    current.apply_for_nickname = userInfo.nickName
+                                }
+                                app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'afterSale', current, () => {
+                                    // wx.navigateBack()
+                                    wx.redirectTo({
+                                        url: './order-list'
+                                    })
 
-        }
+                                }, { loadingText: '提交申请中...', toastInfo: '提交申请成功' })
+                            })
+                        }
+                    }
+                })
+            }
+        }, 500)
     },
     //提交判断
     checkData: function () {
@@ -64,6 +67,7 @@ Page({
         if (this.data.selectedTypeInfo._id == e.currentTarget.dataset.typeInfoId)
             return;
 
+        console.log(e.currentTarget.dataset.typeInfoId)
         let afterSaleTypeInfos = this.data.afterSaleTypeInfos
         let typeInfo
         if (afterSaleTypeInfos.find) {
@@ -91,11 +95,15 @@ Page({
         console.log('after-sale-details onLoad ' + options.afterSaleId)
         let that = this
         app.toast.init(this)
-        !options.afterSaleId && (
+
+        if (!options.afterSaleId) {
             this.setData({
                 current: { orderId: options.orderId }
             })
-        )
+            options.type && this.typeInfoTap({
+                currentTarget: { dataset: { typeInfoId: options.type } }
+            })
+        }
         options.afterSaleId && app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'afterSale/' + options.afterSaleId, (afterSale) => {
             that.setData({
                 current: afterSale

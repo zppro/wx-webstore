@@ -155,12 +155,12 @@ Page({
                                 })
                             })
 
-                            // app.toast.show('订单支付成功')
-                            // setTimeout(() => {
-                            //     wx.redirectTo({
-                            //         url
-                            //     })
-                            // }, 700)
+                            app.toast.show('订单支付成功')
+                            setTimeout(() => {
+                                wx.redirectTo({
+                                    url
+                                })
+                            }, 700)
                         }, (ret) => {
                             app.toast.showError('支付状态更新失败')
                             setTimeout(() => {

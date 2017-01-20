@@ -16,7 +16,7 @@
   <view class="after-sale-details-text">
     <text class="after-sale-details-text-label">申请售后说明</text>
     <view class="after-sale-details-text-textarea-c">
-      <textarea class="after-sale-details-textarea" placeholder="请输入申请售后说明" data-field-name="current.memo" bindinput="setInputData" value="{{current.memo}}" />
+      <textarea class="after-sale-details-textarea" placeholder="请输入申请售后说明" data-field-name="current.memo" bindblur="setInputData" value="{{current.memo}}" />
     </view>
   </view>
   <view class="after-sale-details-actions">
