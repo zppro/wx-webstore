@@ -5,33 +5,64 @@
 }
 .spu-item {
   width: 100%;
+  height: 130px;
+  padding: 0 15px;
+  margin: 1px 0 0 0;
   background-color: white;
   margin-bottom: 20rpx;
 }
-.spu-img{
-  display:block;
+
+.spu-img-c {
+  flex: 1;
+  text-align: center;
+}
+
+.spu-img {
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+}
+
+.spu-other {
+  flex: 2;
+  height: 90px;
+  vertical-align: middle;
+}
+
+.spu-name {
+  flex: 2;
+  width: 100%;
+  font-size: 16pt;
+  font-weight: bold;
+}
+.spu-shipment-place {
+  flex: 1.5;
+  width: 100%;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.spu-price-sales {
+  flex: 2;
   width: 100%;
 }
-.spu-name{
-  display:block;
-  font-size: 17pt;
-  padding-top: 20rpx;
-  padding-left: 20rpx;
-}
-.spu-price{
-  text-align: left;
-}
 .spu-sale-price{
-  font-size: 24pt;
+  font-size: 22pt;
   color: #ff0000;
   padding-left: 20rpx;
 }
 .spu-sale-price::before{
   content: ' ￥';
-  font-size: 20pt;
+  font-size: 18pt;
 }
-.spu-market-price{
-  font-size:16pt;
-  color:#888;
-  text-decoration:line-through;
+
+.spu-sales-all {
+  font-size: 16px;
+  padding-right: 5px;
+  color: #aaa;
+}
+
+.spu-sales-all::before {
+  content: '已销：';
+  font-size: 14px;
 }

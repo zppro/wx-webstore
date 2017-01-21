@@ -68,11 +68,11 @@
 }
 
 .spu-price {
-  text-align: right;
+  text-align: left;
 }
 
 .spu-sale-price {
-  font-size: 28pt;
+  font-size: 24pt;
   color: #f00;
 }
 

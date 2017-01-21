@@ -6,14 +6,14 @@
     <view class="shipping-details-phone">
       <input class="shipping-details-phone-value" placeholder="收件人电话" data-field-name="current.shipping_phone" bindblur="setInputData" value="{{current.shipping_phone}}" />
     </view>
-    <view class="h-flex shipping-details-pca">
+    <view class="h-flex shipping-details-pca" bindtap="openRegionPickerDialog">
       <block wx:if="{{ !current.province || !current.city || !current.area }}">
         <text class="shipping-details-pca-label">所在地区</text>
       </block>
       <text class="shipping-details-province">{{current.province}}</text>
       <text class="shipping-details-city">{{current.city}}</text>
       <text class="shipping-details-area">{{current.area}}</text>
-      <view class="item-arrow-right" bindtap="openRegionPickerDialog">
+      <view class="item-arrow-right">
         ...
       </view>
     </view>

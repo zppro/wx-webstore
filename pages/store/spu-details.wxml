@@ -10,7 +10,7 @@
         <text class="spu-intro">{{current.intro}}</text>
         <view class="spu-price">
           <text class="spu-sale-price">{{selected_sku.sale_price}}</text>
-          <text class="spu-market-price">￥{{selected_sku.market_price}}</text>
+          <text class="spu-market-price" wx:if="{{selected_sku.sale_price<selected_sku.market_price}}">￥{{selected_sku.market_price}}</text>
         </view>
       </view>
       <view class="spu-stat-item">
@@ -31,12 +31,12 @@
         <text class="spu-shipping-info-pick" bindtap="openPickShippingInfoDialog">...</text>
       </view>
       <view class="spu-pan-block" data-is-pan-up="{{true}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd" bindtap="upTap">
-        <text class="iconfont icon-arrowup">上拉查看商品图文详情</text>
+        <text>点击查看商品图文页面</text>
       </view>
     </view>
     <view class="spu-details-page-intro-url {{pageIntroUrlAnimationClass}}" hidden="{{!isPageIntroUrlShow}}">
       <view class="spu-pan-block" data-is-pan-up="{{false}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd" bindtap="downTap">
-        <text class="iconfont icon-arrowdown">下拉查看商品详情</text>
+        <text >点击回到商品详情页面</text>
       </view>
       <image class="spu-img" mode="widthFix" src="{{current.intro_url}}"></image>
     </view>
