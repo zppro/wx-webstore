@@ -1,9 +1,11 @@
 .shipping-list {
-  flex: 1;
   width: 100%;
 }
 
 .shipping-actions {
+  position: fixed;
+  left: 0;
+  bottom: 0;
   height: 45px;
   line-height: 45px;
   width: 100%;

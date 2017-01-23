@@ -37,7 +37,7 @@ Page({
   },
   //事件处理函数
   payTap2: function (e) {
-
+    // 不能删除，防止事件冒泡
   },
   payTap: function (e) {
     let that = this
@@ -192,7 +192,7 @@ Page({
   },
   onLoad: function (options) {
     console.log('order-list onLoad on ' + options.order_status)
-    app.toast.init(this);
+    app.toast.init(this)
     this.setData({
       pageOptions: options
     })

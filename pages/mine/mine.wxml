@@ -19,18 +19,22 @@
     <view class="my-order-status-item" data-order-status="A0001" bindtap="orderTap">
       <text class="iconfont icon-daifukuan my-order-status-icon" />
       <text class="my-order-status-text">待付款</text>
+      <text wx:if="{{orderStat['A0001']}}" class="my-order-status-stat">{{orderStat['A0001']}}</text>
     </view>
     <view class="my-order-status-item" data-order-status="A0003" bindtap="orderTap">
       <text class="iconfont icon-daifahuo my-order-status-icon" />
       <text class="my-order-status-text">待发货</text>
+      <text wx:if="{{orderStat['A0003']}}" class="my-order-status-stat">{{orderStat['A0003']}}</text>
     </view>
     <view class="my-order-status-item" data-order-status="A0005" bindtap="orderTap">
       <text class="iconfont icon-daishouhuo my-order-status-icon" />
       <text class="my-order-status-text">待收货</text>
+      <text wx:if="{{orderStat['A0005']}}" class="my-order-status-stat">{{orderStat['A0005']}}</text>
     </view>
     <view class="my-order-status-item" bindtap="afterSaleTap">
       <text class="iconfont icon-tuikuan1 my-order-status-icon" />
       <text class="my-order-status-text">售后</text>
+      <text wx:if="{{orderStat['A0011'] || orderStat['A0013']}}" class="my-order-status-stat">{{(orderStat['A0011'] || 0) + (orderStat['A0013'] || 0)}}</text>
     </view>
   </view>
   <view class="h-flex my-manage-item">
@@ -52,3 +56,5 @@
     <text class="my-manage-item-text" bindtap="invoiceTap">开票信息</text>
   </view>
 </view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />

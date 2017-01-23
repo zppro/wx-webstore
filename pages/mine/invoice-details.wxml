@@ -2,9 +2,9 @@
   <view class="invoice-details">
     <view class="invoice-details-type">
       <text class="invoice-details-label">发票类型</text>
-      <button class="invoice-type-button {{current.type == 'A0001' ? 'invoice-type-button-selected': '' }}" data-type="A0001" type="default" size="mini" bindtap="setTypeTap">纸质发票</button>
+      <button wx:for="{{types}}" wx:for-item="type" wx:key="type._id" class="invoice-type-button {{current.type == type._id ? 'invoice-type-button-selected': '' }}" data-type="{{type._id}}" type="default" size="mini" bindtap="typeTap">{{type.name}}</button>
     </view>
-    <view class="invoice-details-title">
+    <view wx:if="{{current.type != 'A0005'}}" class="invoice-details-title">
       <text class="invoice-details-label">发票抬头</text>
       <view class="h-flex">
         <block wx:for="{{titleTypes}}" wx:for-item="titleType" wx:key="titleType._id">
@@ -19,14 +19,52 @@
         <input class="invoice-details-title-value" data-field-name="current.title" bindblur="setInputData" value="{{current.title}}" />
       </view>
     </view>
+    <view wx:if="{{current.type == 'A0005'}}" class="invoice-details-add-value-tax">
+      <text class="invoice-details-label">增票资质</text>
+      <view class="v-flex">
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">单位名称</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.title" bindblur="setInputData" value="{{current.title}}" />
+        </view>
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">税号</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.tax_number" bindblur="setInputData" value="{{current.tax_number}}" />
+        </view>
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">注册地址</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.registered_address" bindblur="setInputData" value="{{current.registered_address}}" />
+        </view>
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">注册电话</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.registered_phone" bindblur="setInputData" value="{{current.registered_phone}}" />
+        </view>
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">开户银行</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.deposit_bank" bindblur="setInputData" value="{{current.deposit_bank}}" />
+        </view>
+        <view class="h-flex invoice-details-add-value-tax-item">
+          <text class="invoice-details-add-value-tax-item-label">银行账户</text>
+          <input class="invoice-details-add-value-tax-item-value" placeholder="必填" data-field-name="current.bank_account" bindblur="setInputData" value="{{current.bank_account}}" />
+        </view>
+      </view>
+    </view>
+    <view class="invoice-details-content">
+      <text class="invoice-details-label">发票内容</text>
+      <view class="v-flex">
+        <view class="invoice-details-content-value">
+          <icon class="selectedIcon" type="success" size="18" color="#ff0000" />
+          <text class="title-type-name">{{current.content || '明细'}}</text>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
 <view class="invoice-details-actions">
   <view class="invoice-details-action-row" bindtap="setDefault">
     <view class="setDefaultIcon">
-      <icon class="defaultIcon" type="{{defaultFlag ? 'success' : 'circle'}}" size="24" color="{{defaultFlag ? 'green' : '#B3B3B3'}}"  />
+      <icon class="defaultIcon" type="{{defaultFlag ? 'success' : 'circle'}}" size="24" color="{{defaultFlag ? 'green' : '#B3B3B3'}}" />
     </view>
-    <view class="setDefaultText {{defaultFlag ? 'defaultIconText' : '' }}" >设为默认地址</view>
+    <view class="setDefaultText {{defaultFlag ? 'defaultIconText' : '' }}">设为默认</view>
     <button class="save-button" type="warn" size="45" bindtap="save">保存</button>
   </view>
 </view>

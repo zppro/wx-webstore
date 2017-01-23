@@ -4,7 +4,11 @@ Page({
     data: {
         defaultFlag: false,
         needNavigationBack: false,
-        current: { type: 'A0001', title_type: 'A0003' },
+        current: { type: 'A0001', title_type: 'A0003', content: '明细' },
+        types: [
+            { _id: 'A0001', name: '纸质发票' },
+            { _id: 'A0005', name: '增值税发票' }
+        ],
         titleTypes: [
             { _id: 'A0001', name: '个人' },
             { _id: 'A0003', name: '单位' }
@@ -15,6 +19,18 @@ Page({
     setDefault: function () {
         this.setData({
             defaultFlag: !this.data.defaultFlag
+        })
+    },
+    typeTap: function (e) {
+        let type = e.currentTarget.dataset.type
+        let current = this.data.current
+        if (type == current.type) return
+        current.type = type
+        if (type == 'A0005' && current.title_type != 'A0003') {
+            current.title_type = 'A0003'
+        }
+        this.setData({
+            current
         })
     },
     titleTypeTap: function (e) {
@@ -35,6 +51,9 @@ Page({
             if (!current.id) {
                 current.open_id = app.getSession().openid
                 current.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
+            }
+            if (!current.content) {
+                current.content = '明细'
             }
             app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoice', current, (ret) => {
                 if (that.data.needNavigationBack) {
