@@ -37,7 +37,7 @@ Page({
       success: function (res) {
         if (res.tapIndex == 0) {
           wx.removeStorage({
-            key: keys.CHANNEL_UNIT,
+            key: keys.STG_CHANNEL_UNIT,
             success: function (res) {
               console.log('清除缓存：')
               console.log(res.data)

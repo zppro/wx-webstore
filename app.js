@@ -25,7 +25,7 @@ App({
       that.appid = serverConfig.appid
       that.appname = serverConfig.appname
       // 读取缓存中的session_key并从服务端读取session
-      let gen_session_key = wx.getStorageSync(keys.SESSION_KEY_NAME);
+      let gen_session_key = wx.getStorageSync(keys.STG_SESSION_KEY_NAME);
       console.log(gen_session_key);
       if (gen_session_key) {
         that.libs.http.get(serverConfig.getWXUrl() + 'getSession/' + gen_session_key, (session) => {
@@ -61,7 +61,7 @@ App({
         that.libs.http.post(that.config[keys.CONFIG_SERVER].getWXUrl() + 'requestSession', { appid: that.appid, code: res1.code }, (ret) => {
 
           if (ret && ret.session_key && ret.session_value) {
-            wx.setStorageSync(keys.SESSION_KEY_NAME, ret.session_key);
+            wx.setStorageSync(keys.STG_SESSION_KEY_NAME, ret.session_key);
             that.globalData.session = ret.session_value;
           }
         }, {loadingText: false});

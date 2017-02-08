@@ -27,7 +27,7 @@ Page({
             let memberInvoiceInfos = this.data.memberInvoiceInfos
             let order = this.data.order
             wx.getStorage({
-                key: keys.NEW_ADDED,
+                key: keys.STG_NEW_ADDED,
                 success: function (res) {
                     // success
                     let invoiceInfo = res.data
@@ -76,7 +76,7 @@ Page({
                 },
                 complete: function () {
                     wx.removeStorage({
-                        key: keys.NEW_ADDED
+                        key: keys.STG_NEW_ADDED
                     })
                 }
             })
@@ -93,13 +93,13 @@ Page({
             app.getUserInfo((userInfo) => {
                 order.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
                 try {
-                    let channelUnit = wx.getStorageSync(keys.CHANNEL_UNIT)
+                    let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
                     if (channelUnit) {
                         order.channelUnitId = channelUnit.id
                     }
                 } catch (e) {
                     // Do something when catch error
-                    console.log('getStorageSync:CHANNEL_UNIT')
+                    console.log('getStorageSync:STG_CHANNEL_UNIT')
                     console.log(e)
                 }
                 order.open_id = app.getSession().openid
@@ -334,7 +334,7 @@ Page({
         });
         app.toast.init(this);
         wx.getStorage({
-            key: keys.ORDER_CONFIRM_NOW,
+            key: keys.STG_ORDER_CONFIRM_NOW,
             success: function (res) {
                 // success
                 let totalPay = (parseFloat(res.data.amount) + parseFloat(res.data.shipping_fee)).toFixed(2);

@@ -53,14 +53,14 @@ Page({
     let that = this
     let channelUnitNavSuffix = ''
     try {
-      let channelUnit = wx.getStorageSync(keys.CHANNEL_UNIT)
+      let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
       if (channelUnit) {
         channelUnitNavSuffix = '*'
         console.log(channelUnit)
       }
     } catch (e) {
       // Do something when catch error
-      console.log('getStorageSync:CHANNEL_UNIT')
+      console.log('getStorageSync:STG_CHANNEL_UNIT')
       console.log(e)
     }
     if (!app.appid) {

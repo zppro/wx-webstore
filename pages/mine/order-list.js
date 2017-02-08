@@ -19,13 +19,13 @@ Page({
   onShow: function () {
     let that = this
     wx.getStorage({
-      key: keys.ORDER_IS_CHANGED,
+      key: keys.STG_ORDER_IS_CHANGED,
       success: function (res) {
         console.log('onShow res.data.isOrderChanged:' + res.data.isOrderChanged)
         if (res.data.isOrderChanged) {
           that.fetchData(true, () => {
             wx.removeStorage({
-              key: keys.ORDER_IS_CHANGED,
+              key: keys.STG_ORDER_IS_CHANGED,
               success: (res2) => {
                 console.log(res2.data)
               }

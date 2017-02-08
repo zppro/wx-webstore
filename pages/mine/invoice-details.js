@@ -58,7 +58,7 @@ Page({
             app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'invoice', current, (ret) => {
                 if (that.data.needNavigationBack) {
                     wx.setStorage({
-                        key: keys.NEW_ADDED,
+                        key: keys.STG_NEW_ADDED,
                         data: ret,
                         success: function (res) {
                             // success

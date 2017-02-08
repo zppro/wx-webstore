@@ -4,17 +4,10 @@ import keys from '../config/keys.js'
 var app = getApp()
 Page({
     data: {
+        splashImage: '',
         canTapToIndex: false,
         progressWidth: 1,
         channelUnit: { id: null, name: '梧斯源' }
-    },
-    onShareAppMessage: function () {
-        let desc = app.config[keys.CONFIG_SERVER].wxAppConfig.description || '销售睡眠仪，定位手环，机器人等'
-        return {
-            title: app.appname,
-            desc,
-            path: '/pages/splash'
-        }
     },
     //事件处理函数
     pageTap: function () {
@@ -55,7 +48,7 @@ Page({
             that.setData({ channelUnit: channelUnitData })
             console.log(channelUnitData)
             wx.setStorage({
-                key: keys.CHANNEL_UNIT,
+                key: keys.STG_CHANNEL_UNIT,
                 data: channelUnitData,
                 success: function (res) {
                     // success
@@ -69,11 +62,15 @@ Page({
                     that.setData({ canTapToIndex: true })
                 }
             })
-        }, null,{loadingText: false})
+        }, null, { loadingText: false })
     },
     onLoad: function (options) {
         console.log('splash onLoad ')
         console.log(options)
+        this.setData({
+            splashImage: app.config[keys.CONFIG_SERVER].splash_img
+        })
+        let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
         if (options.channelUnitId) {
             // 验证渠道单元并获取其名称
             this.fetchData(options.channelUnitId)

@@ -2,16 +2,18 @@ page {
   height: 100%;
 }
 
-.preloader {
+.splash-bg {
+  width: 100%;
   background-color: #d9534f;
+  background-size: 100%;
 }
 
 .head {
-  flex: 1;
+  height:40px;
 }
 
 .body {
-  flex: 4;
+  flex: 1;
 }
 
 .preloader-progress {
@@ -36,4 +38,5 @@ page {
   height: 30px;
   font-size: 12px;
   color: white;
+  opacity: 0.6;
 }
