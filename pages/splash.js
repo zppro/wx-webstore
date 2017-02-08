@@ -11,7 +11,7 @@ Page({
     },
     //事件处理函数
     pageTap: function () {
-        if (!this.data.canTapToIndex) {
+        if (!this.data.canTapToIndex || !app.appid) {
             return
         }
         this.toIndex()
@@ -21,7 +21,8 @@ Page({
         if (useAnimation) {
             let internalId = setInterval(() => {
                 let progressWidth = that.data.progressWidth;
-                if (progressWidth === 100) {
+                if (progressWidth === 100 && app.appid) {
+                    console.log(app.appid)
                     clearInterval(internalId)
                     wx.switchTab({
                         url: '/pages/store/index'
@@ -29,6 +30,11 @@ Page({
                 } else {
                     progressWidth += 1
                     that.setData({ progressWidth })
+                    if (app.appid) {
+                        that.setData({
+                            splashImage: app.config[keys.CONFIG_SERVER].splash_img
+                        })
+                    }
                 }
             }, 20)
         } else {
@@ -67,7 +73,9 @@ Page({
     onLoad: function (options) {
         console.log('splash onLoad ')
         console.log(options)
-        this.setData({
+        console.log(app.config[keys.CONFIG_SERVER].splash_img)
+        let that = this
+        that.setData({
             splashImage: app.config[keys.CONFIG_SERVER].splash_img
         })
         let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
