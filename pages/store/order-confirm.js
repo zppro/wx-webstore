@@ -92,6 +92,16 @@ Page({
             console.log(order);
             app.getUserInfo((userInfo) => {
                 order.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
+                try {
+                    let channelUnit = wx.getStorageSync(keys.CHANNEL_UNIT)
+                    if (channelUnit) {
+                        order.channelUnitId = channelUnit.id
+                    }
+                } catch (e) {
+                    // Do something when catch error
+                    console.log('getStorageSync:CHANNEL_UNIT')
+                    console.log(e)
+                }
                 order.open_id = app.getSession().openid
                 order.code = keys.SERVER_GEN
                 order.appid = app.appid
@@ -113,8 +123,8 @@ Page({
                             console.log(ret)
                             let sceneId = prepayRet.scene_id
                             app.requestAccessToken(function (accessToken) {
-                                console.log('accessToken： ' + accessToken + ' templateId:  '+ templateId + ' sceneId:' + sceneId)
-                                
+                                console.log('accessToken： ' + accessToken + ' templateId:  ' + templateId + ' sceneId:' + sceneId)
+
                                 wx.request({
                                     url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + accessToken,
                                     data: {

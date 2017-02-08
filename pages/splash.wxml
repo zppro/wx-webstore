@@ -1,6 +1,6 @@
-<view class="container preloader">
+<view class="container preloader" bindtap="tapToIndex">
   <view class="head"></view>
-  <view class="body" bindtap="tapTotal">
+  <view class="body" >
      <view class="preloader-progress">
         <view class="preloader-progress-bar" style="width: {{progressWidth}}%">
         </view>

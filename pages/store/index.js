@@ -51,36 +51,30 @@ Page({
     console.log('index onLoad')
     app.toast.init(this)
     let that = this
+    let channelUnitNavSuffix = ''
+    try {
+      let channelUnit = wx.getStorageSync(keys.CHANNEL_UNIT)
+      if (channelUnit) {
+        channelUnitNavSuffix = '*'
+      }
+    } catch (e) {
+      // Do something when catch error
+      console.log('getStorageSync:CHANNEL_UNIT')
+      console.log(e)
+    }
     if (!app.appid) {
       setTimeout(() => {
         console.log('delay to wait load wxConfig')
         app.appname && wx.setNavigationBarTitle({
-          title: app.appname
+          title: app.appname + channelUnitNavSuffix
         })
         that.fetchData(true)
       }, 500)
     } else {
       app.appname && wx.setNavigationBarTitle({
-        title: app.appname
+        title: app.appname + channelUnitNavSuffix
       })
       that.fetchData(true)
     }
-
-console.log(keys.CHANNEL_UNIT)
-    wx.getStorage({
-      key: keys.CHANNEL_UNIT,
-      success: function (res) {
-        // success
-        console.log(res.data)
-
-      },
-      fail: function (err) {
-        // fail
-        console.log(err);
-      },
-      complete: function () {
-       
-      }
-    })
   }
 })

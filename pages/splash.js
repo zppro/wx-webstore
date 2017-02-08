@@ -4,6 +4,7 @@ import keys from '../config/keys.js'
 var app = getApp()
 Page({
     data: {
+        canTapToIndex: false,
         progressWidth: 1,
         channelUnit: { id: null, name: '梧斯源' }
     },
@@ -16,42 +17,55 @@ Page({
         }
     },
     //事件处理函数
-    tapTotal: function () {
-        console.log(123)
+    tapToIndex: function () {
+        if (!this.data.canTapToIndex) {
+            return
+        }
         wx.switchTab({
             url: '/pages/store/index'
         });
     },
-    onLoad: function (options) {
-        console.log('splash onLoad ')
+    fetchData: function (id) {
         let that = this
-        if (options.channelUnitId) {
-            let channelUnit = { id: options.channelUnitId, name: options.channelUnitName }
-            this.setData({ channelUnit })
+        app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'channelUnit/' + id, (channelUnit) => {
+            let channelUnitData = { id: channelUnit.id, name: channelUnit.name }
+            that.setData({ channelUnit: channelUnitData })
+            console.log(channelUnitData)
             wx.setStorage({
                 key: keys.CHANNEL_UNIT,
-                data: channelUnit,
+                data: channelUnitData,
                 success: function (res) {
                     // success
                     console.log('渠道商入口设置成功')
+                    wx.setNavigationBarTitle({
+                        title: '正在进入' + channelUnit.name + '...'
+                    })
+                    let internalId = setInterval(() => {
+                        let progressWidth = that.data.progressWidth;
+                        if (progressWidth === 100) {
+                            clearInterval(internalId)
+                            wx.switchTab({
+                                url: '/pages/store/index'
+                            });
+                        } else {
+                            progressWidth += 1
+                            that.setData({ progressWidth })
+                        }
+                    }, 20)
+                },
+                complete: function () {
+                    that.setData({ canTapToIndex: true })
                 }
-            });
-        }
-        wx.setNavigationBarTitle({
-            title: '正在进入' + this.data.channelUnit.name + '...'
+            })
         })
-        let internalId = setInterval(() => {
-            let progressWidth = that.data.progressWidth;
-            if (progressWidth === 100) {
-                clearInterval(internalId)
-                wx.switchTab({
-                    url: '/pages/store/index'
-                });
-            } else {
-                progressWidth += 1
-                that.setData({ progressWidth })
-            }
-
-        }, 20)
+    },
+    onLoad: function (options) {
+        console.log('splash onLoad ')
+        console.log(options)
+        let that = this
+        if (options.channelUnitId) {
+            // 验证渠道单元并获取其名称
+            this.fetchData(options.channelUnitId)
+        }
     }
 })
