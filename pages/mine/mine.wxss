@@ -130,6 +130,14 @@
   text-align: center;
 }
 
+.my-manage-item-icon-c4 {
+   background-color: #ff0000;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+}
+
 .my-manage-item-icon {
   vertical-align: middle;
 }

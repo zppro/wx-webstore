@@ -55,6 +55,15 @@
     </view>
     <text class="my-manage-item-text" bindtap="invoiceTap">开票信息</text>
   </view>
+  <view class="h-flex my-manage-item">
+    <view class="my-manage-item-icon-c">
+      <view class="my-manage-item-icon-c4">
+        <text class="iconfont icon-shanchu-01 my-manage-item-icon" />
+        <view class="verticle-middle"></view>
+      </view>
+    </view>
+    <text class="my-manage-item-text" bindtap="clearStorageTap">清除缓存</text>
+  </view>
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />

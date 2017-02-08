@@ -17,17 +17,40 @@ Page({
         }
     },
     //事件处理函数
-    tapToIndex: function () {
+    pageTap: function () {
         if (!this.data.canTapToIndex) {
             return
         }
-        wx.switchTab({
-            url: '/pages/store/index'
-        });
+        this.toIndex()
+    },
+    toIndex: function (useAnimation) {
+        let that = this
+        if (useAnimation) {
+            let internalId = setInterval(() => {
+                let progressWidth = that.data.progressWidth;
+                if (progressWidth === 100) {
+                    clearInterval(internalId)
+                    wx.switchTab({
+                        url: '/pages/store/index'
+                    })
+                } else {
+                    progressWidth += 1
+                    that.setData({ progressWidth })
+                }
+            }, 20)
+        } else {
+            wx.switchTab({
+                url: '/pages/store/index'
+            })
+        }
     },
     fetchData: function (id) {
         let that = this
         app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'channelUnit/' + id, (channelUnit) => {
+            if (!channelUnit) {
+                that.toIndex(true)
+                return
+            }
             let channelUnitData = { id: channelUnit.id, name: channelUnit.name }
             that.setData({ channelUnit: channelUnitData })
             console.log(channelUnitData)
@@ -40,18 +63,7 @@ Page({
                     wx.setNavigationBarTitle({
                         title: '正在进入' + channelUnit.name + '...'
                     })
-                    let internalId = setInterval(() => {
-                        let progressWidth = that.data.progressWidth;
-                        if (progressWidth === 100) {
-                            clearInterval(internalId)
-                            wx.switchTab({
-                                url: '/pages/store/index'
-                            });
-                        } else {
-                            progressWidth += 1
-                            that.setData({ progressWidth })
-                        }
-                    }, 20)
+                    that.toIndex(true)
                 },
                 complete: function () {
                     that.setData({ canTapToIndex: true })
@@ -62,10 +74,11 @@ Page({
     onLoad: function (options) {
         console.log('splash onLoad ')
         console.log(options)
-        let that = this
         if (options.channelUnitId) {
             // 验证渠道单元并获取其名称
             this.fetchData(options.channelUnitId)
+        } else {
+            this.toIndex(true)
         }
     }
 })

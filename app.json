@@ -22,17 +22,17 @@
   },
   "tabBar": {
     "color": "#a9b7b7",
-    "selectedColor": "#11cd6e",
+    "selectedColor": "#ff0000",
     "borderStyle": "white",
     "list": [
       {
-        "selectedIconPath": "images/首页_填充.png",
+        "selectedIconPath": "images/首页_填充_red.png",
         "iconPath": "images/首页.png",
         "pagePath": "pages/store/index",
         "text": "商城"
       },
       {
-        "selectedIconPath": "images/用户_填充.png",
+        "selectedIconPath": "images/用户_填充_red.png",
         "iconPath": "images/用户.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"

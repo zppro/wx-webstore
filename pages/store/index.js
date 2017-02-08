@@ -56,6 +56,7 @@ Page({
       let channelUnit = wx.getStorageSync(keys.CHANNEL_UNIT)
       if (channelUnit) {
         channelUnitNavSuffix = '*'
+        console.log(channelUnit)
       }
     } catch (e) {
       // Do something when catch error

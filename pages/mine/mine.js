@@ -30,6 +30,24 @@ Page({
       url: './invoice-list'
     })
   },
+  clearStorageTap: function (e) {
+    wx.showActionSheet({
+      itemList: ['确认清除缓存？'],
+      itemColor: '#f00',
+      success: function (res) {
+        if (res.tapIndex == 0) {
+          wx.removeStorage({
+            key: keys.CHANNEL_UNIT,
+            success: function (res) {
+              console.log('清除缓存：')
+              console.log(res.data)
+              app.toast.show('缓存清除成功')
+            }
+          })
+        }
+      }
+    })
+  },
   fetchData: function (cb) {
     let that = this;
     app.libs.http.post(app.config[keys.CONFIG_SERVER].getBizUrl() + 'orderStat/', { tenantId: app.config[keys.CONFIG_SERVER].getTenantId(), open_id: app.getSession().openid }, (orderStat) => {
