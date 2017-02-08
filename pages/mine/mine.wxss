@@ -9,6 +9,11 @@
   box-sizing: border-box;
 }
 
+.margin-tabbar {
+  height: 45px;
+  width: 100%;
+}
+
 .userinfo-space-top {
   flex: 2;
 }

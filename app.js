@@ -37,11 +37,11 @@ App({
             that.globalData.session = session;
             that.getUserInfo();
           }
-        })
+        }, {loadingText: false})
       } else {
         that.requestSession()
       }
-    })
+    }, {loadingText: false})
   },
   requestAccessToken: function (cb) {
     let that = this;
@@ -50,7 +50,7 @@ App({
         console.log('requestAccessToken:' + ret)
         typeof cb == 'function' && cb(ret)
       }
-    })
+    }, {loadingText: false})
   },
   requestSession: function () {
     console.log('requestSession')
@@ -64,7 +64,7 @@ App({
             wx.setStorageSync(keys.SESSION_KEY_NAME, ret.session_key);
             that.globalData.session = ret.session_value;
           }
-        });
+        }, {loadingText: false});
         wx.getUserInfo({
           success: function (res2) {
             that.globalData.userInfo = res2.userInfo

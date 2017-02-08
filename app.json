@@ -23,7 +23,7 @@
   "tabBar": {
     "color": "#a9b7b7",
     "selectedColor": "#ff0000",
-    "borderStyle": "white",
+    "borderStyle": "#f5f5f5",
     "list": [
       {
         "selectedIconPath": "images/首页_填充_red.png",

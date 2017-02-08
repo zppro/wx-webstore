@@ -191,7 +191,7 @@ Page({
                     }
                     console.log(requestPaymentObject);
                     wx.requestPayment(requestPaymentObject);
-                }, { loadingText: '订单创建中...', toastInfo: '订单创建成功' });
+                }, { loadingText: '订单创建中...'});
             })
         }
     },

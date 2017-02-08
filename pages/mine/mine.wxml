@@ -64,6 +64,7 @@
     </view>
     <text class="my-manage-item-text" bindtap="clearStorageTap">清除缓存</text>
   </view>
+  <view class="margin-tabbar"></view>
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />
