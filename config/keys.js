@@ -7,6 +7,7 @@ const ENV_BUILD_TARGET_BC = 'BC'
 const ACCESS_TOKEN_NAME = 'access_token'
 const SESSION_KEY_NAME = 'gen_session_key'
 const SERVER_GEN = 'server-gen'
+const CHANNEL_UNIT = 'channel-unit'
 const NEW_ADDED = 'new_added'
 const ORDER_CONFIRM_NOW = 'order-confirm-now'
 const ORDER_IS_CHANGED = 'order-is-changed'
@@ -21,6 +22,7 @@ module.exports = {
     ENV_BUILD_TARGET_BC,
     SESSION_KEY_NAME,
     SERVER_GEN,
+    CHANNEL_UNIT,
     NEW_ADDED,
     ORDER_CONFIRM_NOW,
     ORDER_IS_CHANGED

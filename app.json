@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/splash",
     "pages/store/index",
     "pages/store/spu-details",
     "pages/store/order-confirm",

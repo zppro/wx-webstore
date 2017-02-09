@@ -3,7 +3,7 @@
   <view wx:if="{{carts.length>0}}">
     <view class="h-flex cart-item" wx:for="{{carts}}" wx:for-item="cart" wx:key="cart.id">
       <view class="cart-img-c h-flex" data-cart-id="{{cart.id}}" bindtap="bindCheckbox">
-        <text class="item-choose iconfont {{cart.selected?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
+        <text class="item-choose iconfont {{!cart.selected?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
         <image class="item-img" src="../../images/cart.jpg"></image>
       </view>
       <view class="v-flex cart-other">
@@ -24,9 +24,10 @@
     </view>
     <view class="cart-actions h-flex"  >
       <view class="amount-action" bindtap="bindSelectAll">
-        <text class="item-choose iconfont {{selectedAllStatus?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
+        <text  wx:if="{{!selectedAllStatus}}" class="item-choose iconfont {{'icon-weixuanzhong-01'}} set-default-icon"></text>
+         <text wx:else class="item-choose iconfont {{'icon-xuanzhong-01 set-default-icon-selected'}} set-default-icon"></text>
         <text class="choose-all">全选</text>
-        <text></text>
+        <text>{{count}}</text>
       </view>
       <view class="button-action">
         <button class="add-new-button">结算</button>

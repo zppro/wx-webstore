@@ -1,0 +1,39 @@
+page {
+  height: 100%;
+}
+
+.preloader {
+  background-color: #d9534f;
+}
+
+.head {
+  flex: 1;
+}
+
+.body {
+  flex: 4;
+}
+
+.preloader-progress {
+  width: 160px;
+  height: 70px;
+  margin: auto;
+  overflow: auto;
+  background-image: url(http://img2.okertrip.com/woosiyuan-empty.png);
+  background-size: 160px 70px;
+}
+
+/*@noflip*/
+
+.preloader-progress-bar {
+  width: 160px;
+  height: 70px;
+  background-image: url(http://img2.okertrip.com/woosiyuan-full.png);
+  background-size: 160px 70px;
+}
+
+.foot {
+  height: 30px;
+  font-size: 12px;
+  color: white;
+}

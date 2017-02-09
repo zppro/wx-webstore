@@ -27,6 +27,9 @@ Page({
   test: function () {
     wx.navigateTo({
       url: '../shopping-cart/shopping-cart'
+
+     // url: '../splash'
+
     })
   },
   //事件处理函数
@@ -65,5 +68,22 @@ Page({
       })
       that.fetchData(true)
     }
+
+console.log(keys.CHANNEL_UNIT)
+    wx.getStorage({
+      key: keys.CHANNEL_UNIT,
+      success: function (res) {
+        // success
+        console.log(res.data)
+
+      },
+      fail: function (err) {
+        // fail
+        console.log(err);
+      },
+      complete: function () {
+       
+      }
+    })
   }
 })
