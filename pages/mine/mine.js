@@ -20,6 +20,9 @@ Page({
       url: './after-sale-list'
     })
   },
+  contactUSTap: function (e) {
+    console.log(345)
+  },
   shippingTap: function (e) {
     wx.navigateTo({
       url: './shipping-list'

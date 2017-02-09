@@ -32,6 +32,12 @@
         "text": "商城"
       },
       {
+        "selectedIconPath": "images/购物车_填充_red.png",
+        "iconPath": "images/购物车.png",
+        "pagePath": "pages/store/index",
+        "text": "购物车"
+      },
+      {
         "selectedIconPath": "images/用户_填充_red.png",
         "iconPath": "images/用户.png",
         "pagePath": "pages/mine/mine",

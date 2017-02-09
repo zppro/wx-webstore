@@ -99,9 +99,9 @@
   width: 20px;
   height: 20px;
   line-height: 20px;
-  color:white;
+  color: white;
   background-color: orange;
-  border:solid 1px #f00;
+  border: solid 1px #f00;
   z-index: 999;
   border-radius: 50%;
   text-align: center;
@@ -112,35 +112,49 @@
   height: 50px;
   padding: 0 8px;
   margin-top: 12px;
+  position: relative;
 }
 
-.my-manage-item-icon-c {
-  flex: 1;
+.my-manage-item-contact-button {
+  position: absolute;
+  z-index: 9999;
+  left: 50px;
+  overflow: hidden;
+  white-space:nowrap;
+}
+
+.my-manage-item-contact-button2 {
+  position: absolute;
+  left: 8px;
+  z-index: 99;
+}
+.icon-contact-button {
+  vertical-align: middle;
+  opacity: 0;
+}
+.my-manage-item-icon-c-share {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
   color: white;
+}
+
+.my-manage-item-icon-c1 {
+  background-color: #7d7dfa;
 }
 
 .my-manage-item-icon-c2 {
   background-color: #ec9401;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  text-align: center;
 }
 
 .my-manage-item-icon-c3 {
   background-color: #32b16c;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  text-align: center;
 }
 
 .my-manage-item-icon-c4 {
-   background-color: #ff0000;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  text-align: center;
+  background-color: #f00;
 }
 
 .my-manage-item-icon {
@@ -148,6 +162,9 @@
 }
 
 .my-manage-item-text {
-  flex: 7;
+  padding-left: 8px;
   text-align: left;
+  color: #888;
 }
+
+
