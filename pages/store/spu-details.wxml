@@ -41,7 +41,9 @@
       <image class="spu-img" mode="widthFix" src="{{current.intro_url}}"></image>
     </view>
   </scroll-view>
-  <view class="sp-details-actions">
+  <view class="sp-details-actions h-flex">
+    <view class="goto-cart" bindtap="gotoCart">进入购物车</view>
+    <button class="into-cart-button" type="warn" size="45" bindtap="intoCart">加入购物车</button>
     <button class="buy-now-button" type="warn" size="45" bindtap="buyNow">立即购买</button>
   </view>
 </view>

@@ -74,6 +74,9 @@ Page({
     }
   },
   //事件处理函数
+  intoCart:function(){
+
+  },
   buyNow: function () {
     if (this.checkData()) {
       let spu = this.data.current;
