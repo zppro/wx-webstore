@@ -118,9 +118,11 @@
 .my-manage-item-contact-button {
   position: absolute;
   z-index: 9999;
-  left: 50px;
+  right: 0;
   overflow: hidden;
-  white-space:nowrap;
+  white-space: nowrap;
+  width: 100%;
+  text-align: right;
 }
 
 .my-manage-item-contact-button2 {
@@ -128,10 +130,13 @@
   left: 8px;
   z-index: 99;
 }
+
 .icon-contact-button {
   vertical-align: middle;
+  padding: 0 3px; /** width = size + 2x3 **/
   opacity: 0;
 }
+
 .my-manage-item-icon-c-share {
   width: 32px;
   height: 32px;
@@ -166,5 +171,3 @@
   text-align: left;
   color: #888;
 }
-
-

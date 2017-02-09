@@ -3,7 +3,9 @@ let app = getApp()
 Page({
   data: {
     userInfo: {},
-    orderStat: {}
+    orderStat: {},
+    contactButtonLoop: [],
+    contactButtonLoopItemWidth: 33
   },
   onPullDownRefresh: function () {
     this.fetchData(() => { wx.stopPullDownRefresh() })
@@ -65,6 +67,15 @@ Page({
     console.log('onLoad')
     var that = this
     app.toast.init(this)
+    wx.getSystemInfo({
+      success: function (ret) {
+        console.log(ret);
+        let itemCount = Math.floor(ret.windowWidth / that.data.contactButtonLoopItemWidth)
+        that.setData({
+          contactButtonLoop: Array.apply(null, Array(itemCount)).map(function (_, i) { return i; })
+        })
+      }
+    })
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
