@@ -2,7 +2,7 @@
 <!--index.wxml-->
 <import src="../../components/quantity-regulator/quantity-regulator.wxml" />
 <view class="container">
-  <scroll-view class="spu-details" scroll-y="true" style="height: {{windowHeight}}px" >
+  <scroll-view class="spu-details" scroll-y="true" style="height: {{windowHeight}}px">
     <view class="spu-details-page-info {{pageInfoAnimationClass}}" hidden="{{!isPageInfoShow}}">
       <view class="spu-details-item">
         <image class="spu-img" mode="widthFix" src="{{current.img}}"></image>
@@ -36,13 +36,29 @@
     </view>
     <view class="spu-details-page-intro-url {{pageIntroUrlAnimationClass}}" hidden="{{!isPageIntroUrlShow}}">
       <view class="spu-pan-block" data-is-pan-up="{{false}}" bindtouchstart="spuPanTouchStart" bindtouchmove="spuPanTouchMove" bindtouchend="spuPanTouchEnd" bindtap="downTap">
-        <text >点击回到商品详情页面</text>
+        <text>点击回到商品详情页面</text>
       </view>
       <image class="spu-img" mode="widthFix" src="{{current.intro_url}}"></image>
     </view>
   </scroll-view>
-  <view class="sp-details-actions">
-    <button class="buy-now-button" type="warn" size="45" bindtap="buyNow">立即购买</button>
+  <view class="sp-details-actions h-flex">
+    <view class="transfer-links h-flex">
+      <view class="space"></view>
+      <view class="contact-button-icon">
+        <view class="contact-button-icon-absolute">
+          <contact-button type="default-dark" size="27" session-from="merchant-webstore">
+          </contact-button>
+        </view>
+        <text class="iconfont icon-kefu customer-service-icon" />
+      </view>
+      <view class="space"></view>
+      <navigator url="../mine/mine" class="shopping-cart-icon-c" open-type="switchTab">
+        <text class="iconfont icon-gouwuche shopping-cart-icon" />
+      </navigator>
+      <view class="space"></view>
+    </view>
+    <button class="sp-details-button add-to-shopping-cart-button" type="warn" size="mini" bindtap="addToShoppingCart">加入购物车</button>
+    <button class="sp-details-button buy-now-button" type="warn" size="mini" bindtap="buyNow">立即购买</button>
   </view>
 </view>
 <view class="spu-popup-container " hidden="{{!isSKUSContainerPopup}}">
