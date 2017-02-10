@@ -52,8 +52,9 @@
         <text class="iconfont icon-kefu customer-service-icon" />
       </view>
       <view class="space"></view>
-      <navigator url="../mine/mine" class="shopping-cart-icon-c" open-type="switchTab">
+      <navigator url="../shopping-cart/shopping-cart" class="shopping-cart-icon-c" open-type="switchTab">
         <text class="iconfont icon-gouwuche shopping-cart-icon" />
+        <text wx:if="{{shoppingCartItemCount > 0}}" class="shopping-cart-item-count">{{shoppingCartItemCount}}</text>
       </navigator>
       <view class="space"></view>
     </view>

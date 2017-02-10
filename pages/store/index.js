@@ -26,7 +26,7 @@ Page({
   },
   test: function () {
     wx.navigateTo({
-      url: '../splash'
+      url: '../shopping-cart/shopping-cart'
     })
   },
   //事件处理函数

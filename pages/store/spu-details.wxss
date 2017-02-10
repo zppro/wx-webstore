@@ -43,13 +43,27 @@
 
 .shopping-cart-icon-c {
   width: 40px;
+  position: relative;
 }
 
 .shopping-cart-icon {
   font-size: 28px;
   text-align: center;
 }
-
+.shopping-cart-item-count{
+  position: absolute;
+  right:5px;
+  top: -5px;
+  color: white;
+  background-color: #f00;
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  line-height: 20px;
+  z-index: 9999;
+  border-radius: 50%;
+  text-align: center;
+}
 .sp-details-button {
   text-align: center;
   height: 100%;
