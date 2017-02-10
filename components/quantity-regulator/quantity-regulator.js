@@ -17,6 +17,7 @@ module.exports = {
         });
     },
     plus: function({step = 1} = {}) {
+        console.log(345);
         let newValue = this.page.data.quantity + step;
         newValue > this.max && (newValue = this.max);
         this.page.setData({
