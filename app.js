@@ -3,12 +3,12 @@ import libs from 'utils/libs.js'
 import util from 'utils/util.js'
 import keys from 'config/keys.js'
 import toast from 'components/wx-toast/wx-toast'
-
-
+import ShoppingCart from 'components/shopping-cart'
 
 const build = {
+
   where: keys.ENV_BUILD_WHERE_PRODUCE, //ENV_BUILD_WHERE_DEBUG_OFFICE ENV_BUILD_WHERE_PRODUCE
-  target: keys.ENV_BUILD_TARGET_WSY // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
+  target: keys.ENV_BUILD_TARGET_BC // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
 
 }
 const serverConfig = require('config/server-config.js')(build)
@@ -42,7 +42,11 @@ App({
       } else {
         that.requestSession()
       }
+      that.noStateComponentsInit()
     }, {loadingText: false})
+  },
+  noStateComponentsInit: function () {
+    this.shoppingCart = new ShoppingCart(wx, keys.STG_SHOPPING_CART)
   },
   requestAccessToken: function (cb) {
     let that = this;

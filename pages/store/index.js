@@ -27,9 +27,6 @@ Page({
   test: function () {
     wx.navigateTo({
       url: '../shopping-cart/shopping-cart'
-
-     // url: '../splash'
-
     })
   },
   //事件处理函数

@@ -1,6 +1,8 @@
 <import src="../../components/quantity-regulator/quantity-regulator.wxml" />
 <view class="container shopping-cart">
   <view wx:if="{{carts.length>0}}">
+    <view class="address">
+    </view>
     <view class="h-flex cart-item" wx:for="{{carts}}" wx:for-item="cart" wx:key="cart.id">
       <view class="cart-img-c h-flex" data-cart-id="{{cart.id}}" bindtap="bindCheckbox">
         <text class="item-choose iconfont {{!cart.selected?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>

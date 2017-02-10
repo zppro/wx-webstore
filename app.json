@@ -4,6 +4,7 @@
     "pages/store/index",
     "pages/store/spu-details",
     "pages/store/order-confirm",
+    "pages/shopping-cart/shopping-cart",
     "pages/mine/mine",
     "pages/mine/order-list",
     "pages/mine/order-details",
@@ -12,10 +13,7 @@
     "pages/mine/invoice-list",
     "pages/mine/invoice-details",
     "pages/mine/after-sale-list",
-    "pages/mine/after-sale-details",
-    "pages/shopping-cart/shopping-cart"
-
-
+    "pages/mine/after-sale-details"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -35,16 +33,9 @@
         "text": "商城"
       },
       {
-
-        "selectedIconPath": "images/首页_填充.png",
-        "iconPath": "images/首页.png",
-        "pagePath": "pages/shopping-cart/shopping-cart",
-        "text": "购物车"
-      },
-      {
         "selectedIconPath": "images/购物车_填充_red.png",
         "iconPath": "images/购物车.png",
-        "pagePath": "pages/store/index",
+        "pagePath": "pages/shopping-cart/shopping-cart",
         "text": "购物车"
       },
       {

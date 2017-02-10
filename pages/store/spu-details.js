@@ -7,18 +7,9 @@ Page({
     selected_sku: {},
     quantity: 1,
     windowHeight: 627 - 45,
-    selectedShippingInfo: {
-      // _id: '1',
-      // province: '浙江',
-      // city: '杭州市',
-      // area: '余杭区',
-      // address: '余杭镇XX小区1-3-102'
-    },
-    memberShippingInfos: [
-      { _id: '1', province: '浙江', city: '杭州市', area: '余杭区', address: '余杭镇XX小区1-3-102' },
-      { _id: '2', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区XX小区1-3-303' },
-      { _id: '3', province: '浙江', city: '湖州市', area: '吴兴区', address: '城区YY小区12-1-502' }
-    ],
+    shoppingCartItemCount: 0,
+    selectedShippingInfo: {},
+    memberShippingInfos: [],
     isPageInfoShow: true,
     isPageIntroUrl: false,
     pageInfoAnimationClass: '',
@@ -74,45 +65,84 @@ Page({
     }
   },
   //事件处理函数
-  intoCart:function(){
-
+  addToShoppingCart: function () {
+    let spuInfo = this.getSPUInfo()
+    if (!spuInfo) {
+      return;
+    }
+    let that = this
+    let shipping_info = this.data.selectedShippingInfo
+      , groupKey = shipping_info._id
+      , groupInfo = shipping_info
+      , groupComparator = (groupItem) => {
+        return groupItem.groupKey === shipping_info._id
+      }
+      , newItem = spuInfo
+      , itemComparator = (item) => {
+        return item.spu_id === spuInfo.spu_id && item.sku_id === spuInfo.sku_id
+      }
+      , mergeSameItemFn = (oldItem, newItem) => {
+        oldItem.spu_name = newItem.spu_name
+        oldItem.sku_name = newItem.sku_name
+        oldItem.img = newItem.img
+        oldItem.price = newItem.price
+        oldItem.market_price = newItem.market_price
+        oldItem.quantity = oldItem.quantity + newItem.quantity
+      }
+      , successFn = () => {
+        that.setData({
+          shoppingCartItemCount: app.shoppingCart.getItemCount()
+        })
+      }
+    app.shoppingCart.addItem(groupKey, groupInfo, groupComparator, newItem, itemComparator, mergeSameItemFn, successFn)
   },
   buyNow: function () {
-    if (this.checkData()) {
-      let spu = this.data.current;
-      let sku = this.data.selected_sku;
-      let quantity = this.data.quantity;
-      let amount = sku.sale_price * quantity;
-      wx.setStorage({
-        key: keys.STG_ORDER_CONFIRM_NOW,
-        data: {
-          shipping_info: this.data.selectedShippingInfo,
-          items: [{
-            spu_id: spu.id,
-            spu_name: spu.name,
-            sku_id: sku._id,
-            sku_name: sku.name,
-            img: spu.img,
-            price: sku.sale_price,//下单单价 单位元
-            market_price: sku.market_price,
-            quantity: quantity//数量
-          }],
-          amount: new Number(amount).toFixed(2),
-          shipping_fee: new Number(0).toFixed(2)
-        },
-        success: function (res) {
-          // success
-          wx.navigateTo({
-            url: './order-confirm'
-          });
-        },
-        fail: function (err) {
-          // fail
-          console.log(err);
-          app.toast.show(err, { icon: 'warn', duration: 1500 })
-        }
-      });
+    let spuInfo = this.getSPUInfo()
+    if (!spuInfo) {
+      return;
     }
+    let that = this
+    wx.setStorage({
+      key: keys.STG_ORDER_CONFIRM_NOW,
+      data: {
+        shipping_info: this.data.selectedShippingInfo,
+        items: [spuInfo],
+        amount: new Number(spuInfo.price * spuInfo.quantity).toFixed(2),
+        shipping_fee: new Number(0).toFixed(2)
+      },
+      success: function (res) {
+        // success
+        that.toOrderConfirm()
+      },
+      fail: function (err) {
+        // fail
+        console.log(err);
+        app.toast.show(err, { icon: 'warn', duration: 1500 })
+      }
+    })
+  },
+  getSPUInfo: function () {
+    if (!this.checkData()) {
+      return null
+    }
+    let spu = this.data.current
+    let sku = this.data.selected_sku
+    let quantity = this.data.quantity
+    return {
+      spu_id: spu.id,
+      spu_name: spu.name,
+      sku_id: sku._id,
+      sku_name: sku.name,
+      img: spu.img,
+      price: sku.sale_price,//下单单价 单位元
+      market_price: sku.market_price,
+      quantity: quantity//数量
+    }
+  },
+  toOrderConfirm: function () {
+    wx.navigateTo({
+      url: './order-confirm'
+    })
   },
   checkData: function () {
     if (!this.data.selectedShippingInfo || app.util.isEmpty(this.data.selectedShippingInfo.id)) {
@@ -330,6 +360,9 @@ Page({
 
     app.toast.init(this)
     quantityRegulator.init(this)
+    this.setData({
+      shoppingCartItemCount: app.shoppingCart.getItemCount()
+    })
     this.fetchData(options.spuId)
     this.fetchDefaultShippingInfo()
   }

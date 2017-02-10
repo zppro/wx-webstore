@@ -2,7 +2,6 @@
 <!--index.wxml-->
 <view class="container spu-list">
   <view class="h-flex spu-item" data-spu-id="{{spu.id}}" bindtap="spuTap" wx:for="{{spus}}" wx:for-item="spu" wx:key="spu.id">
-    <!--<image class="spu-img" mode="widthFix" src="{{spu.img}}"></image>-->
     <view class="spu-img-c">
       <image class="spu-img" src="{{spu.img + '?imageView2/1/w/100/h/100'}}"></image>
       <text class="verticle-middle"></text>
@@ -16,11 +15,7 @@
       </view>
     </view>
   </view>
-
-  <button wx:if="{{true}}" type="primary" size="45" bindtap="test">测试</button>
-
   <!--<button wx:if="{{true}}" type="primary" size="45" bindtap="test">测试</button>-->
-
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />
