@@ -1,4 +1,4 @@
-import quantityRegulator from '../../components/quantity-regulator/quantity-regulator'
+import QuantityRegulator from '../../components/quantity-regulator/quantity-regulator'
 import keys from '../../config/keys.js'
 var app = getApp()
 Page({
@@ -199,7 +199,7 @@ Page({
       quantity: 1,
       selected_sku: sku
     });
-    quantityRegulator.setMax(this.data.selected_sku.quantity);
+    this.quantityRegulator.setMax(this.data.selected_sku.quantity);
   },
   openPickShippingInfoDialog: function () {
     var that = this;
@@ -344,7 +344,7 @@ Page({
         current: spu,
         selected_sku: spu.default_selected_sku || {}
       });
-      quantityRegulator.setMax(that.data.selected_sku.quantity);
+      this.quantityRegulator.setMax(that.data.selected_sku.quantity);
     })
   },
   onLoad: function (options) {
@@ -359,7 +359,7 @@ Page({
     })
 
     app.toast.init(this)
-    quantityRegulator.init(this)
+    this.quantityRegulator = new QuantityRegulator(that)
     this.setData({
       shoppingCartItemCount: app.shoppingCart.getItemCount()
     })
