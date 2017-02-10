@@ -35,15 +35,13 @@
         "text": "商城"
       },
       {
-<<<<<<< HEAD
+
         "selectedIconPath": "images/首页_填充.png",
         "iconPath": "images/首页.png",
         "pagePath": "pages/shopping-cart/shopping-cart",
         "text": "购物车"
       },
       {
-        "selectedIconPath": "images/用户_填充.png",
-=======
         "selectedIconPath": "images/购物车_填充_red.png",
         "iconPath": "images/购物车.png",
         "pagePath": "pages/store/index",
@@ -51,7 +49,6 @@
       },
       {
         "selectedIconPath": "images/用户_填充_red.png",
->>>>>>> zpproup/master
         "iconPath": "images/用户.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"

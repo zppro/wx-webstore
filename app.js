@@ -7,14 +7,9 @@ import toast from 'components/wx-toast/wx-toast'
 
 
 const build = {
-<<<<<<< HEAD
-
-  where: keys.ENV_BUILD_WHERE_DEBUG_OFFICE, //ENV_BUILD_WHERE_DEBUG_OFFICE ENV_BUILD_WHERE_PRODUCE
-  target: keys.ENV_BUILD_TARGET_BC // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
-=======
-  where: keys.ENV_BUILD_WHERE_PRODUCE, //ENV_BUILD_WHERE_DEBUG_OFFICE, ENV_BUILD_WHERE_PRODUCE
+  where: keys.ENV_BUILD_WHERE_PRODUCE, //ENV_BUILD_WHERE_DEBUG_OFFICE ENV_BUILD_WHERE_PRODUCE
   target: keys.ENV_BUILD_TARGET_WSY // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
->>>>>>> zpproup/master
+
 }
 const serverConfig = require('config/server-config.js')(build)
 
