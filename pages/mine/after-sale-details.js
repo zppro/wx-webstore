@@ -28,6 +28,16 @@ Page({
                                     current.code = keys.SERVER_GEN
                                     current.open_id = app.getSession().openid
                                     current.tenantId = app.config[keys.CONFIG_SERVER].getTenantId()
+                                    try {
+                                        let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
+                                        if (channelUnit) {
+                                            current.channelUnitId = channelUnit.id
+                                        }
+                                    } catch (e) {
+                                        // Do something when catch error
+                                        console.log('getStorageSync:STG_CHANNEL_UNIT')
+                                        console.log(e)
+                                    }
                                     current.apply_for_nickname = userInfo.nickName
                                 }
                                 app.libs.http.save(app.config[keys.CONFIG_SERVER].getBizUrl() + 'afterSale', current, () => {

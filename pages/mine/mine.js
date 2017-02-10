@@ -3,7 +3,9 @@ let app = getApp()
 Page({
   data: {
     userInfo: {},
-    orderStat: {}
+    orderStat: {},
+    contactButtonLoop: [],
+    contactButtonLoopItemWidth: 33
   },
   onPullDownRefresh: function () {
     this.fetchData(() => { wx.stopPullDownRefresh() })
@@ -20,6 +22,9 @@ Page({
       url: './after-sale-list'
     })
   },
+  contactUSTap: function (e) {
+    console.log(345)
+  },
   shippingTap: function (e) {
     wx.navigateTo({
       url: './shipping-list'
@@ -28,6 +33,24 @@ Page({
   invoiceTap: function (e) {
     wx.navigateTo({
       url: './invoice-list'
+    })
+  },
+  clearStorageTap: function (e) {
+    wx.showActionSheet({
+      itemList: ['确认清除缓存？'],
+      itemColor: '#f00',
+      success: function (res) {
+        if (res.tapIndex == 0) {
+          wx.removeStorage({
+            key: keys.STG_CHANNEL_UNIT,
+            success: function (res) {
+              console.log('清除缓存：')
+              console.log(res.data)
+              app.toast.show('缓存清除成功')
+            }
+          })
+        }
+      }
     })
   },
   fetchData: function (cb) {
@@ -44,6 +67,15 @@ Page({
     console.log('onLoad')
     var that = this
     app.toast.init(this)
+    wx.getSystemInfo({
+      success: function (ret) {
+        console.log(ret);
+        let itemCount = Math.floor(ret.windowWidth / that.data.contactButtonLoopItemWidth)
+        that.setData({
+          contactButtonLoop: Array.apply(null, Array(itemCount)).map(function (_, i) { return i; })
+        })
+      }
+    })
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({

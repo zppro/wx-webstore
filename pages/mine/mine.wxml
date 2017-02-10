@@ -38,23 +38,47 @@
     </view>
   </view>
   <view class="h-flex my-manage-item">
-    <view class="my-manage-item-icon-c">
-      <view class="my-manage-item-icon-c2">
-        <text class="iconfont icon-map my-manage-item-icon" />
+    <view class="my-manage-item-contact-button">
+      <contact-button wx:for="{{contactButtonLoop}}" wx:key="*this"  class="icon-contact-button" type="default-light" size="27" session-from="merchant-webstore">
+      </contact-button>
+    </view>
+    <view class="my-manage-item-contact-button2">
+      <view class="my-manage-item-icon-c-share my-manage-item-icon-c1">
+        <contact-button class="my-manage-item-icon" type="default-light" size="20" session-from="merchant-webstore">
+        </contact-button>
         <view class="verticle-middle"></view>
       </view>
+      <text class="my-manage-item-text">联系客服</text>
     </view>
-    <text class="my-manage-item-text" bindtap="shippingTap">收货地址</text>
   </view>
   <view class="h-flex my-manage-item">
     <view class="my-manage-item-icon-c">
-      <view class="my-manage-item-icon-c3">
+      <view class="my-manage-item-icon-c-share my-manage-item-icon-c2">
+        <text class="iconfont icon-map my-manage-item-icon" />
+        <view class="verticle-middle"></view>
+      </view>
+      <text class="my-manage-item-text" bindtap="shippingTap">收货地址</text>
+    </view>
+  </view>
+  <view class="h-flex my-manage-item">
+    <view class="my-manage-item-icon-c">
+      <view class="my-manage-item-icon-c-share my-manage-item-icon-c3">
         <text class="iconfont icon-kaifapiao my-manage-item-icon" />
         <view class="verticle-middle"></view>
       </view>
+      <text class="my-manage-item-text" bindtap="invoiceTap">开票信息</text>
     </view>
-    <text class="my-manage-item-text" bindtap="invoiceTap">开票信息</text>
   </view>
+  <view class="h-flex my-manage-item ">
+    <view class="my-manage-item-icon-c ">
+      <view class="my-manage-item-icon-c-share my-manage-item-icon-c4 ">
+        <text class="iconfont icon-shanchu-01 my-manage-item-icon " />
+        <view class="verticle-middle "></view>
+      </view>
+      <text class="my-manage-item-text " bindtap="clearStorageTap">清除缓存</text>
+    </view>
+  </view>
+  <view class="margin-tabbar "></view>
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />

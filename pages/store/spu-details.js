@@ -48,7 +48,7 @@ Page({
       // this.fetchMemberShippingInfos()
       var memberShippingInfos = this.data.memberShippingInfos
       wx.getStorage({
-        key: keys.NEW_ADDED,
+        key: keys.STG_NEW_ADDED,
         success: function (res) {
           // success
           console.log(res.data)
@@ -67,7 +67,7 @@ Page({
         },
         complete: function () {
           wx.removeStorage({
-            key: keys.NEW_ADDED
+            key: keys.STG_NEW_ADDED
           })
         }
       })
@@ -84,7 +84,7 @@ Page({
       let quantity = this.data.quantity;
       let amount = sku.sale_price * quantity;
       wx.setStorage({
-        key: keys.ORDER_CONFIRM_NOW,
+        key: keys.STG_ORDER_CONFIRM_NOW,
         data: {
           shipping_info: this.data.selectedShippingInfo,
           items: [{

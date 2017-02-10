@@ -22,7 +22,7 @@ Page({
                 if (res.tapIndex == 0) {
                     app.libs.http.delete(app.config[keys.CONFIG_SERVER].getBizUrl() + 'order/' + orderId, () => {
                         wx.setStorage({
-                            key: keys.ORDER_IS_CHANGED,
+                            key: keys.STG_ORDER_IS_CHANGED,
                             data: {
                                 isOrderChanged: true
                             },

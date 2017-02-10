@@ -4,54 +4,86 @@ import keys from '../config/keys.js'
 var app = getApp()
 Page({
     data: {
+        splashImage: '',
+        canTapToIndex: false,
         progressWidth: 1,
         channelUnit: { id: null, name: '梧斯源' }
     },
-    onShareAppMessage: function () {
-        let desc = app.config[keys.CONFIG_SERVER].wxAppConfig.description || '销售睡眠仪，定位手环，机器人等'
-        return {
-            title: app.appname,
-            desc,
-            path: '/pages/splash'
+    //事件处理函数
+    pageTap: function () {
+        if (!this.data.canTapToIndex || !app.appid) {
+            return
+        }
+        this.toIndex()
+    },
+    toIndex: function (useAnimation) {
+        let that = this
+        if (useAnimation) {
+            let internalId = setInterval(() => {
+                let progressWidth = that.data.progressWidth;
+                if (progressWidth === 100 && app.appid) {
+                    console.log(app.appid)
+                    clearInterval(internalId)
+                    wx.switchTab({
+                        url: '/pages/store/index'
+                    })
+                } else {
+                    progressWidth += 1
+                    that.setData({ progressWidth })
+                    if (app.appid) {
+                        that.setData({
+                            splashImage: app.config[keys.CONFIG_SERVER].splash_img
+                        })
+                    }
+                }
+            }, 20)
+        } else {
+            wx.switchTab({
+                url: '/pages/store/index'
+            })
         }
     },
-    //事件处理函数
-    tapTotal: function () {
-        console.log(123)
-        wx.switchTab({
-            url: '/pages/store/index'
-        });
-    },
-    onLoad: function (options) {
-        console.log('splash onLoad ')
+    fetchData: function (id) {
         let that = this
-        if (options.channelUnitId) {
-            let channelUnit = { id: options.channelUnitId, name: options.channelUnitName }
-            this.setData({ channelUnit })
+        app.libs.http.get(app.config[keys.CONFIG_SERVER].getBizUrl() + 'channelUnit/' + id, (channelUnit) => {
+            if (!channelUnit) {
+                that.toIndex(true)
+                return
+            }
+            let channelUnitData = { id: channelUnit.id, name: channelUnit.name }
+            that.setData({ channelUnit: channelUnitData })
+            console.log(channelUnitData)
             wx.setStorage({
-                key: keys.CHANNEL_UNIT,
-                data: channelUnit,
+                key: keys.STG_CHANNEL_UNIT,
+                data: channelUnitData,
                 success: function (res) {
                     // success
                     console.log('渠道商入口设置成功')
+                    wx.setNavigationBarTitle({
+                        title: '正在进入' + channelUnit.name + '...'
+                    })
+                    that.toIndex(true)
+                },
+                complete: function () {
+                    that.setData({ canTapToIndex: true })
                 }
-            });
-        }
-        wx.setNavigationBarTitle({
-            title: '正在进入' + this.data.channelUnit.name + '...'
+            })
+        }, null, { loadingText: false })
+    },
+    onLoad: function (options) {
+        console.log('splash onLoad ')
+        console.log(options)
+        console.log(app.config[keys.CONFIG_SERVER].splash_img)
+        let that = this
+        that.setData({
+            splashImage: app.config[keys.CONFIG_SERVER].splash_img
         })
-        let internalId = setInterval(() => {
-            let progressWidth = that.data.progressWidth;
-            if (progressWidth === 100) {
-                clearInterval(internalId)
-                wx.switchTab({
-                    url: '/pages/store/index'
-                });
-            } else {
-                progressWidth += 1
-                that.setData({ progressWidth })
-            }
-
-        }, 20)
+        let channelUnit = wx.getStorageSync(keys.STG_CHANNEL_UNIT)
+        if (options.channelUnitId) {
+            // 验证渠道单元并获取其名称
+            this.fetchData(options.channelUnitId)
+        } else {
+            this.toIndex(true)
+        }
     }
 })

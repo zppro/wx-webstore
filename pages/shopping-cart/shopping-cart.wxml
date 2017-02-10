@@ -9,13 +9,14 @@
       <view class="v-flex cart-other">
         <view class="h-flex">
           <text class="item-name">{{cart.spu_name}}</text>
-          <view class="remove-c" data-cart-id="{{cart.id}}" bindtap="removeTap">
+          <view class="remove-c" data-cart-id="{{cart.id}}" bindtap="removecCart">
             <text class="remove-button iconfont {{'icon-shanchu-01'}} set-default-icon">删除</text>
           </view>
         </view>
         <text class="item-shipment-place">{{cart.spu_type}}</text>
         <view class="h-flex item-price-sales">
           <text class="item-sale-price">{{cart.spu_price}}</text>
+          <text class="item-market-price" wx:if="{{cart.spu_price<cart.market_price}}">￥{{cart.market_price}}</text>
         </view>
         <view class="item-skus-quantity-control">
           <template is="quantity-regulator" data="{{quantity:cart.quantity}}" />
@@ -30,7 +31,7 @@
         <text>{{count}}</text>
       </view>
       <view class="button-action">
-        <button class="add-new-button">结算</button>
+        <button class="add-new-button" bindtap="setAccounts">结算</button>
       </view>
     </view>
   </view>
