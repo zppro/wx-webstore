@@ -87,7 +87,7 @@ Page({
         oldItem.img = newItem.img
         oldItem.price = newItem.price
         oldItem.market_price = newItem.market_price
-        oldItem.quantity = newItem.quantity + newItem.quantity
+        oldItem.quantity = oldItem.quantity + newItem.quantity
       }
       , successFn = () => {
         that.setData({

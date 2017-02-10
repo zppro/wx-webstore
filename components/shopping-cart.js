@@ -3,10 +3,13 @@ var ShoppingCart = function (wx, cacheKey) {
     this.cacheKey = cacheKey
     this.groupedItems = this.wx.getStorageSync(this.cacheKey) || []
 }
-ShoppingCart.prototype.getItemCount = function () {
+ShoppingCart.prototype.getItemCount = function (quantityKey = 'quantity') {
     return this.groupedItems.reduce((totalOfGroup, group) => {
+        console.log(group)
         return totalOfGroup + group.items.reduce((totalOfItem, item) => {
-            return totalOfItem + item.quantity
+            console.log(totalOfItem)
+            console.log(item[quantityKey])
+            return totalOfItem + item[quantityKey]
         }, 0)
     }, 0)
 }
