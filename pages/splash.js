@@ -68,7 +68,7 @@ Page({
                     that.setData({ canTapToIndex: true })
                 }
             })
-        }, null, { loadingText: false })
+        }, { loadingText: false })
     },
     onLoad: function (options) {
         console.log('splash onLoad ')

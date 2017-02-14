@@ -6,10 +6,8 @@ import toast from 'components/wx-toast/wx-toast'
 import ShoppingCart from 'components/shopping-cart'
 
 const build = {
-
-  where: keys.ENV_BUILD_WHERE_PRODUCE, //ENV_BUILD_WHERE_DEBUG_OFFICE ENV_BUILD_WHERE_PRODUCE
-  target: keys.ENV_BUILD_TARGET_BC // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
-
+  where: keys.ENV_BUILD_WHERE_PRODUCE, //ENV_BUILD_WHERE_DEBUG_OFFICE, ENV_BUILD_WHERE_PRODUCE
+  target: keys.ENV_BUILD_TARGET_WSY // ENV_BUILD_TARGET_WSY ENV_BUILD_TARGET_BC
 }
 const serverConfig = require('config/server-config.js')(build)
 
