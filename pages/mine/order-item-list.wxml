@@ -1,0 +1,26 @@
+<view class="container order-item-list">
+  <view class="order-box">
+    <view class="h-flex order-item" wx:for="{{orderItems}}" wx:for-index="idx2" wx:for-item="orderItem" wx:key="orderItem.id">
+      <view class="item-information  h-flex">
+        <view class="item-img-c">
+          <image class="item-img" src="../../images/cart.jpg"></image>
+        </view>
+        <view class="v-flex item-other">
+          <view class="h-flex">
+            <text class="item-name">{{orderItem.spu_name}}</text>
+          </view>
+          <text class="item-shipment-place">{{orderItem.sku_name}}</text>
+          <view class="h-flex item-price-sales">
+            <text class="item-sale-price">{{orderItem.price}}</text>
+            <text class="item-market-price" wx:if="{{orderItem.price<orderItem.market_price}}">￥{{orderItem.market_price}}</text>
+            <view class="item-skus-quantity-control h-flex">
+                <text>x{{orderItem.quantity}}</text>
+          </view>
+          </view>         
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<import src="../../components/wx-toast/wx-toast.wxml" />
+<template is="wx-toast" data="{{toastOptions: toastOptions}}" />
