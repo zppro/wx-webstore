@@ -1,9 +1,6 @@
 import keys from '../../config/keys.js'
-import settings from '../../config/settings.js'
-import quantityRegulator from '../../components/quantity-regulator/quantity-regulator'
 //获取应用实例
-var app = getApp();
-// var  selectedAllStatus = false;
+var app = getApp()
 Page({
     data: {
         orderItems: []
@@ -11,10 +8,10 @@ Page({
     //事件处理函数
 
     onLoad: function (options) {
-        console.log('shopping-cart onLoad ');
-         let orderItems = this.data.orderItems;
+        console.log('order-item-list onLoad ');
+        let that = this
         wx.getStorage({
-            key: keys.STG_ORDER_CONFIRM_NOW,
+            key: keys.STG_ORDER_CONFIRM_SHOW_ORDER_ITEMS,
             success: function (res) {
                 // success
                 that.setData({

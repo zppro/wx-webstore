@@ -37,8 +37,9 @@
             <image class="item-img" src="{{orderItem.img + '?imageView2/1/w/90/h/90'}}"></image>
             <text class="verticle-middle"></text>
           </view>
-          <view class="order-items-other2">
-            共{{order.items.length}}件
+          <view class="order-items-other2" bindtap="orderItemListTap">
+            <text>共{{order.items.length}}件</text>
+            <text class="order-item-list iconfont icon-arrowright" ></text>
           </view>
           <text class="verticle-middle"></text>
         </block>

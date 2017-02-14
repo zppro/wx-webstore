@@ -11,6 +11,7 @@ const STG_SPLASH_BACK_IMG = 'splash-back-img'
 const STG_NEW_ADDED = 'new_added'
 const STG_SHOPPING_CART = 'shopping-cart'
 const STG_ORDER_CONFIRM_NOW = 'order-confirm-now'
+const STG_ORDER_CONFIRM_SHOW_ORDER_ITEMS = 'order-confirm-show-order-items'
 const STG_ORDER_IS_CHANGED = 'order-is-changed'
 const ORDER_CONFIRM_SOURCE_SPU_DETAILS = 'spu-details'
 const ORDER_CONFIRM_SOURCE_SHOPPING_CART = 'shopping-cart'
@@ -29,6 +30,7 @@ module.exports = {
     STG_NEW_ADDED,
     STG_SHOPPING_CART,
     STG_ORDER_CONFIRM_NOW,
+    STG_ORDER_CONFIRM_SHOW_ORDER_ITEMS,
     STG_ORDER_IS_CHANGED,
     ORDER_CONFIRM_SOURCE_SPU_DETAILS,
     ORDER_CONFIRM_SOURCE_SHOPPING_CART

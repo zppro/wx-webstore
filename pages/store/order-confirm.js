@@ -232,6 +232,22 @@ Page({
         }
         return true;
     },
+    orderItemListTap: function () {
+        wx.setStorage({
+            key: keys.STG_ORDER_CONFIRM_SHOW_ORDER_ITEMS,
+            data: this.data.order.items,
+            success: function (res) {
+                wx.navigateTo({
+                    url: '../mine/order-item-list'
+                })
+            },
+            fail: function (err) {
+                console.log(err);
+                app.toast.show(err, { icon: 'warn', duration: 1500 })
+            }
+        })
+
+    },
     addNewInvoiceInfo: function () {
         console.log('addNewInvoiceInfo...')
         this.setData({

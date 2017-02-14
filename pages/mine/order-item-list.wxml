@@ -22,5 +22,3 @@
     </view>
   </view>
 </view>
-<import src="../../components/wx-toast/wx-toast.wxml" />
-<template is="wx-toast" data="{{toastOptions: toastOptions}}" />
