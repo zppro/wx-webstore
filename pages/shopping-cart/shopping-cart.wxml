@@ -1,45 +1,53 @@
 <import src="../../components/quantity-regulator/quantity-regulator.wxml" />
 <view class="container shopping-cart">
-  <view wx:if="{{carts.length>0}}">
-    <view class="address">
-    </view>
-    <view class="h-flex cart-item" wx:for="{{carts}}" wx:for-item="cart" wx:key="cart.id">
-      <view class="cart-img-c h-flex" data-cart-id="{{cart.id}}" bindtap="bindCheckbox">
-        <text class="item-choose iconfont {{!cart.selected?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
-        <image class="item-img" src="../../images/cart.jpg"></image>
-      </view>
-      <view class="v-flex cart-other">
-        <view class="h-flex">
-          <text class="item-name">{{cart.spu_name}}</text>
-          <view class="remove-c" data-cart-id="{{cart.id}}" bindtap="removecCart">
-            <text class="remove-button iconfont {{'icon-shanchu-01'}} set-default-icon">删除</text>
+  <block wx:if="{{shopping_cart.length>0}}">
+  <view class="cart-box">
+    <view class="address-box" wx:for="{{shopping_cart}}" wx:for-index="idx" wx:for-item="cart" wx:key="cart.groupKey">
+      <view class="address" >
+        <text class="item-choose addr-choose iconfont {{cartChecked[idx]['self']?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon" data-group-index="{{idx}}" bindtap="bindCheckAddrbox"></text>
+        <text class="adress-text">{{cart.group.province}}{{cart.group.city}}{{cart.group.area}}</text>
+        <view class="h-flex cart-item" wx:for="{{cart.items}}" wx:for-index="idx2" wx:for-item="item" wx:key="item.spu_id">
+          <view class="cart-img-c h-flex" data-group-index="{{idx}}" data-item-index="{{idx2}}" bindtap="bindCheckbox">
+            <text class="item-choose iconfont {{cartChecked[idx][idx2]?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
+            <image class="item-img" src="../../images/cart.jpg"></image>
+          </view>
+          <view class="v-flex cart-other">
+            <view class="h-flex">
+              <text class="item-name">{{item.spu_name}}</text>
+              <!--<view class="remove-c" data-cart-id="{{cart.items.spu_id}}" bindtap="removecCart">
+                <text class="remove-button iconfont {{'icon-shanchu-01'}} set-default-icon">删除</text>
+              </view>-->
+            </view>
+            <text class="item-shipment-place">{{item.sku_name}}</text>
+            <view class="h-flex item-price-sales">
+              <text class="item-sale-price">{{item.price}}</text>
+              <text class="item-market-price" wx:if="{{item.price<item.market_price}}">￥{{item.market_price}}</text>
+            </view>
+            <view class="item-skus-quantity-control h-flex">
+              <template is="quantity-regulator" data="{{quantity:item.quantity}}" />
+              <view class="remove-c" data-group-index="{{idx}}" data-item-index="{{idx2}}" bindtap="removecCart">
+                <text class="remove-button iconfont {{'icon-shanchu-01'}} set-default-icon"></text>
+              </view>
+            </view>
           </view>
         </view>
-        <text class="item-shipment-place">{{cart.spu_type}}</text>
-        <view class="h-flex item-price-sales">
-          <text class="item-sale-price">{{cart.spu_price}}</text>
-          <text class="item-market-price" wx:if="{{cart.spu_price<cart.market_price}}">￥{{cart.market_price}}</text>
-        </view>
-        <view class="item-skus-quantity-control">
-          <template is="quantity-regulator" data="{{quantity:cart.quantity}}" />
-        </view>
       </view>
     </view>
-    <view class="cart-actions h-flex"  >
-      <view class="amount-action" bindtap="bindSelectAll">
-        <text  wx:if="{{!selectedAllStatus}}" class="item-choose iconfont {{'icon-weixuanzhong-01'}} set-default-icon"></text>
-         <text wx:else class="item-choose iconfont {{'icon-xuanzhong-01 set-default-icon-selected'}} set-default-icon"></text>
+  </view>
+    <view class="cart-actions h-flex">
+      <view class="amount-action" bindtap="bindCheckAll">
+        <text class="item-choose iconfont {{selectedAllStatus?'icon-xuanzhong-01 set-default-icon-selected':'icon-weixuanzhong-01'}} set-default-icon"></text>
         <text class="choose-all">全选</text>
-        <text>{{count}}</text>
+        <text>{{amount}}</text>
       </view>
       <view class="button-action">
-        <button class="add-new-button" bindtap="setAccounts">结算</button>
+        <button class="settlement-button {{groupCheckCount !== 1?'settlement-button-disabled':''}}" bindtap="doSettlement">结算</button>
       </view>
     </view>
-  </view>
-  <view wx:else>
+  </block>
+  <block wx:else>
     <text class="cart-null">当前购物车为空</text>
-  </view>
+  </block>
 </view>
 <import src="../../components/wx-toast/wx-toast.wxml" />
 <template is="wx-toast" data="{{toastOptions: toastOptions}}" />
