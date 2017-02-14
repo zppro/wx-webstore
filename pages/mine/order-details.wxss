@@ -2,31 +2,35 @@
   flex: 1;
   width: 100%;
 }
+
 .order-details-actions {
   height: 45px;
   line-height: 45px;
   width: 100%;
   background-color: #f5f5f5;
 }
-.order-remove{
-    flex: 1;
-    border-radius: 0;
+
+.order-remove {
+  flex: 1;
+  border-radius: 0;
 }
-.order-apply-for-after-sale{
-    flex: 1;
-    text-align: center;
-    border-radius: 0;
+
+.order-apply-for-after-sale {
+  flex: 1;
+  text-align: center;
+  border-radius: 0;
 }
-.order-rebuy{
-    flex: 1;
-    text-align: center;
-    border-radius: 0;
+
+.order-rebuy {
+  flex: 1;
+  text-align: center;
+  border-radius: 0;
 }
-.order-remove-space,
-.order-apply-for-after-sale-space,
-.order-rebuy-space{
-    flex: 3;
+
+.order-remove-space, .order-apply-for-after-sale-space, .order-rebuy-space {
+  flex: 3;
 }
+
 .order-shipping {
   width: 100%;
   height: 87px;
@@ -121,18 +125,21 @@
   color: #f00;
 }
 
+.order-body {
+  background-color: white;
+}
+
 .order-items {
   width: 100%;
   height: 100px;
   padding: 0 4px;
-  margin: 1px 0 0 0;
-  background-color: white;
-  border-top: solid 1px #f5f5f5;
+  margin: 1px 0 1px 0;
+  background-color: #f4f4f4;
 }
 
-.order-items-img-single {
-  flex: 1;
+.order-items-img-list {
   text-align: center;
+  margin: 0 3px;
 }
 
 .item-img {
@@ -143,6 +150,7 @@
 
 .order-items-other {
   flex: 2;
+  margin-left: 5px;
   height: 90px;
   vertical-align: middle;
 }
@@ -179,7 +187,7 @@
 .item-quantity {
   font-size: 16px;
   padding-right: 5px;
-  color:#aaa;
+  color: #aaa;
 }
 
 .item-quantity::before {
@@ -286,6 +294,7 @@
   content: '￥';
   font-size: 11px;
 }
+
 .order-time-value::before {
   content: '下单时间：';
   font-size: 11px;

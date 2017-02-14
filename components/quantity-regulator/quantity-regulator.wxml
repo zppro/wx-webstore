@@ -1,7 +1,7 @@
 <template name="quantity-regulator">
     <view class="quantity-regulator-c">
-        <view class="quantity-minus" bindtap="minus" >-</view>
-        <input class="quantity-value" value="{{quantity}}" bindblur="setQuantityRegulator"  />
-        <view class="quantity-plus" bindtap="plus" >+</view>
+        <view class="quantity-minus" data-step="{{step}}" data-max="{{max}}" data-path="{{path}}" data-quantity="{{quantity}}" data-changed-id="{{path}}" bindtap="minus" >-</view>
+        <input class="quantity-value" value="{{quantity}}" data-changed-id="{{path}}" bindblur="setQuantityRegulator"  />
+        <view class="quantity-plus" data-step="{{step}}" data-max="{{max}}" data-path="{{path}}" data-quantity="{{quantity}}" data-changed-id="{{path}}" bindtap="plus" >+</view>
     </view>
 </template>

@@ -4,7 +4,7 @@ var app = getApp()
 Page({
   data: {
     current: {},
-    selected_sku: {},
+    selected_sku: {quantity:0},
     quantity: 1,
     windowHeight: 627 - 45,
     shoppingCartItemCount: 0,
@@ -105,6 +105,7 @@ Page({
     wx.setStorage({
       key: keys.STG_ORDER_CONFIRM_NOW,
       data: {
+        source: keys.ORDER_CONFIRM_SOURCE_SPU_DETAILS,
         shipping_info: this.data.selectedShippingInfo,
         items: [spuInfo],
         amount: new Number(spuInfo.price * spuInfo.quantity).toFixed(2),
@@ -198,8 +199,7 @@ Page({
     this.setData({
       quantity: 1,
       selected_sku: sku
-    });
-    this.quantityRegulator.setMax(this.data.selected_sku.quantity);
+    })
   },
   openPickShippingInfoDialog: function () {
     var that = this;
@@ -343,8 +343,7 @@ Page({
       that.setData({
         current: spu,
         selected_sku: spu.default_selected_sku || {}
-      });
-      this.quantityRegulator.setMax(that.data.selected_sku.quantity);
+      })
     })
   },
   onLoad: function (options) {

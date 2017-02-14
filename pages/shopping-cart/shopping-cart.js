@@ -1,38 +1,23 @@
 import keys from '../../config/keys.js'
 import settings from '../../config/settings.js'
-import quantityRegulator from '../../components/quantity-regulator/quantity-regulator'
+import QuantityRegulator from '../../components/quantity-regulator/quantity-regulator'
 //获取应用实例
-var app = getApp();
-// var  selectedAllStatus = false;
+var app = getApp()
+let quantityRegulators = []
 Page({
     data: {
         selectedAllStatus: false,
-        selected: [],
         cartChecked: [],
         groupCheckCount: 0,
         amount: 0,
         ischooseAll: 0,
         shopping_cart: []
     },
-    //事件处理函数
-    bindCheckAddrbox: function (e) {
-        console.log('bindCheckAddrbox ');
-        let idx = e.currentTarget.dataset.groupIndex
-        let cartChecked = this.data.cartChecked
-        let groupCheck = cartChecked[idx]['self']
-        groupCheck = !groupCheck
-        for (let k2 in cartChecked[idx]) {
-            cartChecked[idx][k2] = groupCheck
-            console.log("cartChecked[k]['self']:" + cartChecked[idx][k2])
-        }
-        let groupCheckCount = this.groupCheckCount()
-        this.setData({
-            cartChecked,
-            groupCheckCount
-        })
-        console.log(cartChecked)
-        this.calculateAmount()
+    onShow: function () {
+        this.fetchData()
     },
+    //事件处理函数
+
     doSettlement: function () {
         console.log("结算");
         if (this.data.groupCheckCount === 0) {
@@ -50,14 +35,12 @@ Page({
         let checkedShoppingItems = []
         let shipping_info
         for (let k in cartChecked) {
-            if (cartChecked[k]['self']) {
-                shipping_info = shopping_cart[k].group
-                for (let k2 in cartChecked[k]) {
-                    if (k2 !== 'self' && cartChecked[k][k2]) {
-                        console.log(shopping_cart[k])
-                        let shoppingItem = shopping_cart[k].items[k2]
-                        checkedShoppingItems.push(shoppingItem)
-                    }
+            shipping_info = shopping_cart[k].group
+            for (let k2 in cartChecked[k]) {
+                if (k2 !== 'self' && cartChecked[k][k2]) {
+                    console.log(shopping_cart[k])
+                    let shoppingItem = shopping_cart[k].items[k2]
+                    checkedShoppingItems.push(shoppingItem)
                 }
             }
         }
@@ -97,13 +80,20 @@ Page({
             itemColor: '#f00',
             success: function (res) {
                 if (res.tapIndex == 0) {
-                    console.log("确认删除");
-                    if (shopping_cart[idx].items.length == 1) {
-                        shopping_cart.splice(idx, 1);
-                    } else {
-                        shopping_cart[idx].items.splice(idx2, 1);
-                    }
-                    that.syncToStorage(shopping_cart);
+                    console.log("确认删除")
+                    let groupKey = shopping_cart[idx].groupKey,
+                        spu_id = shopping_cart[idx].items[idx2].spu_id,
+                        sku_id = shopping_cart[idx].items[idx2].sku_id;
+                    let groupComparator = (groupItem) => { return groupItem.groupKey === groupKey },
+                        itemComparator = (item) => {
+                            return item.spu_id === spu_id && item.sku_id === sku_id
+                        },
+                        successFn = () => {
+                            that.fetchData()
+                        }
+
+                    app.shoppingCart.removeItem(groupComparator, itemComparator, successFn)
+
                 }
             }
         })
@@ -116,7 +106,7 @@ Page({
         let isBreak = false
         for (let k in cartChecked) {
             for (let k2 in cartChecked[k]) {
-                if (cartChecked[k][k2]) {
+                if (shopping_cart[k] && cartChecked[k][k2]) {
                     if (!previousGroup) {
                         previousGroup = shopping_cart[k].groupKey
                         console.log("previousGroup:" + previousGroup)
@@ -171,9 +161,18 @@ Page({
             let shoppingItems = shopping_cart[idx].items
             if (shoppingItems) {
                 cartChecked[idx] = {}
+                quantityRegulators[idx] = []
                 let groupChecked = true
                 for (let idx2 = 0; idx2 < shoppingItems.length; idx2++) {
                     cartChecked[idx][idx2] = shoppingItems[idx2].checked
+                    let a = 'idx:' + idx + ',' + 'idx2:' + idx2
+                    let changedId = 'shopping_cart[' + idx + '].items[' + idx2 + '].quantity'
+                    let onChanged = (oldQuantity, newQuantity) => {
+                        shopping_cart[idx].items[idx2].quantity = newQuantity
+                        app.shoppingCart.update(shopping_cart)
+                    }
+                    quantityRegulators[idx][idx2] = new QuantityRegulator(this)
+                    quantityRegulators[idx][idx2].setOnChanged(changedId, onChanged)
                     groupChecked = groupChecked && cartChecked[idx][idx2]
                 }
                 cartChecked[idx]['self'] = groupChecked
@@ -205,6 +204,41 @@ Page({
         })
         console.log(this.data.cartChecked)
         this.calculateAmount()
+        let shopping_cart = this.data.shopping_cart
+        for (let idx = 0; idx < shopping_cart.length; idx++) {
+            if (shopping_cart[idx].items) {
+                for (let idx2 = 0; idx2 < shopping_cart[idx].items.length; idx2++) {
+                    shopping_cart[idx].items[idx2].checked = cartChecked[idx][idx2]
+                }
+            }
+        }
+        // console.log(shopping_cart)
+        app.shoppingCart.update(shopping_cart)
+    },
+    bindCheckAddrbox: function (e) {
+        console.log('bindCheckAddrbox ');
+        let idx = e.currentTarget.dataset.groupIndex
+        let cartChecked = this.data.cartChecked
+        let groupCheck = cartChecked[idx]['self']
+        groupCheck = !groupCheck
+        for (let k2 in cartChecked[idx]) {
+            cartChecked[idx][k2] = groupCheck
+            console.log("cartChecked[k]['self']:" + cartChecked[idx][k2])
+        }
+        let groupCheckCount = this.groupCheckCount()
+        this.setData({
+            cartChecked,
+            groupCheckCount
+        })
+        this.calculateAmount()
+        let shopping_cart = this.data.shopping_cart
+        if (shopping_cart[idx].items) {
+            for (let idx2 = 0; idx2 < shopping_cart[idx].items.length; idx2++) {
+                shopping_cart[idx].items[idx2].checked = cartChecked[idx][idx2]
+            }
+        }
+        app.shoppingCart.update(shopping_cart)
+
     },
     bindCheckbox: function (e) {
         let idx = e.currentTarget.dataset.groupIndex
@@ -234,35 +268,27 @@ Page({
         let shopping_cart = this.data.shopping_cart
         if (shopping_cart[idx].items && shopping_cart[idx].items[idx2]) {
             shopping_cart[idx].items[idx2].checked = cartChecked[idx][idx2]
-            this.syncToStorage(shopping_cart)
+            app.shoppingCart.update(shopping_cart)
         }
     },
-    syncToStorage: function (shopping_cart) {
-        wx.setStorage({
-            key: keys.STG_SHOPPING_CART,
-            data: shopping_cart
+    bindSPUItem: function (e) {
+        let idx = e.currentTarget.dataset.groupIndex
+        let idx2 = e.currentTarget.dataset.itemIndex
+        let shopping_cart = this.data.shopping_cart
+        if (shopping_cart[idx].items && shopping_cart[idx].items[idx2]) {
+            wx.navigateTo({
+                url: '../store/spu-details?spuId=' + shopping_cart[idx].items[idx2].spu_id
+            })
+        }
+    },
+    fetchData: function () {
+        this.setData({
+            shopping_cart: app.shoppingCart.groupedItems
         })
+        this.loadCheckState()
     },
     onLoad: function (options) {
-        console.log('shopping-cart onLoad ');
+        console.log('shopping-cart onLoad ')
         app.toast.init(this)
-        let that = this;
-        let shopping_cart = this.data.shopping_cart;
-        console.log(JSON.stringify(shopping_cart))
-        wx.getStorage({
-            key: keys.STG_SHOPPING_CART,
-            success: function (res) {
-                // console.log(JSON.stringify(res.data))
-                if (res.data) {
-                    that.setData({
-                        shopping_cart: res.data
-                    })
-                    that.loadCheckState()
-                }
-            }
-        })
-        quantityRegulator.init(this);
-
-
     }
 })

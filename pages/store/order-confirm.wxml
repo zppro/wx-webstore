@@ -1,65 +1,77 @@
 <form name='orderNowForm' report-submit bindsubmit='orderNow'>
-<view class="container">
-  <scroll-view class="order-confirm" scroll-y="true" style="height: {{windowHeight}}px">
-    <view class="order-shipping">
-      <view class="order-shipping-info">
-        <view class="order-shipping-man">
-          <input class="order-shipping-nickname" placeholder="填写收货人" data-field-name="order.shipping_info.shipping_nickname" bindblur="setInputData" value="{{order.shipping_info.shipping_nickname}}" />
-          <input class="order-shipping-phone" placeholder="填写收货人手机" data-field-name="order.shipping_info.shipping_phone" bindblur="setInputData" value="{{order.shipping_info.shipping_phone}}" />
+  <view class="container">
+    <scroll-view class="order-confirm" scroll-y="true" style="height: {{windowHeight}}px">
+      <view class="order-shipping">
+        <view class="order-shipping-info">
+          <view class="order-shipping-man">
+            <input class="order-shipping-nickname" placeholder="填写收货人" data-field-name="order.shipping_info.shipping_nickname" bindblur="setInputData" value="{{order.shipping_info.shipping_nickname}}" />
+            <input class="order-shipping-phone" placeholder="填写收货人手机" data-field-name="order.shipping_info.shipping_phone" bindblur="setInputData" value="{{order.shipping_info.shipping_phone}}" />
+          </view>
+          <view class="order-shipping-place">
+            <text class="iconfont icon-map order-shipping-place-icon" />
+            <text class="order-shipping-place-value">{{order.shipping_info.province + order.shipping_info.city + order.shipping_info.area + order.shipping_info.address}}</text>
+          </view>
         </view>
-        <view class="order-shipping-place">
-          <text class="iconfont icon-map order-shipping-place-icon" />
-          <text class="order-shipping-place-value">{{order.shipping_info.province + order.shipping_info.city + order.shipping_info.area + order.shipping_info.address}}</text>
-        </view>
-      </view>
-      <!--<view class="order-shipping-set item-arrow-right iconfont icon-arrowright">
+
+        <!--<view class="order-shipping-set item-arrow-right iconfont icon-arrowright">
       </view>-->
-    </view>
-    <view class="h-flex order-items">
-      <block wx:if="{{order.items.length == 1}}">
-        <view class="order-items-img-single">
-          <image class="item-img" src="{{order.items[0].img}}"></image>
-          <text class="verticle-middle"></text>
-        </view>
-        <view class="v-flex order-items-other">
+      </view>
+      <view class="h-flex order-items">
+        <block wx:if="{{order.items.length == 1}}">
+          <view class="order-items-img-single">
+            <image class="item-img" src="{{order.items[0].img + '?imageView2/1/w/90/h/90' }}"></image>
+            <text class="verticle-middle"></text>
+          </view>
+          <view class="v-flex order-items-other">
             <text class="item-spu-name">{{order.items[0].spu_name}}</text>
             <text class="item-sku-name">{{order.items[0].sku_name}}</text>
             <view class="h-flex item-price-quantity">
-                <text class="item-price">{{order.items[0].price}}</text>
-                <text class="item-quantity">{{order.items[0].quantity}}</text>
+              <text class="item-price">{{order.items[0].price}}</text>
+              <text class="item-quantity">{{order.items[0].quantity}}</text>
             </view>
-        </view>
-        <text class="verticle-middle"></text>
-      </block>
-    </view>
-    <view class="h-flex order-invoice">
+          </view>
+          <text class="verticle-middle"></text>
+        </block>
+        <block wx:else>
+          <view class="order-items-img-list" wx:for="{{order.items}}" wx:for-item="orderItem" wx:key="orderItem.spu_id">
+            <image class="item-img" src="{{orderItem.img + '?imageView2/1/w/90/h/90'}}"></image>
+            <text class="verticle-middle"></text>
+          </view>
+          <view class="order-items-other2">
+            共{{order.items.length}}件
+          </view>
+          <text class="verticle-middle"></text>
+        </block>
+      </view>
+      <view class="h-flex order-invoice">
         <text class="item-label">发票信息</text>
         <text class="order-invoice-info">{{order.invoice_flag ? (order.invoice_info.type ? (order.invoice_info.type == 'A0003' ? '(电子)' :'(纸质)') + order.invoice_info.title || '' : '') : '不开发票' }}</text>
+
         <!--<view class="item-arrow-right iconfont icon-arrowright">
         </view>-->
         <text class="invoice-info-pick" bindtap="openPickInvoiceInfoDialog">...</text>
-    </view>
-    <view class="h-flex order-memo">
+      </view>
+      <view class="h-flex order-memo">
         <text class="item-label">订单备注</text>
         <input class="order-memo-value" placeholder="填写需要额外告知我们的信息" data-field-name="order.memo" bindinput="setInputData" value="{{order.memo}}" />
-    </view>
-    <view class="h-flex order-amount">
+      </view>
+      <view class="h-flex order-amount">
         <text class="item-label">商品总额</text>
         <text class="order-amount-value">{{order.amount}}</text>
-    </view>
-    <view class="h-flex order-shipping-fee">
+      </view>
+      <view class="h-flex order-shipping-fee">
         <text class="item-label">运费</text>
         <text class="order-shipping-fee-value">{{order.shipping_fee}}</text>
+      </view>
+    </scroll-view>
+    <view class="order-confirm-actions">
+      <view class="order-pay-summary">
+        <text class="total-pay-label">需要支付：</text>
+        <text class="total-pay">{{ totalPay }}</text>
+      </view>
+      <button class="order-now-button" type="warn" size="45" form-type="submit">立即下单</button>
     </view>
-  </scroll-view>
-  <view class="order-confirm-actions">
-    <view class="order-pay-summary">
-      <text class="total-pay-label">需要支付：</text>
-      <text class="total-pay">{{ totalPay }}</text>
-    </view>
-    <button class="order-now-button" type="warn" size="45" form-type="submit">立即下单</button>
   </view>
-</view>
 </form>
 <view class="order-confirm-popup-container " hidden="{{!isInvoiceInfoPickContainerPopup}}">
   <view class="order-confirm-popup-container-mask {{invoiceInfoAnimationMaskClass}}" bindtap="closePickInvoiceInfoDialog">
@@ -75,7 +87,7 @@
           <view class="invoice-info-item {{invoiceInfo._id == selectedInvoiceInfo._id ? 'invoice-info-item-selected': ''}}" data-invoice-info-id="{{invoiceInfo._id}}" bindtap="invoiceInfoTap">
             <text class="invoice-info-details">{{' ' + invoiceInfo.title}}
             </text>
-            <text class="invoice-info-default-flag" hidden="{{!invoiceInfo.default_flag}}" ></text>
+            <text class="invoice-info-default-flag" hidden="{{!invoiceInfo.default_flag}}"></text>
             <text class="invoice-info-picker-marker {{invoiceInfo._id == selectedInvoiceInfo._id ? 'iconfont icon-zhengque': ''}}" />
           </view>
         </block>

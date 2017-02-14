@@ -1,40 +1,60 @@
-var QuantityRegulator = function (page, dataPath = 'quantity', {step = 1, max = 1} = {}) {
+var QuantityRegulator = function (page, {changedId = null, onChanged = null} = {}) {
     this.page = page
-    this.step = step
-    this.max = max
     this.page.minus = this.minus.bind(this)
     this.page.plus = this.plus.bind(this)
     this.page.setQuantityRegulator = this.setQuantityRegulator.bind(this)
-    this.dataPath = dataPath
-    console.log(this.dataPath)
+    if (changedId && onChanged && typeof onChanged === 'function') {
+        this.onChangedListeners[changedId] = onChanged
+    }
 }
-QuantityRegulator.prototype.setMax = function (max) {
-    this.max = max
+QuantityRegulator.prototype.onChangedListeners = {}
+QuantityRegulator.prototype.setOnChanged = function (changedId, onChanged) {
+    if (changedId && onChanged && typeof onChanged === 'function') {
+        this.onChangedListeners[changedId] = onChanged
+    }
 }
 QuantityRegulator.prototype.minus = function (e) {
-    let newValue = this.page.data.quantity - this.step
+    let quantity = e.currentTarget.dataset.quantity
+    let step = e.currentTarget.dataset.step
+    let path = e.currentTarget.dataset.path
+    let changedId = e.currentTarget.dataset.changedId || 'changedId'
+    let newValue = quantity - step
     newValue < 1 && (newValue = 1)
-    let dataPath = this.dataPath
     this.page.setData({
-        [`${dataPath}`]: newValue
+        [`${path}`]: newValue
     })
+    if (quantity !== newValue && this.onChangedListeners[changedId]) {
+        this.onChangedListeners[changedId](quantity, newValue)
+    }
 }
 QuantityRegulator.prototype.plus = function (e) {
-    let newValue = this.page.data.quantity + this.step;
-    newValue > this.max && (newValue = this.max);
-    let dataPath = this.dataPath
+    let quantity = e.currentTarget.dataset.quantity
+    let step = e.currentTarget.dataset.step
+    let max = e.currentTarget.dataset.max
+    let path = e.currentTarget.dataset.path
+    let changedId = e.currentTarget.dataset.changedId || 'changedId'
+    let newValue = quantity + step
+    max > 0 && newValue > max && (newValue = max)
     this.page.setData({
-        [`${dataPath}`]: newValue
+        [`${path}`]: newValue
     })
+    if (quantity !== newValue && this.onChangedListeners[changedId]) {
+        this.onChangedListeners[changedId](quantity, newValue)
+    }
 }
 QuantityRegulator.prototype.setQuantityRegulator = function (e) {
     let newValue = new Number(e.detail.value);
-    if (!newValue || newValue < 1 || newValue > this.max) {
+    let max = e.currentTarget.dataset.max
+    let path = e.currentTarget.dataset.path
+    let changedId = e.currentTarget.dataset.changedId || 'changedId'
+    if (!newValue || newValue < 1 || newValue > max) {
         return;
     }
-    let dataPath = this.dataPath
     this.page.setData({
-        [`${dataPath}`]: newValue
+        [`${path}`]: newValue
     })
+    if (quantity !== newValue && this.onChangedListeners[changedId]) {
+        this.onChangedListeners[changedId](quantity, newValue)
+    }
 }
 module.exports = QuantityRegulator

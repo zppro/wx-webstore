@@ -60,7 +60,7 @@
   height: 20px;
   font-size: 13px;
   line-height: 20px;
-  z-index: 9999;
+  z-index: 9998;
   border-radius: 50%;
   text-align: center;
 }
@@ -252,7 +252,7 @@
   background-color: transparent;
   box-sizing: border-box;
   position: absolute;
-  z-index: 99;
+  z-index: 99999;
   bottom: 0;
 }
 

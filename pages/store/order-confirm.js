@@ -166,6 +166,21 @@ Page({
                             })
 
                             app.toast.show('订单支付成功')
+                            wx.removeStorage({
+                                key: keys.STG_ORDER_CONFIRM_NOW
+                            })
+
+                            // 从购物车清除当前订单SPU
+                            let groupKey = order.shipping_info._id,
+                                groupComparator = (groupItem) => { return groupItem.groupKey === groupKey }
+                            for (let i = 0, length = order.items.length; i < length; i++) {
+                                let spu_id = order.items[i].spu_id,
+                                    sku_id = order.items[i].sku_id;
+                                app.shoppingCart.removeItem(groupComparator, (item) => {
+                                    return item.spu_id === spu_id && item.sku_id === sku_id
+                                })
+                            }
+
                             setTimeout(() => {
                                 wx.redirectTo({
                                     url
@@ -191,7 +206,7 @@ Page({
                     }
                     console.log(requestPaymentObject);
                     wx.requestPayment(requestPaymentObject);
-                }, { loadingText: '订单创建中...'});
+                }, { loadingText: '订单创建中...' });
             })
         }
     },

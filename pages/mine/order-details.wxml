@@ -25,21 +25,23 @@
       <text class="order-code">{{current.code}}</text>
       <text class="order-status">{{current.order_status_name}}</text>
     </view>
-    <view class="h-flex order-items">
-      <block wx:if="{{current.items.length == 1}}">
-        <view class="order-items-img-single">
-          <image class="item-img" src="{{current.items[0].img}}"></image>
+    <view class="order-body">
+      <block wx:for="{{current.items}}" wx:for-item="orderItem" wx:key="orderItem.spu_id">
+        <view class="h-flex order-items">
+          <view class="order-items-img-list">
+            <image class="item-img" src="{{orderItem.img + '?imageView2/1/w/90/h/90'}}"></image>
+            <text class="verticle-middle"></text>
+          </view>
+          <view class="v-flex order-items-other">
+            <text class="item-spu-name">{{orderItem.spu_name}}</text>
+            <text class="item-sku-name">{{orderItem.sku_name}}</text>
+            <view class="h-flex item-price-quantity">
+              <text class="item-price">{{orderItem.price}}</text>
+              <text class="item-quantity">{{orderItem.quantity}}</text>
+            </view>
+          </view>
           <text class="verticle-middle"></text>
         </view>
-        <view class="v-flex order-items-other">
-          <text class="item-spu-name">{{current.items[0].spu_name}}</text>
-          <text class="item-sku-name">{{current.items[0].sku_name}}</text>
-          <view class="h-flex item-price-quantity">
-            <text class="item-price">{{current.items[0].price}}</text>
-            <text class="item-quantity">{{current.items[0].quantity}}</text>
-          </view>
-        </view>
-        <text class="verticle-middle"></text>
       </block>
     </view>
     <view class="h-flex order-invoice">

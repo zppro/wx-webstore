@@ -3,6 +3,11 @@ var ShoppingCart = function (wx, cacheKey) {
     this.cacheKey = cacheKey
     this.groupedItems = this.wx.getStorageSync(this.cacheKey) || []
 }
+ShoppingCart.prototype.refresh = function () {
+    console.log('refresh')
+    this.groupedItems = this.wx.getStorageSync(this.cacheKey) || []
+    console.log(this.groupedItems)
+}
 ShoppingCart.prototype.getItemCount = function (quantityKey = 'quantity') {
     return this.groupedItems.reduce((totalOfGroup, group) => {
         console.log(group)
@@ -12,6 +17,13 @@ ShoppingCart.prototype.getItemCount = function (quantityKey = 'quantity') {
             return totalOfItem + item[quantityKey]
         }, 0)
     }, 0)
+}
+ShoppingCart.prototype.update = function (groupedItems) {
+    this.groupedItems = groupedItems
+    this.wx.setStorage({
+        key: this.cacheKey,
+        data: groupedItems
+    })
 }
 ShoppingCart.prototype.addItem = function (groupKey, group, groupComparator, newItem, itemComparator, mergeSameItemFn, successFn) {
     let groupedItems = this.groupedItems
@@ -58,27 +70,29 @@ ShoppingCart.prototype.addItem = function (groupKey, group, groupComparator, new
         key: this.cacheKey,
         data: groupedItems,
         success: function (res) {
-            successFn()
+            if (successFn && typeof successFn === 'function') {
+                successFn()
+            }
         },
         fail: function (err) {
             console.log(err)
         }
     })
 }
-ShoppingCart.prototype.removeItem = function (groupComparator, itemComparator) {
+ShoppingCart.prototype.removeItem = function (groupComparator, itemComparator, successFn) {
     let groupedItems = this.groupedItems
-    let groupedItem;
-    if (typeof groupedItems.find === 'function') {
-        groupedItem = groupedItems.find(groupComparator)
+    let groupedIndex;
+    if (typeof groupedItems.findIndex === 'function') {
+        groupedIndex = groupedItems.findIndex(groupComparator)
     } else {
         console.log('array no find method ')
-        for (let i = 0; i < groupedItems.length; i++) {
-            if (groupComparator(groupedItems[i])) {
-                groupedItem = groupedItems[i]
+        for (groupedIndex; groupedIndex < groupedItems.length; groupedIndex++) {
+            if (groupComparator(groupedItems[groupedIndex])) {
                 break
             }
         }
     }
+    let groupedItem = groupedItems[groupedIndex]
     if (groupedItem) {
         let removeItemIndex = -1
         if (typeof groupedItem.items.findIndex === 'function') {
@@ -94,6 +108,25 @@ ShoppingCart.prototype.removeItem = function (groupComparator, itemComparator) {
         if (removeItemIndex != -1) {
             groupedItem.items.splice(removeItemIndex, 1)
         }
+
+        if (groupedItem.items.length === 0) {
+            groupedItems.splice(groupedIndex, 1)
+        }
     }
+
+    console.log(groupedItems)
+
+    this.wx.setStorage({
+        key: this.cacheKey,
+        data: groupedItems,
+        success: function (res) {
+            if (successFn && typeof successFn === 'function') {
+                successFn()
+            }
+        },
+        fail: function (err) {
+            console.log(err)
+        }
+    })
 }
 module.exports = ShoppingCart

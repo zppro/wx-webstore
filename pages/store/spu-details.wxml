@@ -89,7 +89,7 @@
     <view class="spu-skus-row spu-skus-quantity">
       <text class="spu-skus-quantity-label">数量</text>
       <view class="spu-skus-quantity-control">
-        <template is="quantity-regulator" data="{{quantity:quantity}}" />
+        <template is="quantity-regulator" data="{{quantity:quantity, step: 1, max: selected_sku.quantity, path: 'quantity'}}" />
       </view>
     </view>
   </view>
