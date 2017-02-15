@@ -14,7 +14,8 @@
     "pages/mine/invoice-list",
     "pages/mine/invoice-details",
     "pages/mine/after-sale-list",
-    "pages/mine/after-sale-details"
+    "pages/mine/after-sale-details",
+    "pages/mine/qrcode"
   ],
   "window": {
     "backgroundTextStyle": "light",

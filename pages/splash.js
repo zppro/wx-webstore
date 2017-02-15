@@ -50,7 +50,7 @@ Page({
                 that.toIndex(true)
                 return
             }
-            let channelUnitData = { id: channelUnit.id, name: channelUnit.name }
+            let channelUnitData = { id: channelUnit.id, name: channelUnit.name, qrcode: channelUnit.wxa_qrcode }
             that.setData({ channelUnit: channelUnitData })
             console.log(channelUnitData)
             wx.setStorage({

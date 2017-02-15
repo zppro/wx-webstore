@@ -39,7 +39,7 @@
   </view>
   <view class="h-flex my-manage-item">
     <view class="my-manage-item-contact-button">
-      <contact-button wx:for="{{contactButtonLoop}}" wx:key="*this"  class="icon-contact-button" type="default-light" size="27" session-from="merchant-webstore">
+      <contact-button wx:for="{{contactButtonLoop}}" wx:key="*this" class="icon-contact-button" type="default-light" size="27" session-from="merchant-webstore">
       </contact-button>
     </view>
     <view class="my-manage-item-contact-button2">
@@ -71,8 +71,17 @@
   </view>
   <view class="h-flex my-manage-item ">
     <view class="my-manage-item-icon-c ">
+      <view class="my-manage-item-icon-c-share my-manage-item-icon-c5">
+        <text class="iconfont icon-erweima my-manage-item-icon" />
+        <view class="verticle-middle "></view>
+      </view>
+      <text class="my-manage-item-text " bindtap="codeTab">我的二维码</text>
+    </view>
+  </view>
+  <view class="h-flex my-manage-item ">
+    <view class="my-manage-item-icon-c ">
       <view class="my-manage-item-icon-c-share my-manage-item-icon-c4 ">
-        <text class="iconfont icon-shanchu-01 my-manage-item-icon " />
+        <text class="iconfont icon-shanchu-01 my-manage-item-icon" />
         <view class="verticle-middle "></view>
       </view>
       <text class="my-manage-item-text " bindtap="clearStorageTap">清除缓存</text>

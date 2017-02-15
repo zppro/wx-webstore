@@ -35,6 +35,11 @@ Page({
       url: './invoice-list'
     })
   },
+  codeTab:function(){
+    wx.navigateTo({
+      url: './qrcode'
+    })
+  },
   clearStorageTap: function (e) {
     wx.showActionSheet({
       itemList: ['确认清除缓存？'],
