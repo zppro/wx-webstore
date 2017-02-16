@@ -1,2 +1,2 @@
 # wx-webstore
-weixin app
+网上商城 webstore
